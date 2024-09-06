@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TMF Timetable</title>
+    <script src="src/viewToggle.js"></script>
+</head>
+<body>
+    <div class="topnav">
+        <div class="topnav-flx">
+            <!-- View toggle -->
+            <div class="toggle-switch">
+                <input type="checkbox" id="view-toggle" style="display:none"/>
+                <label for="view-toggle" class="switch-label">
+                    <img src="public/user_single.png" width="auto" height="30" id="singleUserIcon">
+                    <img src="public/user_multiple.png" width="auto" height="30" id="multiUserIcon">
+                </label>
+            </div>
+            <!-- Profile-switch -->
+            <div class="controls-left">
+                <select name="profiles" id="profiles">
+                    <option value="profile1">Menzer Tillmann</option>
+                    <option value="profile2">Mustermann Max</option>
+                </select>
+            </div>
+            <div class="timerange-center">
+                <button class="timerange-controls">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40">
+                        <!-- Outer circle -->
+                        <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
+                        <!-- Left arrow -->
+                        <polygon points="30,50 50,30 50,40 70,40 70,60 50,60 50,70" fill="black"/>
+                    </svg>
+                </button>
+                <h2 class="timerange-item" id="startdate">30. Juli</h2>
+                <h2 class="timerange-item">-</h2>
+                <h2 class="timerange-item" id="enddate">5. August</h2>
+                <button class="timerange-controls">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40" class="timerange-controls">
+                        <!-- Outer circle -->
+                        <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
+                        <!-- Right arrow -->
+                        <polygon points="70,50 50,30 50,40 30,40 30,60 50,60 50,70" fill="black"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="controls-right">
+                <button class="buttons-right">
+                    <img src="public/clipboard.png" width="auto" height="30">
+                </button>
+                <button class="buttons-right">
+                    <img src="public/notifications.png" width="auto" height="30">
+                </button>
+                <button class="buttons-right">
+                    <img src="public/user.png" width="auto" height="30">
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
