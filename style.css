@@ -4,7 +4,7 @@ body {
     margin: 20px 40px;
 }
 
-.topnav-flx {
+.topnav {
     display: flex;
     justify-content: space-between; 
     align-items: center;
