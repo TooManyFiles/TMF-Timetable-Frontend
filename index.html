@@ -10,16 +10,16 @@
 <body>
     <div class="head">
         <div class="topnav">
-            <!-- View toggle -->
-            <div class="toggle-switch">
-                <input type="checkbox" id="view-toggle" style="display:none"/>
-                <label for="view-toggle" class="switch-label">
-                    <img src="public/user_single.png" width="auto" height="30" id="singleUserIcon">
-                    <img src="public/user_multiple.png" width="auto" height="30" id="multiUserIcon">
-                </label>
-            </div>
-            <!-- Profile-switch -->
             <div class="controls-left">
+                <!-- View toggle -->
+                <div class="toggle-switch">
+                    <input type="checkbox" id="view-toggle" style="display:none"/>
+                    <label for="view-toggle" class="switch-label">
+                        <img src="public/user_single.png" width="25" height="25" class="userIcon" id="singleUserIcon">
+                        <img src="public/user_multiple.png" width="25" height="25" class="userIcon" id="multiUserIcon">
+                    </label>
+                </div>
+                <!-- Profile-switch -->
                 <select name="profiles" id="profiles" class="profile-select" onchange="//Funktion zum profil ändern">
                     <option value="profile1">Menzer Tillmann</option>
                     <option value="profile2">Mustermann Max</option>

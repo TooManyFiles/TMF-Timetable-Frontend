@@ -1,3 +1,8 @@
+:root {
+    --accent-dark: #333333;
+    --accent-light: #D9D9D9;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #f4f4f4;
@@ -13,6 +18,7 @@ body {
 
 .controls-left {
     margin-left: 10px;
+    display: flex;
 }
 
 .timerange-center {
@@ -37,6 +43,12 @@ body {
 .toggle-switch {
     display: flex;
     align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    height: 29px;
+    width: 55px;
+    padding: 3px 5px;
+    border-radius: 20px;
 }
 
 .switch-label {
@@ -48,6 +60,12 @@ body {
 .icon {
     width: 24px;
     height: 24px;
+}
+
+.userIcon {
+    background-color: var(--accent-dark);
+    border-radius: 20px;
+    padding: 2px;
 }
 
 #singleUserIcon {
