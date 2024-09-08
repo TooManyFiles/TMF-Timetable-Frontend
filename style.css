@@ -165,15 +165,3 @@ th:first-child, td:first-child {
 th:not(:first-child), td:not(:first-child) {
     width: 18%;
 }
-
-
-/* for reference: */
-#m11, #m12 {
-    background-color: var(--table-highlight-faded);
-    border-radius: 10px;
-}
-
-#t1, #t2 {
-    background-color: var(--table-highlight);
-    border-radius: 10px;
-}
