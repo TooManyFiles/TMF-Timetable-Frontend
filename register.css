@@ -1,0 +1,206 @@
+:root {
+    --accent-dark: #6f6f6f;
+    --accent-light: #D9D9D9;
+    --highlight: rgba(64, 125, 127, 1);
+    --highlight-faded: rgba(64, 125, 127, 0.54);
+    --text: rgb(0, 0, 0);
+    --text-faded: rgb(73, 73, 73);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+.onboarding-heading {
+    text-align: start;
+    color: var(--highlight);
+}
+
+.onboarding-description {
+    text-align: start;
+    color: var(--accent-dark);
+    margin-bottom: 2em;
+}
+
+.center-wrapper {
+    text-align: center;
+}
+
+.container {
+    width: 600px;
+    margin: 20px auto;
+    padding: 50px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Added Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--accent-light);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.progress-bar .progress {
+    height: 100%;
+    width: 0;
+    background-color: var(--highlight);
+    transition: width 0.4s ease; /* Smooth transition for the progress fill */
+}
+
+.group {
+    position: relative;
+    margin-bottom: 45px;
+}
+
+/* INPUT */
+
+input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--highlight-faded);
+}
+
+input:focus {
+    outline: none;
+    border: none;
+}
+
+label {
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+}
+
+input:focus ~ label, input:valid ~ label {
+    top: -20px;
+    font-size: 14px;
+    color: var(--highlight);
+}
+
+.bar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: var(--highlight);
+    transition: 0.2s ease all;
+}
+
+.bar:before {
+    left: 50%;
+}
+
+.bar:after {
+    right: 50%;
+}
+
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width: 50%;
+}
+
+.highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+input:focus ~ .highlight {
+    animation: inputHighlighter 0.3s ease;
+}
+
+@keyframes inputHighlighter {
+    from { background: var(--highlight); }
+    to   { width: 0; background: transparent; }
+}
+
+/* BUTTON */
+
+.button {
+  position: relative;
+  border: 2px solid var(--highlight);
+  border-radius: 12px;
+  background-color: #fffdfd00;
+  color: var(--highlight);
+  font-size: 15px;
+  width: 20em;
+  height: 2.5em;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+/* transitions between steps: */
+.form-step {
+    display: none;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.form-step.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}

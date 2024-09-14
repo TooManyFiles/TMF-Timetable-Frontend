@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | TMF Timetable</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="center-wrapper">
+        <h1>Willkommen bei BetterUntis!</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+
+        <div class="container">
+            <!-- Step 1 -->
+            <form id="form-step-1" class="form-step active">
+                <h2 class="onboarding-heading">Registrieren - Schritt 1</h2>
+                <p class="onboarding-description">Bitte gib folgende Daten an:</p>
+                <div class="group">      
+                    <input type="text" id="forename" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Vorname</label>
+                </div>
+                <div class="group">      
+                    <input type="text" id="lastname" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Nachname</label>
+                </div>
+                <button type="button" class="button next-btn">Weiter!</button>
+                <p>Bereits einen Account erstellt? <a href="/login.html" style="color: var(--highlight-faded)">Zum login</a></p>
+            </form>
+            
+            <!-- Step 2 -->
+            <form id="form-step-2" class="form-step">
+                <h2 class="onboarding-heading">Registrieren - Schritt 2</h2>
+                <p class="onboarding-description">Erstelle einen Benutzername und ein Passwort:</p>
+                <div class="group">      
+                    <input type="text" id="username" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Benutzername</label>
+                </div>
+                <div class="group">      
+                    <input type="password" id="password" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Passwort</label>
+                </div>
+                <button type="button" class="button next-btn">Weiter!</button>
+                <p>Bald geschafft! | <a onclick="showPreviousStep()" style="color: var(--highlight-faded); cursor: pointer">Zurück</a></p>
+            </form>
+
+            <!-- Step 3 -->
+            <form id="form-step-3" class="form-step">
+                <h2 class="onboarding-heading">Registrieren - Schritt 3</h2>
+                <p class="onboarding-description">Dein Passwort bleibt sicher bei uns und kann von niemandem eingelesen werden. </p>
+                <div class="group">      
+                    <input type="password" id="untis-password" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>WebUntis Passwort</label>
+                </div>
+                <button type="button" class="button next-btn">Abschließen!</button>
+                <p>Letzer Schritt! | <a onclick="showPreviousStep()" style="color: var(--highlight-faded); cursor: pointer">Zurück</a></p>
+            </form>
+
+            <!-- Step 4 -->
+            <form id="form-step-4" class="form-step">
+                <h1 class="onboarding-heading" style="text-align: center;">&#127881; Geschafft! &#127881;</h1>
+                <h4>Dein Account ist jetzt erstellt und du kannst dich mit deinen Anmeldedaten anmelden:</h4>
+                <button class="button" style="background-color: var(--highlight); color: white;"><a href="/login.html" style="text-decoration: none; color: white !important"> Zum login! </a></button> <!-- redirect not final! -->
+            </form>
+        </div>
+    </div>
+
+    <script src="/src/register.js"></script>
+</body>
+</html>
