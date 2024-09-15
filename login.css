@@ -137,14 +137,18 @@ input:focus ~ .highlight {
   position: relative;
   border: 2px solid var(--highlight);
   border-radius: 12px;
-  background-color: #fffdfd00;
-  color: var(--highlight) !important;
+  background-color: var(--highlight);
+  color: white;
   font-size: 15px;
   width: 20em;
   height: 2.5em;
   transition: all 0.5s;
   cursor: pointer;
   margin-bottom: 10px;
+}
+
+.button a{
+  color: white;
 }
 
 .button span {
