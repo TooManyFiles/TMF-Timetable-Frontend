@@ -1,0 +1,165 @@
+:root {
+    --accent-dark: #6f6f6f;
+    --accent-light: #D9D9D9;
+    --table-highlight: rgba(64, 125, 127, 1);
+    --table-highlight-faded: rgba(64, 125, 127, 0.54);
+    --text: rgb(0, 0, 0);
+    --text-faded: rgb(73, 73, 73);
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px 40px;
+}
+
+.topnav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+}
+
+.timerange-center {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-grow: 1;  
+}
+
+.timerange-item {
+    margin: 0 5px;
+}
+
+.timerange-controls {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    height: 29px;
+    width: 55px;
+    padding: 3px 5px;
+    border-radius: 20px;
+}
+
+.switch-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.userIcon {
+    background-color: var(--accent-dark);
+    border-radius: 20px;
+    padding: 2px;
+}
+
+#singleUserIcon {
+    opacity: 1;
+}
+
+#multiUserIcon {
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked + .switch-label #singleUserIcon {
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked + .switch-label #multiUserIcon {
+    opacity: 1;
+}
+
+.profile-select {
+    margin-left: 30px;
+    text-align: center;
+    font-size: 1.1em;
+    background-color: lightgray;
+    border: 2px solid lightgray;
+    border-radius: 8px;
+}
+
+.controls-right {
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.buttons-right{
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.week-indicator {
+    text-align: center;
+    margin-top: -20px; 
+    position: relative;
+}
+
+
+
+/* TABLE */
+.table-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    height: 85vh;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+    width: 20%;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+}
+
+thead th {
+    background-color: var(--accent-light);
+    height: 8%;
+    font-weight: bolder;
+}
+
+
+/* leftmost column */
+th:first-child, td:first-child {
+    font-weight: bolder;
+    width: 5%; /* Smaller width */
+    background-color: var(--accent-light);
+}
+
+/* equal width for other columns */
+th:not(:first-child), td:not(:first-child) {
+    width: 18%;
+}
