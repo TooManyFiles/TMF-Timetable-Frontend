@@ -6,20 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //check if all inputs are filled
     function isStepValid() {
-        const inputs = forms[currentStep].querySelectorAll('input');
-        for (let input of inputs) {
-            if (!input.value.trim()) {
-                return false;
-            }
-        }
+        // const inputs = forms[currentStep].querySelectorAll('input');
+        // for (let input of inputs) {
+        //     if (!input.value.trim()) {
+        //         return false;
+        //     }
+        // }
         return true;
     }
 
     function showNextStep() {
-        // if (!isStepValid()) {
-        //     alert("Bitte fülle alle Felder aus, um fortzufahren.");
-        //     return;
-        // }
+        if (!isStepValid()) {
+            alert("Bitte fülle alle Felder aus, um fortzufahren.");
+            return;
+        }
         forms[currentStep].classList.remove('active');
         currentStep++;
         forms[currentStep].classList.add('active');
@@ -48,5 +48,3 @@ document.addEventListener('DOMContentLoaded', () => {
     
     window.showPreviousStep = showPreviousStep;
 });
-
-

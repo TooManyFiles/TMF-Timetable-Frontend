@@ -10,21 +10,33 @@
 <body>
     <div class="center-wrapper">
         <h1 style="color: white">Willkommen, Forename!</h1>
-        
-        
-
         <div class="container">
             <!-- Progress Bar -->
             <div class="progress-bar">
                 <div class="progress"></div>
             </div>
             <!-- Step 1 -->
+            <!-- SKIP WHEN ONLY ONE CLASS AVAILABLE -->
             <form id="form-step-1" class="form-step active">
-                <h2 class="onboarding-heading">Filter erstellen - 1/3</h2>
+                <h2 class="onboarding-heading">Klasse auswählen - 1/3</h2>
+                <p class="onboarding-description">Wähle deine Klasse aus</p>
+                <div class="select">
+                    <select name="format" id="format">
+                       <option selected disabled>Wähle deine Klasse aus</option>
+                       <option value="pdf">Klasse 10b (Aicher/Häussler)</option>
+                       <option value="txt">Jahrgangsstufe 1 (Linden)</option>
+                    </select>
+                 </div>                 
+                <button type="button" class="button next-btn">Weiter!</button>
+                <p>Du möchtest keinen Filter erstelllen? <a href="/login.html" style="color: var(--highlight-faded)">Überspringen</a></p>
+            </form>
+            <!-- Step 2 -->
+            <form id="form-step-2" class="form-step">
+                <h2 class="onboarding-heading">Filter erstellen - 2/3</h2>
                 <p class="onboarding-description">Wähle die Fächer, die in deinem Stundenplan angezeigt werden sollen</p>
                 <select id="dynamic" name="dynamic" class="select"></select>         
                 <button type="button" class="button next-btn">Weiter!</button>
-                <p>Du möchtest keinen Filter erstelllen? <a href="/login.html" style="color: var(--highlight-faded)">Überspringen</a></p>
+                <p>Letzer Schritt! | <a href="/login.html" style="color: var(--highlight-faded)">Zurück</a></p>
             </form>
         </div>
     </div>
