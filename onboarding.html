@@ -28,7 +28,7 @@
                     </select>
                  </div>                 
                 <button type="button" class="button next-btn">Weiter!</button>
-                <p>Du möchtest keinen Filter erstelllen? <a href="/login.html" style="color: var(--highlight-faded)">Überspringen</a></p>
+                <p>Du möchtest keinen Filter erstelllen? <a href="" style="color: var(--highlight-faded)">Überspringen</a></p>
             </form>
             <!-- Step 2 -->
             <form id="form-step-2" class="form-step">
@@ -36,7 +36,13 @@
                 <p class="onboarding-description">Wähle die Fächer, die in deinem Stundenplan angezeigt werden sollen</p>
                 <select id="dynamic" name="dynamic" class="select"></select>         
                 <button type="button" class="button next-btn">Weiter!</button>
-                <p>Letzer Schritt! | <a href="/login.html" style="color: var(--highlight-faded)">Zurück</a></p>
+                <p>Letzter Schritt! | <a onclick="showPreviousStep()" style="color: var(--highlight-faded); cursor: pointer">Zurück</a></p>
+            </form>
+            <!-- Step 3 -->
+            <form id="form-step-3" class="form-step">
+                <h1 class="onboarding-heading" style="text-align: center;">&#127881; Geschafft! &#127881;</h1>
+                <h4>Dein Account ist jetzt fertig eingerichtet!</h4>
+                <button class="button" style="background-color: var(--highlight); color: white;"><a href="" style="text-decoration: none; color: white !important"> Zum Stundenplan </a></button>
             </form>
         </div>
     </div>

@@ -217,8 +217,6 @@ input:focus ~ .highlight {
 /* SUBJECTS DROPDOWN */
 form h1 {
     margin: 10px 0 5px;
-    font-size: 24px;
-    font-weight: 500;
     color: #474b50;
 }
 form label {
