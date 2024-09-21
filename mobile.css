@@ -10,7 +10,26 @@
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #f4f4f4;
-    margin: 20px 40px;
+    margin: 0;
+}
+
+.head {
+    margin-top: 20px;
+}
+
+.week-indicator{
+    display: flex;
+    justify-content: center;
+}
+
+.timerange {
+    display: flex;
+}
+
+#week_indicator {
+    border-top: black 1px solid;
+    padding: 1px 15px;
+    width: fit-content;
 }
 
 .topnav {
@@ -18,11 +37,12 @@ body {
     justify-content: space-between; 
     align-items: center;
     width: 100%;
+    padding-bottom: 2px;
 }
 
 .timerange-center {
     display: flex;
-    justify-content: center; 
+    justify-content: space-between; 
     align-items: center; 
     flex-grow: 1;  
 }
@@ -75,6 +95,11 @@ body {
     opacity: 0;
 }
 
+.btn_changeWeek {
+    width: 25px;
+    height: 25px;
+}
+
 input[type="checkbox"]:checked + .switch-label #singleUserIcon {
     opacity: 0;
 }
@@ -117,12 +142,12 @@ input[type="checkbox"]:checked + .switch-label #multiUserIcon {
 .table-wrapper {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    margin: 0 10px;
 }
 
 table {
     width: 100%;
-    height: 85vh;
+    height: 75vh;
     border-collapse: collapse;
     table-layout: fixed;
 }
