@@ -143,13 +143,13 @@ input[type="checkbox"]:checked + .switch-label #multiUserIcon {
     display: flex;
     justify-content: space-between;
     margin: 0 10px;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 20px;
     overflow: hidden;
 }
 
 table {
     width: 100%;
-    height: 75vh;
+    height: 80vh;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -189,4 +189,15 @@ th:first-child, td:first-child {
 /* equal width for other columns */
 th:not(:first-child), td:not(:first-child) {
     width: 18%;
+}
+
+.bottomnav {
+    display: flex;
+    background-color: var(--accent-light);
+    width: 95%;
+    height: 8vh;
+    margin: auto;
+    margin-top: 1vh;
+
+    border-radius: 50px;
 }
