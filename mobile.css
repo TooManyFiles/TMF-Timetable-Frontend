@@ -143,6 +143,8 @@ input[type="checkbox"]:checked + .switch-label #multiUserIcon {
     display: flex;
     justify-content: space-between;
     margin: 0 10px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 table {
