@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="styles/popup.css">
     <title>TMF Timetable</title>
     <script src="src/viewToggle.js"></script>
 </head>
@@ -64,7 +65,7 @@
     </div>
 
     <!-- TABLE -->
-     <div class="table-wrapper">
+    <div class="table-wrapper">
         <table id="schedule">
             <thead>
                 <tr>
@@ -80,7 +81,40 @@
                 <!-- Dynamic rows will be added here -->
             </tbody>
         </table>    
-     </div>
-         <script src="src/generateTable.js"></script>
+    </div>
+
+    <!-- POPUPS -->
+    <!-- lesson -->
+    <div id="lesson-popup" class="popup-overlay">
+        <div class="popup-content" onclick="event.stopPropagation()"> <!-- the onclick is there to prevent the popup from closing when pressing inside of it -->
+            <button class="close-btn" onclick="closeLessonPopup()">×</button>
+            <div class="popup-centered">           
+                <h2 id="subject"></h2>
+                <hr class="popup-divider">
+                <p id="time"></p>
+            </div>
+            <p><strong>Lehrkraft:</strong> <span id="teacher"></span></p>
+            <p><strong>Raum:</strong> <span id="room"></span></p>
+            <p class="info"><strong>Info:</strong> <span id="info"></span></p>
+        </div>
+    </div>
+    <!-- cafe -->
+    <div id="cafe-popup" class="popup-overlay">
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeCafePopup()">×</button>
+            <div class="popup-centered">           
+                <img src="/public/cafeteria_logo_weiss.png" alt="Treffpunkt Fanny" height="80px" width="auto">
+                <hr class="popup-divider">
+                <p id="date"></p>
+            </div>
+            <p><strong>Hauptgericht:</strong> <span id="main_dish"></span></p>
+            <p><strong>Vegetarisch:</strong> <span id="vegetarian_dish"></span></p>
+            <p><strong>Salat:</strong> <span id="salad"></span></p>
+            <p><strong>Nachtisch:</strong> <span id="desert"></span></p>
+            <p class="cooking-team"><strong>Kochteam:</strong> <span id="cooking_team"></span></p>
+        </div>
+    </div>
+    <script src="src/generateTable.js"></script>
+    <script src="src/generatePopup.js"></script>
 </body>
 </html>
