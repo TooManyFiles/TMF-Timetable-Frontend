@@ -200,4 +200,14 @@ th:not(:first-child), td:not(:first-child) {
     margin-top: 1vh;
 
     border-radius: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottomnav_img {
+    height: 4.5vh;
+}
+.bottomnav_img:hover{
+    cursor: pointer;
+    pointer-events: auto;
 }
