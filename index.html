@@ -68,13 +68,21 @@
     <div class="table-wrapper">
         <table id="schedule">
             <thead>
-                <tr>
-                    <th><img src="/public/calendar.png" height="30px" width="auto"/></th>
+                <tr class="mainheading-row">
+                    <th><img src="/public/calendar.png" height="30px" width="auto" style="margin-top: 15px;"/></th>
                     <th>Montag</th>
                     <th>Dienstag</th>
                     <th>Mittwoch</th>
                     <th>Donnerstag</th>
                     <th>Freitag</th>
+                </tr>
+                <tr class="subheading-row">
+                    <th></th>
+                    <th><span id="cafepreview-mon" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Farfalle mit Lachs-Sahnesoße</span></th>
+                    <th><span id="cafepreview-tue" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Drelli-Nudeln mit Bolognesesoße und Parmesan</span></th>
+                    <th><span id="cafepreview-wed" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Kässspätzle</span></th>
+                    <th><span id="cafepreview-thu" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Lasagne Bolognese</span></th>
+                    <th>Kein Kochtag</th>
                 </tr>
             </thead>
             <tbody id="scheduleBody">
@@ -82,6 +90,8 @@
             </tbody>
         </table>    
     </div>
+
+    
 
     <!-- POPUPS -->
     <!-- lesson -->

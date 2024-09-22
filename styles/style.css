@@ -142,6 +142,26 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+    border-bottom: none;
+}
+
+.subheading-row th {
+    background-color: var(--accent-light);
+    font-size: 0.85em;
+    height: 3%;
+    font-weight: normal;
+    border-top: none;
+    padding: 5px 10px;
+    margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-faded);
+}
+
+.mainheading-row th {
+    font-size: 1.2em;
 }
 
 td {
@@ -152,8 +172,9 @@ td {
 
 thead th {
     background-color: var(--accent-light);
-    height: 8%;
+    height: 6%;
     font-weight: bolder;
+    padding: 0px 4px;
 }
 
 
@@ -168,3 +189,5 @@ th:first-child, td:first-child {
 th:not(:first-child), td:not(:first-child) {
     width: 18%;
 }
+
+
