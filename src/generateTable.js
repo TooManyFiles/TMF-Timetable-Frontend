@@ -49,7 +49,8 @@ function generateSchedule(data) {
 
             if (cellData) {
                 td.textContent = cellData.value;
-                // Style
+                td.onclick = () => generateLessonPopup('subject', 'time', 'teacher', 'room', 'info');
+                td.style.cursor = 'pointer';
                 td.style.backgroundColor = 'var(--table-highlight)';
                 td.style.borderRadius = '10px';
 
