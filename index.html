@@ -8,7 +8,7 @@
     <title>TMF Timetable</title>
     <script src="src/viewToggle.js"></script>
 </head>
-<body>
+<body onload="setLastRefreshed(getCurrentTime())">
     <div class="head">
         <div class="topnav">
             <div class="controls-left">
@@ -91,6 +91,10 @@
         </table>    
     </div>
 
+    <div id="status-display">
+        <div id="loader" class="loader"></div>
+        <p><span id="status-display-text"></span></p>
+    </div>
     
 
     <!-- POPUPS -->
@@ -126,5 +130,6 @@
     </div>
     <script src="src/generateTable.js"></script>
     <script src="src/generatePopup.js"></script>
+    <script src="src/statusDisplay.js"></script>
 </body>
 </html>

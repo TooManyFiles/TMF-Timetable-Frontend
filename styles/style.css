@@ -191,3 +191,31 @@ th:not(:first-child), td:not(:first-child) {
 }
 
 
+
+/* STATUS DISPLAY */
+#status-display {
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    z-index: 999;
+    color: var(--table-highlight-faded);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--table-highlight-faded);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
