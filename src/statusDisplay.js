@@ -16,5 +16,5 @@ function getCurrentTime(){
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
-    return(`${day}.${month}.${year} um ${hours}:${minutes}:${seconds}`);
+    return(`${hours}:${minutes}:${seconds}`);
 }
