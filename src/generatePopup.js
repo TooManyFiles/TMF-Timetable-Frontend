@@ -1,12 +1,13 @@
 // LESSON POPUP
 function generateLessonPopup(subject, time, teacher, room, info) {
-    document.getElementById('subject').textContent = subject;
+    document.getElementById('subject').textContent = subject || "Sonderstunde";
     document.getElementById('time').textContent = time;
-    document.getElementById('teacher').textContent = teacher;
-    document.getElementById('room').textContent = room;
-    document.getElementById('info').textContent = info;
+    document.getElementById('teacher').textContent = teacher || "n/a";
+    document.getElementById('room').textContent = room || "n/a";
+    document.getElementById('info').textContent = info || "n/a";
     document.getElementById('lesson-popup').style.display = 'flex';
 }
+
 
 function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
