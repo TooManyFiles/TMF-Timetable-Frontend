@@ -7,7 +7,7 @@ function setErrorDisplay(e){
     display.style.display = 'block';
 }
 
-function showErrorDispay(){
+function showErrorDisplay(){
     display.style.display = 'block';
 }
 

@@ -34,6 +34,7 @@ const scheduleData = [
     { row: 9, day: 'th', value: 'inf, Hr, 423', cancelled: '' },
     { row: 10, day: 'th', value: 'ph1, Hr, 424', cancelled: '' },
     { row: 11, day: 'th', value: 'ph1, Hr, 424', cancelled: '' },
+    { row: 12, day: 'th', value: 'TEST SUBJECT', cancelled: '' },
     //fri
     { row: 3, day: 'f', value: 'm2, Pl, 121', cancelled: '' },
     { row: 4, day: 'f', value: 'm2, Pl, 121', cancelled: '' },
