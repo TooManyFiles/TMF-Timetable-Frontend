@@ -54,7 +54,7 @@
                 <button class="buttons-right">
                     <img src="public/notifications.png" width="auto" height="30">
                 </button> -->
-                <button class="buttons-right" onclick="setLastRefreshed(getCurrentTime()) //add actual refresh here once its there">
+                <button class="buttons-right" onclick="refreshAll()">
                     <img src="public/refresh.png" width="auto" height="30">
                 </button>
                 <button class="buttons-right">
@@ -139,9 +139,10 @@
     </div>
     <script src="src/generateTable.js"></script>
     <script src="src/generatePopup.js"></script>
-    <script src="src/statusDisplay.js"></script>
+    <script type="module" src="src/statusDisplay.js"></script>
     <script src="src/errorDisplay.js"></script>
     <script src="src/utils.js"></script>
     <script type="module" src="src/foodplan.js"></script>
+    <script type="module" src="src/api/refresh.js"></script>
 </body>
 </html>

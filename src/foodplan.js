@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-async function fetchAndDisplayMenu() {
+export async function fetchAndDisplayMenu() {
     try {
         await getMenu(dateToString(getMonday()), 3);
         const menuData = JSON.parse(localStorage.getItem('menuData'));
