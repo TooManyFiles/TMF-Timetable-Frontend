@@ -81,10 +81,10 @@
                 </tr>
                 <tr class="subheading-row">
                     <th></th>
-                    <th><span id="cafepreview-mon" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Farfalle mit Lachs-Sahnesoße</span></th>
-                    <th><span id="cafepreview-tue" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Drelli-Nudeln mit Bolognesesoße und Parmesan</span></th>
-                    <th><span id="cafepreview-wed" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Kässspätzle</span></th>
-                    <th><span id="cafepreview-thu" onclick="generateCafePopup('date', 'main_dish', 'vegetarian_dish', 'salad', 'desert', 'cooking_team')" style="cursor: pointer;">Lasagne Bolognese</span></th>
+                    <th><span id="cafepreview-mon" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)" style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-tue" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)" style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-wed" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)" style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-thu" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)" style="cursor: pointer;"></span></th>
                     <th>Kein Kochtag</th>
                 </tr>
             </thead>
@@ -141,5 +141,7 @@
     <script src="src/generatePopup.js"></script>
     <script src="src/statusDisplay.js"></script>
     <script src="src/errorDisplay.js"></script>
+    <script src="src/utils.js"></script>
+    <script type="module" src="src/foodplan.js"></script>
 </body>
 </html>
