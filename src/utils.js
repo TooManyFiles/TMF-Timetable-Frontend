@@ -1,36 +1,41 @@
+// WHEN ITS SAT / SUN, THESE DATE FUNCTIONS RETURN THE DATES OF THE NEXT WEEK!!
+
 export function getMonday() {
     const today = new Date();
     const dayOfWeek = today.getDay();
-    const differenceToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+    // Calculate the difference to Monday of the current or next week
+    let differenceToMonday;
+    
+    if (dayOfWeek >= 6) { // Saturday or Sunday, move to next week's Monday
+        differenceToMonday = 8 - dayOfWeek; // (7 + 1) - dayOfWeek for the upcoming Monday
+    } else {
+        differenceToMonday = dayOfWeek - 1; // Normal difference for current week's Monday
+    }
+
     const monday = new Date(today);
     monday.setDate(today.getDate() - differenceToMonday);
     return monday;
 }
 
+// Calc the other dates based on monday
 export function getTuesday() {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const differenceToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 2);
-    const tuesday = new Date(today);
-    tuesday.setDate(today.getDate() - differenceToMonday);
+    const monday = getMonday();
+    const tuesday = new Date(monday);
+    tuesday.setDate(monday.getDate() + 1); 
     return tuesday;
 }
 
 export function getWednesday() {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const differenceToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 3);
-    const wednesday = new Date(today);
-    wednesday.setDate(today.getDate() - differenceToMonday);
+    const monday = getMonday();
+    const wednesday = new Date(monday);
+    wednesday.setDate(monday.getDate() + 2);
     return wednesday;
 }
 
 export function getThursday() {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const differenceToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 4);
-    const thursday = new Date(today);
-    thursday.setDate(today.getDate() - differenceToMonday);
+    const monday = getMonday();
+    const thursday = new Date(monday);
+    thursday.setDate(monday.getDate() + 3);
     return thursday;
 }
 
