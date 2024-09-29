@@ -140,6 +140,10 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
     opacity: 0.5;
 }
 
+.hint {
+    color: var(--accent-dark);
+}
+
 input:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
 }

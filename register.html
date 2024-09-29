@@ -40,17 +40,29 @@
             <form id="form-step-2" class="form-step">
                 <h2 class="onboarding-heading">Registrieren - Schritt 2</h2>
                 <p class="onboarding-description">Erstelle einen Benutzername und ein Passwort:</p>
+
                 <div class="group">      
                     <input type="text" id="username" required>
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Benutzername</label>
+                    <small id="username-hint" class="hint">Der Benutzername muss mindestens 5 Zeichen lang sein.</small>
                 </div>
+
                 <div class="group">      
                     <input type="password" id="password" required>
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Passwort</label>
+                    <small id="password-hint" class="hint">Das Passwort muss zwischen 8 und 72 Zeichen lang sein und mindestens einen Buchstaben enthalten.</small>
+                </div>
+
+                <div class="group">      
+                    <input type="password" id="repeat-password" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Passwort wiederholen</label>
+                    <small id="password-match-hint" class="hint">Die Passwörter müssen übereinstimmen.</small>
                 </div>
                 <button type="button" class="button next-btn">Weiter!</button>
                 <p>Bald geschafft! | <a onclick="showPreviousStep()" style="color: var(--highlight-faded); cursor: pointer">Zurück</a></p>
