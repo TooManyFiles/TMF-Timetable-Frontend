@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,24 @@
     <link rel="stylesheet" href="styles/popup.css">
     <title>BetterUntis</title>
     <script src="src/viewToggle.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log("Registered!");
+                }).catch(console.error);
+            }
+    </script>
 </head>
+
 <body onload="setLastRefreshed(getCurrentTime());">
     <div class="head">
         <div class="topnav">
             <div class="controls-left">
                 <!-- View toggle -->
                 <div class="toggle-switch">
-                    <input type="checkbox" id="view-toggle" style="display:none"/>
+                    <input type="checkbox" id="view-toggle" style="display:none" />
                     <label for="view-toggle" class="switch-label">
                         <img src="public/user_single.png" width="25" height="25" class="userIcon" id="singleUserIcon">
                         <img src="public/user_multiple.png" width="25" height="25" class="userIcon" id="multiUserIcon">
@@ -32,18 +43,19 @@
                         <!-- Outer circle -->
                         <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
                         <!-- Left arrow -->
-                        <polygon points="30,50 50,30 50,40 70,40 70,60 50,60 50,70" fill="black"/>
+                        <polygon points="30,50 50,30 50,40 70,40 70,60 50,60 50,70" fill="black" />
                     </svg>
                 </button>
                 <h2 class="timerange-item" id="startdate">30. Juli</h2>
                 <h2 class="timerange-item">-</h2>
                 <h2 class="timerange-item" id="enddate">5. August</h2>
                 <button class="timerange-controls">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40" class="timerange-controls">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40"
+                        class="timerange-controls">
                         <!-- Outer circle -->
                         <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
                         <!-- Right arrow -->
-                        <polygon points="70,50 50,30 50,40 30,40 30,60 50,60 50,70" fill="black"/>
+                        <polygon points="70,50 50,30 50,40 30,40 30,60 50,60 50,70" fill="black" />
                     </svg>
                 </button>
             </div>
@@ -72,7 +84,7 @@
         <table id="schedule">
             <thead>
                 <tr class="mainheading-row">
-                    <th><img src="/public/calendar.png" height="30px" width="auto" style="margin-top: 15px;"/></th>
+                    <th><img src="/public/calendar.png" height="30px" width="auto" style="margin-top: 15px;" /></th>
                     <th>Montag</th>
                     <th>Dienstag</th>
                     <th>Mittwoch</th>
@@ -81,17 +93,25 @@
                 </tr>
                 <tr class="subheading-row">
                     <th></th>
-                    <th><span id="cafepreview-mon" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)" style="cursor: pointer;"></span></th>
-                    <th><span id="cafepreview-tue" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)" style="cursor: pointer;"></span></th>
-                    <th><span id="cafepreview-wed" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)" style="cursor: pointer;"></span></th>
-                    <th><span id="cafepreview-thu" onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)" style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-mon"
+                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)"
+                            style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-tue"
+                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)"
+                            style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-wed"
+                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)"
+                            style="cursor: pointer;"></span></th>
+                    <th><span id="cafepreview-thu"
+                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)"
+                            style="cursor: pointer;"></span></th>
                     <th>Kein Kochtag</th>
                 </tr>
             </thead>
             <tbody id="scheduleBody">
                 <!-- Dynamic rows will be added here -->
             </tbody>
-        </table>    
+        </table>
     </div>
 
     <div id="status-display">
@@ -103,15 +123,16 @@
         <h4>Error:</h4>
         <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
     </div>
-    
-    
+
+
 
     <!-- POPUPS -->
     <!-- lesson -->
     <div id="lesson-popup" class="popup-overlay">
-        <div class="popup-content" onclick="event.stopPropagation()"> <!-- the onclick is there to prevent the popup from closing when pressing inside of it -->
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <!-- the onclick is there to prevent the popup from closing when pressing inside of it -->
             <button class="close-btn" onclick="closeLessonPopup()">×</button>
-            <div class="popup-centered">           
+            <div class="popup-centered">
                 <h2 id="subject"></h2>
                 <hr class="popup-divider">
                 <p id="time"></p>
@@ -125,7 +146,7 @@
     <div id="cafe-popup" class="popup-overlay">
         <div class="popup-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeCafePopup()">×</button>
-            <div class="popup-centered">           
+            <div class="popup-centered">
                 <img src="/public/cafeteria_logo_weiss.png" alt="Treffpunkt Fanny" height="80px" width="auto">
                 <hr class="popup-divider">
                 <p id="date"></p>
@@ -140,9 +161,8 @@
     <script src="src/generateTable.js"></script>
     <script src="src/generatePopup.js"></script>
     <script type="module" src="src/statusDisplay.js"></script>
-    <script src="src/errorDisplay.js"></script>
-    <script src="src/utils.js"></script>
     <script type="module" src="src/foodplan.js"></script>
     <script type="module" src="src/api/refresh.js"></script>
 </body>
+
 </html>
