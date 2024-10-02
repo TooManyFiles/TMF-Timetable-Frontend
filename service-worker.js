@@ -3,6 +3,8 @@ const CACHE_NAME_AUTO = 'cache-auto-v1';
 const CACHE_NAME_MAX_AGE = 'cache-max-age-v1';
 const CACHE_NAME_ALWAYS_UPDATE = 'cache-always-update-v1';
 
+var filesToCache, permanentFiles, alwaysUpdateFiles, maxAgeFiles
+
 let CACHE_CONFIG = null;
 async function openDatabase() {
     return new Promise((resolve, reject) => {
@@ -89,8 +91,18 @@ async function fetchCacheConfig() {
                         CACHE_CONFIG.force = collectFilesToCache(CACHE_CONFIG.force);
                     }
                     await saveConfigToDB(db, CACHE_CONFIG); // Save the fetched configuration
-                    console.log("refetch all data!")
+
+                    filesToCache = CACHE_CONFIG.force;
+                    console.log('Files to cache:', filesToCache.map(file => file.path));
+                    permanentFiles = filesToCache.filter(file => file.maxAge === -1);
+                    console.log('Files to cache (permanent):', permanentFiles.map(file => file.path));
+                    alwaysUpdateFiles = filesToCache.filter(file => file.maxAge === 0);
+                    console.log('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
+                    maxAgeFiles = filesToCache.filter(file => file.maxAge > 0);
+                    console.log('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
+                    console.log("Refetch all cached data and updated config!")
                     fetchAllData()
+                    return
                 }
             }
 
@@ -117,16 +129,16 @@ async function fetchCacheConfig() {
     } catch (error) {
         console.error('Failed to fetch cache configuration:', error);
     }
+    filesToCache = CACHE_CONFIG.force;
+    console.log('Files to cache:', filesToCache.map(file => file.path));
+    permanentFiles = filesToCache.filter(file => file.maxAge === -1);
+    console.log('Files to cache (permanent):', permanentFiles.map(file => file.path));
+    alwaysUpdateFiles = filesToCache.filter(file => file.maxAge === 0);
+    console.log('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
+    maxAgeFiles = filesToCache.filter(file => file.maxAge > 0);
+    console.log('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
 }
 async function fetchAllData() {
-    const filesToCache = CACHE_CONFIG.force;
-    console.log('Files to cache:', filesToCache.map(file => file.path));
-    const permanentFiles = filesToCache.filter(file => file.maxAge === -1);
-    console.log('Files to cache (permanent):', permanentFiles.map(file => file.path));
-    const alwaysFiles = filesToCache.filter(file => file.maxAge === 0);
-    console.log('Files to cache (always update):', alwaysFiles.map(file => file.path));
-    const maxAgeFiles = filesToCache.filter(file => file.maxAge > 0);
-    console.log('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
 
     const permanentCache = await caches.open(CACHE_NAME_PERMANENT);
     const permanentUrlsToCache = permanentFiles.map(file => file.path);
@@ -148,7 +160,7 @@ async function fetchAllData() {
         durability: 'strict', // Or `'relaxed'`.
         persisted: true, // Or `false`.
     });
-    const alwaysFilesUrlsToCache = alwaysFiles.map(file => file.path);
+    const alwaysFilesUrlsToCache = alwaysUpdateFiles.map(file => file.path);
     try {
         for (const url of alwaysFilesUrlsToCache) {
             const response = await fetch(url);
@@ -163,7 +175,7 @@ async function fetchAllData() {
         console.error('Failed to cache always update files:', error);
     }
     const maxAgeCache = await caches.open(CACHE_NAME_MAX_AGE);
-    const maxAgeFilesUrlsToCache = alwaysFiles.map(file => file.path);
+    const maxAgeFilesUrlsToCache = maxAgeFiles.map(file => file.path);
     try {
         for (const url of maxAgeFilesUrlsToCache) {
             const response = await fetch(url);
@@ -232,16 +244,25 @@ self.addEventListener('fetch', event => {
             }
 
             const requestUrl = new URL(event.request.url);
-
             // Permanent cache: Serve from the permanent cache if no other rules apply
-            const permanentCache = await (await caches.open(CACHE_NAME_PERMANENT)).match(event.request);
-            if (permanentCache) {
-                console.log(`Serving from permanent cache: ${requestUrl.href}`);
-                return permanentCache;
+            if (permanentFiles.some(file => requestUrl.pathname.endsWith(file.path))) { //TODO: DOMAIN
+                const permanentCache = await (await caches.open(CACHE_NAME_PERMANENT)).match(event.request, { ignoreVary: true });
+                if (permanentCache) {
+                    console.log(`Serving from permanent cache: ${requestUrl.href}`);
+                    return permanentCache;
+                } else {
+                    const response = await fetch(event.request);
+                    const cache = await caches.open(CACHE_NAME_ALWAYS_UPDATE);
+                    try {
+                        await cache.put(event.request, response.clone());
+                        console.log(`Added to permanent cache: ${requestUrl.href}`);
+                    } catch (error) {
+                        console.error('Failed to update permanent:', error);
+                    }
+                    return response;
+                }
             }
-
             // Always update cache
-            const alwaysUpdateFiles = CACHE_CONFIG.force.filter(file => file.maxAge === 0);
             if (alwaysUpdateFiles.some(file => requestUrl.pathname.endsWith(file.path))) { //TODO: DOMAIN
                 const response = await fetch(event.request);
                 const cache = await caches.open(CACHE_NAME_ALWAYS_UPDATE);
@@ -255,11 +276,10 @@ self.addEventListener('fetch', event => {
             }
 
             // Max age cache
-            const maxAgeFiles = CACHE_CONFIG.force.filter(file => file.maxAge > 0);
             const maxAgeFile = maxAgeFiles.find(file => requestUrl.pathname.endsWith(file.path));
             if (maxAgeFile) {
                 const cache = await caches.open(CACHE_NAME_MAX_AGE);
-                const cachedResponse = await cache.match(event.request);
+                const cachedResponse = await cache.match(event.request, { ignoreVary: true });
 
                 if (cachedResponse) {
                     const cachedDate = new Date(cachedResponse.headers.get('date'));
@@ -291,7 +311,7 @@ self.addEventListener('fetch', event => {
                         return fetch(event.request);
                     }
                     const cache = await caches.open(CACHE_NAME_AUTO);
-                    const cachedResponse = await cache.match(event.request);
+                    const cachedResponse = await cache.match(event.request, { ignoreVary: true });
                     if (cachedResponse) {
                         console.log(`Serving from auto cache: ${requestUrl.href}`);
                         return cachedResponse;
