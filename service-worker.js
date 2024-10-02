@@ -264,15 +264,21 @@ self.addEventListener('fetch', event => {
             }
             // Always update cache
             if (alwaysUpdateFiles.some(file => requestUrl.pathname.endsWith(file.path))) { //TODO: DOMAIN
-                const response = await fetch(event.request);
                 const cache = await caches.open(CACHE_NAME_ALWAYS_UPDATE);
                 try {
+                    const response = await fetch(event.request);
+                    console.log("resons ok")
                     await cache.put(event.request, response.clone());
                     console.log(`Always updated cache: ${requestUrl.href}`);
+                    return response;
                 } catch (error) {
+                    cachedResponse = await cache.match(event.request)
+                    if (cachedResponse) {
+                        console.log(`Always update: Serving from cache as fallback: ${requestUrl.href}`);
+                        return cachedResponse;
+                    }
                     console.error('Failed to update always cache:', error);
                 }
-                return response;
             }
 
             // Max age cache
@@ -280,7 +286,6 @@ self.addEventListener('fetch', event => {
             if (maxAgeFile) {
                 const cache = await caches.open(CACHE_NAME_MAX_AGE);
                 const cachedResponse = await cache.match(event.request, { ignoreVary: true });
-
                 if (cachedResponse) {
                     const cachedDate = new Date(cachedResponse.headers.get('date'));
                     const ageInHours = (Date.now() - cachedDate.getTime()) / 1000 / 60 / 60;
@@ -295,6 +300,11 @@ self.addEventListener('fetch', event => {
                     await cache.put(event.request, networkResponse.clone());
                     console.log(`Max-age cache updated: ${requestUrl.href}`);
                 } catch (error) {
+                    cachedResponse = await cache.match(event.request, { ignoreVary: true })
+                    if (cachedResponse) {
+                        console.log(`Max-age: Serving from cache as fallback: ${requestUrl.href}`);
+                        return cachedResponse;
+                    }
                     console.error('Failed to update max-age cache:', error);
                 }
                 return networkResponse;
