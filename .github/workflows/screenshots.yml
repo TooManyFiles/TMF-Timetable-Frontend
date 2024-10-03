@@ -14,11 +14,11 @@ jobs:
         ports:
           - 4444:4444
       http_server:
-        image: python:3.8
+        image: nginx:alpine
         ports:
-          - 5500:5500
-        options: >-
-          --entrypoint="python3 -m http.server 5500"  # Start the HTTP server
+          - 5500:80
+        volumes:
+          - ${{ github.workspace }}:/usr/share/nginx/html  # Mount the code directory
     
     steps:
     - name: Checkout code
