@@ -1,1 +1,1 @@
-export const apiurl = '%%API_URL%%';
+export const apiurl = '${API_URL}';
