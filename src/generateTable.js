@@ -1,49 +1,54 @@
 const scheduleData = [
-    //mon
-    { row: 1, day: 'm', value: 'rev2, Fi, 314', cancelled: '' },
-    { row: 2, day: 'm', value: 'rev2, Fi, 314', cancelled: '' },
-    { row: 3, day: 'm', value: 'E1, Rs, 323', cancelled: '' },
-    { row: 4, day: 'm', value: 'E1, Rs, 323', cancelled: '' },
-    { row: 8, day: 'm', value: 'mu1, Hz, 422', cancelled: '' },
-    { row: 9, day: 'm', value: 'mu1, Hz, 422', cancelled: '' },
-    //tue
-    { row: 1, day: 't', value: 'D2, Rt, 414', cancelled: '' },
-    { row: 2, day: 't', value: 'D2, Rt, 414', cancelled: '' },
-    { row: 3, day: 't', value: 'ph1, Hr, 424', cancelled: '' },
-    { row: 4, day: 't', value: 'ph1, Hr, 424', cancelled: '' },
-    { row: 5, day: 't', value: 'f1, Kth, 422', cancelled: '' },
-    { row: 6, day: 't', value: 'f1, Kth, 422', cancelled: '' },
-    { row: 10, day: 't', value: 's3, Er, SHA', cancelled: 'True' },
-    { row: 11, day: 't', value: 's3, Er, SHA', cancelled: 'True' },
-    //wed
-    { row: 2, day: 'w', value: 'm2, Pl, 321', cancelled: '' },
-    { row: 3, day: 'w', value: 'geo4, Lk, 414', cancelled: 'True' },
-    { row: 4, day: 'w', value: 'geo4, Lk, 414', cancelled: 'True' },
-    { row: 5, day: 'w', value: 'G1, An, 324', cancelled: '' },
-    { row: 6, day: 'w', value: 'G1, An, 324', cancelled: '' },
-    { row: 7, day: 'w', value: 'G1, An, 324', cancelled: '' },
-    { row: 9, day: 'w', value: 'E1, Rs, 323', cancelled: '' },
-    { row: 10, day: 'w', value: 'E1, Rs, 323', cancelled: '' },
-    //thur
-    { row: 1, day: 'th', value: 'G1, An, 321', cancelled: '' },
-    { row: 2, day: 'th', value: 'G1, An, 321', cancelled: '' },
-    { row: 3, day: 'th', value: 'D2, Rt, 323', cancelled: '' },
-    { row: 4, day: 'th', value: 'D2, Rt, 323', cancelled: '' },
-    { row: 5, day: 'th', value: 'f1, Kth, 113', cancelled: '' },
-    { row: 8, day: 'th', value: 'inf, Hr, 423', cancelled: '' },
-    { row: 9, day: 'th', value: 'inf, Hr, 423', cancelled: '' },
-    { row: 10, day: 'th', value: 'ph1, Hr, 424', cancelled: '' },
-    { row: 11, day: 'th', value: 'ph1, Hr, 424', cancelled: '' },
-    { row: 12, day: 'th', value: 'TEST SUBJECT', cancelled: '' },
-    //fri
-    { row: 3, day: 'f', value: 'm2, Pl, 121', cancelled: '' },
-    { row: 4, day: 'f', value: 'm2, Pl, 121', cancelled: '' },
-    { row: 5, day: 'f', value: 'E1, Rs, 322', cancelled: '' },
-    { row: 6, day: 'f', value: 'D2, Rt, 312', cancelled: '' },
-    { row: 8, day: 'f', value: 'lth, Sch, 410', cancelled: '' },
-    { row: 9, day: 'f', value: 'lth, Sch, 410', cancelled: '' },
-    
+    // Monday
+    { row: 1, day: 'm', value: 'Math, Mr. Smith, 101', cancelled: '' },
+    { row: 2, day: 'm', value: 'Math, Mr. Smith, 101', cancelled: '' },
+    { row: 3, day: 'm', value: 'English, Ms. Johnson, 102', cancelled: '' },
+    { row: 4, day: 'm', value: 'English, Ms. Johnson, 102', cancelled: '' },
+    { row: 5, day: 'm', value: 'History, Mr. Clark, 103', cancelled: 'True' },
+    { row: 8, day: 'm', value: 'Biology, Ms. Lee, 104', cancelled: '' },
+    { row: 9, day: 'm', value: 'Biology, Ms. Lee, 104', cancelled: '' },
+
+    // Tuesday
+    { row: 1, day: 't', value: 'Physics, Mr. Green, 201', cancelled: '' },
+    { row: 2, day: 't', value: 'Physics, Mr. Green, 201', cancelled: '' },
+    { row: 3, day: 't', value: 'Chemistry, Ms. White, 202', cancelled: '' },
+    { row: 4, day: 't', value: 'Chemistry, Ms. White, 202', cancelled: '' },
+    { row: 5, day: 't', value: 'Art, Mr. Blue, 203', cancelled: 'True' },
+    { row: 6, day: 't', value: 'Art, Mr. Blue, 203', cancelled: 'True' },
+    { row: 9, day: 't', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
+    { row: 10, day: 't', value: 'Geography, Ms. Black, 204', cancelled: '' },
+    { row: 11, day: 't', value: 'Geography, Ms. Black, 204', cancelled: '' },
+
+    // Wednesday
+    { row: 1, day: 'w', value: 'Music, Mr. Grey, 301', cancelled: '' },
+    { row: 2, day: 'w', value: 'Music, Mr. Grey, 301', cancelled: '' },
+    { row: 3, day: 'w', value: 'Sports, Ms. Brown, Gym', cancelled: '' },
+    { row: 4, day: 'w', value: 'Sports, Ms. Brown, Gym', cancelled: '' },
+    { row: 5, day: 'w', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
+    { row: 6, day: 'w', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
+
+
+    // Thursday
+    { row: 1, day: 'th', value: 'Math, Mr. Silver, 401', cancelled: '' },
+    { row: 2, day: 'th', value: 'Math, Mr. Silver, 401', cancelled: '' },
+    { row: 3, day: 'th', value: 'History, Mr. Brown, 402', cancelled: '' },
+    { row: 4, day: 'th', value: 'History, Mr. Brown, 402', cancelled: '' },
+    { row: 5, day: 'th', value: 'Chemistry, Ms. Green, 403', cancelled: '' },
+
+    { row: 8, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
+    { row: 9, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
+    { row: 10, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
+
+    // Friday
+    { row: 1, day: 'f', value: 'Math, Ms. Red, 501', cancelled: '' },
+    { row: 2, day: 'f', value: 'Math, Ms. Red, 501', cancelled: '' },
+    { row: 3, day: 'f', value: 'History, Ms. Blue, 502', cancelled: '' },
+    { row: 4, day: 'f', value: 'History, Ms. Blue, 502', cancelled: '' },
+    { row: 5, day: 'f', value: 'English, Mr. Yellow, 503', cancelled: '' },
+    { row: 6, day: 'f', value: 'English, Mr. Yellow, 503', cancelled: '' },
+
 ];
+
 
 function generateSchedule(data) {
     const scheduleBody = document.getElementById("scheduleBody");

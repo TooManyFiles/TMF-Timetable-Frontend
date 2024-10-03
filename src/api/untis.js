@@ -81,7 +81,7 @@ export async function getAllClasses(accesstoken) {
     }
 }
 
-async function getAllRoooms(accesstoken) {
+async function getAllRooms(accesstoken) {
     const url = `http://${apiurl}/untis/rooms`;
     
     try {

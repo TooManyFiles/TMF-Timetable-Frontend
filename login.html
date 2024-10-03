@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | TMF Timetable</title>
     <link rel="stylesheet" href="/styles/login.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log("Registered!");
+                }).catch(console.error);
+            }
+    </script>
 </head>
 <body>
     <div class="center-wrapper">

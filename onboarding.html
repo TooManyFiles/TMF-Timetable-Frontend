@@ -6,6 +6,15 @@
     <title>Onboarding | BetterUntis</title>
     <link rel="stylesheet" href="/styles/onboarding.css">
     <link href="MultiSelect.css" rel="stylesheet" type="text/css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log("Registered!");
+                }).catch(console.error);
+            }
+    </script>
 </head>
 <body>
     <div class="center-wrapper">

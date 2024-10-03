@@ -1,0 +1,51 @@
+name: Run Headless Browser Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      chrome:
+        image: selenium/standalone-chrome
+        options: >-
+          --shm-size 2g
+        ports:
+          - 4444:4444
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Specify your desired Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r /devtools/screenshotsrequirements.txt
+
+    - name: Start web server
+      run: |
+        python -m http.server 5500 &  # Start the HTTP server in the background
+
+    - name: Wait for server to start
+      run: sleep 5  # Wait for a few seconds to ensure the server is up
+    - name: Run tests
+      run: |
+        cd ./devtools/screenshots
+        python main.py
+
+    - name: Add and commit screenshots
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add public/screenshots/*
+        git add manifest.json
+        git commit -m "Add screenshots from headless browser tests" || echo "No changes to commit"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
