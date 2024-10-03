@@ -12,7 +12,7 @@ screenshots_uri = '/public/screenshots/'
 websiteUrl="https://localhost:5500"
 running_in_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
 if running_in_github_actions:
-    websiteUrl = "http://http_server:5500"
+    websiteUrl = "http://http_server"
 # List of websites with optional interactions
 websites = [
     {
