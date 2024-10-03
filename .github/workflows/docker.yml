@@ -10,33 +10,23 @@ jobs:
   wait_for_other_action:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Other Action to Complete
-        id: check_status
-        run: |
-          # Set the necessary variables
-          WORKFLOW_NAME="Run Headless Browser Tests"
-          REPO="${{ github.repository }}"  # Automatically get the repository name
-          BRANCH="${{ github.ref }}"  # Get the ref, which includes refs/heads/main
-          
-          # Loop until the workflow is complete
-          while true; do
-            # Query the GitHub API for the workflow run status
-            STATUS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              "https://api.github.com/repos/$REPO/actions/workflows/${WORKFLOW_NAME}/runs?branch=${BRANCH}&per_page=1" | \
-              jq -r '.workflow_runs[0].status')
-
-            # Check if the status is completed
-            if [[ "$STATUS" == "completed" ]]; then
-              echo "Other action is complete."
-              break
-            fi
-            if [[ "$STATUS" == "failed" ]]; then
-              echo "Other action is faild."
-              exit 1  # Exit with error code
-            fi
-            echo "Waiting for other action to complete..."
-            sleep 10  # Wait for 10 seconds before checking again
-          done
+      - name: Dispatch an action and get the run ID
+        uses: codex-/return-dispatch@v1
+        id: return_dispatch
+        with:
+          token: ${{ github.token }}
+          repo: ${{ github.event.repository.name }}
+          owner: ${{ github.repository_owner }}
+          workflow: automation-test.yml
+      - name: Await Run ID ${{ steps.return_dispatch.outputs.run_id }}
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ github.token }}
+          repo: ${{ github.event.repository.name }}
+          owner: ${{ github.repository_owner }}
+          run_id: ${{ steps.return_dispatch.outputs.run_id }}
+          run_timeout_seconds: 300 # Optional
+          poll_interval_ms: 5000 # Optional
 
   build:
     runs-on: ubuntu-latest
