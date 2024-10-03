@@ -11,19 +11,19 @@ screenshots_uri = '/public/screenshots/'
 # List of websites with optional interactions
 websites = [
     {
-        "url": "https://localhost:5500/login.html",
+        "url": "http://localhost:5500/login.html",
         "name": "login",
     },
     {
-        "url": "https://localhost:5500/onboarding.html",
+        "url": "http://localhost:5500/onboarding.html",
         "name": "getting-started",
     },
     {
-        "url": "https://localhost:5500/",
+        "url": "http://localhost:5500/",
         "name": "example",
     },
     {
-        "url": "https://localhost:5500/",
+        "url": "http://localhost:5500/",
         "name": "example2",
         "interactions": lambda driver: interact_example(driver)
     }
