@@ -64,6 +64,6 @@ jobs:
         git add public/screenshots/*
         git add manifest.json
         git commit -m "Add screenshots from headless browser tests" || echo "No changes to commit"
-        git push
+        git push origin HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication

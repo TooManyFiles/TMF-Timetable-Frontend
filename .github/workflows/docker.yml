@@ -14,6 +14,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: return_dispatch
         with:
+          ref: ${{ github.event.ref }} # or refs/heads/target_branch
           token: ${{ github.token }}
           repo: ${{ github.event.repository.name }}
           owner: ${{ github.repository_owner }}
