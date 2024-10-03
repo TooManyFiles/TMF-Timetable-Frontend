@@ -1,0 +1,63 @@
+{
+    "version": "21",
+    "autoCache": false,
+    "autoCacheDomains": [],
+    "force": {
+        "/src/statusDisplay.js":{},
+        "/assets": {
+            "User.svg": {},
+            "Users.svg": {}
+        },
+        "/src": {
+            "api": {
+                "cafe.js": {},
+                "refresh.js": {},
+                "untis.js": {}
+            },
+            "errorDisplay.js": {},
+            "foodplan.js": {
+                "maxAge": 0
+            },
+            "generateCourseSelect.js": {},
+            "generatePopup.js": {},
+            "generateTable.js": {},
+            "MultiSelect.js": {},
+            "onboarding.js": {},
+            "register.js": {},
+            "statusDisplay.js": {},
+            "utils.js": {},
+            "viewToggle.js": {}
+        },
+        "/public": {
+            "cafeteria_logo_weiss.png": {},
+            "calendar.png": {},
+            "clipboard.png": {},
+            "icon (2).png": {},
+            "icon.png": {},
+            "icon144.png": {},
+            "icon192.png": {},
+            "icon512.png": {},
+            "notifications.png": {},
+            "refresh.png": {},
+            "user_multiple.png": {},
+            "user_single.png": {},
+            "user.png": {}
+        },
+        "/styles": {
+            "login.css": {},
+            "MultiSelect.css": {},
+            "onboarding.css": {},
+            "popup.css": {},
+            "register.css": {},
+            "style.css": {}
+        },
+        "/manifest.json": {},
+        "/favicon.ico": {},
+        "/": {},
+        "/index.html": {},
+        "/?utm_source=web_app_manifest": {}
+    },
+    "preventAutoCache": [
+        "https://timetable.api.dev.toomanyfiles.dev/*"
+    ]
+}
