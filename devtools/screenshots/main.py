@@ -8,22 +8,27 @@ from PIL import Image
 screenshots_dir = '../../public/screenshots'
 manifest_path = '../../manifest.json'
 screenshots_uri = '/public/screenshots/'
+
+websiteUrl="https://localhost:5500"
+running_in_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
+if running_in_github_actions:
+    websiteUrl = "http://http_server:5500"
 # List of websites with optional interactions
 websites = [
     {
-        "url": "http://localhost:5500/login.html",
+        "url": f"{websiteUrl}/login.html",
         "name": "login",
     },
     {
-        "url": "http://localhost:5500/onboarding.html",
+        "url": f"{websiteUrl}/onboarding.html",
         "name": "getting-started",
     },
     {
-        "url": "http://localhost:5500/",
+        "url": f"{websiteUrl}/",
         "name": "example",
     },
     {
-        "url": "http://localhost:5500/",
+        "url": f"{websiteUrl}/",
         "name": "example2",
         "interactions": lambda driver: interact_example(driver)
     }
@@ -62,7 +67,6 @@ if os.path.exists(manifest_path):
         manifest = json.load(f)
         
 
-running_in_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
 
 # Set up Chrome options for Selenium
 chrome_options = Options()

@@ -30,7 +30,10 @@ jobs:
               echo "Other action is complete."
               break
             fi
-
+            if [[ "$STATUS" == "failed" ]]; then
+              echo "Other action is faild."
+              exit 1  # Exit with error code
+            fi
             echo "Waiting for other action to complete..."
             sleep 10  # Wait for 10 seconds before checking again
           done
