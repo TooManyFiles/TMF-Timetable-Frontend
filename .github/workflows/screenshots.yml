@@ -33,7 +33,17 @@ jobs:
         python -m http.server 5500 &  # Start the HTTP server in the background
 
     - name: Wait for server to start
-      run: sleep 5  # Wait for a few seconds to ensure the server is up
+      run: |
+        # Wait for the server to respond
+        for i in {1..10}; do
+          if curl -s http://localhost:5500/ > /dev/null; then
+            echo "Server is up!"
+            break
+          fi
+          echo "Waiting for server..."
+          sleep 5  # Wait 5 seconds before trying again
+        done
+    
     - name: Run tests
       run: |
         cd ./devtools/screenshots

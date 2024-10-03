@@ -60,15 +60,29 @@ if not os.path.exists(screenshots_dir):
 if os.path.exists(manifest_path):
     with open(manifest_path, 'r') as f:
         manifest = json.load(f)
+        
+
+running_in_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
 
 # Set up Chrome options for Selenium
 chrome_options = Options()
-# chrome_options.add_argument('--headless')  # Run in headless mode
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--window-size=1280x800')
+chrome_options.add_argument("--headless")  # Run headless
+chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
-# Initialize WebDriver
-driver = webdriver.Chrome(options=chrome_options)
+chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration
+driver = None
+if running_in_github_actions:
+    driver = webdriver.Remote(
+        command_executor='http://localhost:4444/wd/hub',
+        options=chrome_options
+    )
+else:
+    # Initialize WebDriver
+    driver = webdriver.Chrome(options=chrome_options)
+    
 if not screenshots_uri.endswith('/'):
     screenshots_uri += '/'
 if not screenshots_dir.endswith('/'):
