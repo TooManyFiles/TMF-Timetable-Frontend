@@ -13,7 +13,13 @@ jobs:
           --shm-size 2g
         ports:
           - 4444:4444
-
+      http_server:
+        image: python:3.8
+        ports:
+          - 5500:5500
+        options: >-
+          --entrypoint="python3 -m http.server 5500"  # Start the HTTP server
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -27,10 +33,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r ./devtools/screenshots/requirements.txt
-
-    - name: Start web server
-      run: |
-        python -m http.server 5500 &  # Start the HTTP server in the background
 
     - name: Wait for server to start
       run: |
