@@ -31,5 +31,54 @@
   "start_url": "./?utm_source=web_app_manifest",
   "display": "fullscreen",
   "orientation": "any",
-  "screenshots": [  ]
+  "screenshots": [
+    {
+      "src": "/public/screenshots/login-wide.png",
+      "sizes": "1000x515",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/public/screenshots/login-narrow.png",
+      "sizes": "469x366",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/public/screenshots/getting-started-wide.png",
+      "sizes": "1000x515",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/public/screenshots/getting-started-narrow.png",
+      "sizes": "469x366",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/public/screenshots/example-wide.png",
+      "sizes": "1000x515",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/public/screenshots/example-narrow.png",
+      "sizes": "469x366",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/public/screenshots/example2-wide.png",
+      "sizes": "1000x515",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/public/screenshots/example2-narrow.png",
+      "sizes": "469x366",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }
