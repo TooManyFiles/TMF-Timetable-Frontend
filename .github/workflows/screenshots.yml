@@ -1,6 +1,11 @@
 name: Run Headless Browser Tests
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags
+  workflow_dispatch:  # Allows manual triggering
+
 
 jobs:
   build:
