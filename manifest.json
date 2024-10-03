@@ -1,12 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/web-manifest",
   "short_name": "TimeTable",
-  "name": "Timetable long",
+  "name": "Better Timetable",
   "description": "description",
   "scope": "/",
   "icons": [
     {
-      "src": "/public/icon.png",
+      "src": "/public/icon96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
