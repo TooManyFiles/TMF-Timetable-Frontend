@@ -26,7 +26,8 @@
             "register.js": {},
             "statusDisplay.js": {},
             "utils.js": {},
-            "viewToggle.js": {}
+            "viewToggle.js": {},
+            "config.js":{}
         },
         "/public": {
             "cafeteria_logo_weiss.png": {},
