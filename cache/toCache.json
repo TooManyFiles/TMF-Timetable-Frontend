@@ -58,6 +58,7 @@
         "/?utm_source=web_app_manifest": {}
     },
     "preventAutoCache": [
-        "https://timetable.api.dev.toomanyfiles.dev/*"
+        "https://timetable.api.dev.toomanyfiles.dev/*",
+        "http://localhost:8080/*"
     ]
 }

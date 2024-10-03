@@ -1,9 +1,8 @@
 import { setErrorDisplay } from '../errorDisplay.js';
-
-const apiurl = 'localhost:8080';
+import { apiurl } from '../config.js';
 
 export async function getAllSubjects(accesstoken) {
-    const url = `http://${apiurl}/untis/subjects`;
+    const url = `${apiurl}/untis/subjects`;
     
     try {
       const response = await fetch(url, {
