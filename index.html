@@ -130,16 +130,8 @@
     <!-- lesson -->
     <div id="lesson-popup" class="popup-overlay">
         <div class="popup-content" onclick="event.stopPropagation()">
-            <!-- the onclick is there to prevent the popup from closing when pressing inside of it -->
+            <!-- Prevent the popup from closing when clicking inside -->
             <button class="close-btn" onclick="closeLessonPopup()">×</button>
-            <div class="popup-centered">
-                <h2 id="subject"></h2>
-                <hr class="popup-divider">
-                <p id="time"></p>
-            </div>
-            <p><strong>Lehrkraft:</strong> <span id="teacher"></span></p>
-            <p><strong>Raum:</strong> <span id="room"></span></p>
-            <p class="info"><strong>Info:</strong> <span id="info"></span></p>
         </div>
     </div>
     <!-- cafe -->

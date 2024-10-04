@@ -69,3 +69,8 @@
 .popup-content .close-btn:hover {
     color: #ccc;
 }
+#lesson-popup{
+    p:has(span:empty){
+        display: none;
+    }
+}

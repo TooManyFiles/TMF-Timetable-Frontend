@@ -9,13 +9,13 @@ export function getMonday() {
     let differenceToMonday;
 
     if (dayOfWeek >= 6) { // Saturday or Sunday, move to next week's Monday
-        differenceToMonday = 8 - dayOfWeek; // (7 + 1) - dayOfWeek for the upcoming Monday
+        differenceToMonday = dayOfWeek- 8 ; // (7 + 1) - dayOfWeek for the upcoming Monday
     } else {
         differenceToMonday = dayOfWeek - 1; // Normal difference for current week's Monday
     }
 
     const monday = new Date(today);
-    monday.setDate(today.getDate() - differenceToMonday+7);
+    monday.setDate(today.getDate() - differenceToMonday);
     return monday;
 }
 
@@ -64,6 +64,37 @@ export function datestringToReadable(dateString) {
     };
     return date.toLocaleDateString('de-DE', options);
 }
+export function dateAndTimeToReadable(dateString) {
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('de-DE', options);
+}
+export function timeToReadable(dateString) {
+    const options = { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+    };
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('de-DE', options);
+}
+export function dateToReadable(dateString) {
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('de-DE', options);
+}
+
 
 export function timeToSchoolTimeGrid(dateInput) {
     
@@ -104,3 +135,6 @@ window.getThursday = getThursday;
 window.dateToString = dateToString;
 window.getFriday = getFriday;
 window.datestringToReadable = datestringToReadable;
+window.dateAndTimeToReadable = dateAndTimeToReadable;
+window.timeToReadable = timeToReadable;
+window.dateToReadable = dateToReadable;

@@ -134,7 +134,7 @@ function generateSchedule(data) {
                 if (cellData.chairUp){
                     td.classList.add("chairUp")
                 }
-                td.onclick = () => generateLessonPopup('subject', 'time', 'teacher', 'room', 'info');
+                td.onclick = () => generateLessonPopup(cellData.id);
                 td.style.cursor = 'pointer';
                 td.style.backgroundColor = 'var(--table-highlight)';
                 td.style.borderRadius = '10px';
