@@ -12,7 +12,8 @@
             "api": {
                 "cafe.js": {},
                 "refresh.js": {},
-                "untis.js": {}
+                "untis.js": {},
+                "view.js":{}
             },
             "errorDisplay.js": {},
             "foodplan.js": {
@@ -33,8 +34,6 @@
             "cafeteria_logo_weiss.png": {},
             "calendar.png": {},
             "clipboard.png": {},
-            "icon (2).png": {},
-            "icon.png": {},
             "icon144.png": {},
             "icon192.png": {},
             "icon512.png": {},

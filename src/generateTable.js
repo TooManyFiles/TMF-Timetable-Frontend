@@ -1,53 +1,93 @@
-const scheduleData = [
-    // Monday
-    { row: 1, day: 'm', value: 'Math, Mr. Smith, 101', cancelled: '' },
-    { row: 2, day: 'm', value: 'Math, Mr. Smith, 101', cancelled: '' },
-    { row: 3, day: 'm', value: 'English, Ms. Johnson, 102', cancelled: '' },
-    { row: 4, day: 'm', value: 'English, Ms. Johnson, 102', cancelled: '' },
-    { row: 5, day: 'm', value: 'History, Mr. Clark, 103', cancelled: 'True' },
-    { row: 8, day: 'm', value: 'Biology, Ms. Lee, 104', cancelled: '' },
-    { row: 9, day: 'm', value: 'Biology, Ms. Lee, 104', cancelled: '' },
+let lessons = localStorage.getItem('lessons');
+lessons = JSON.parse(lessons);
+// Get the start (Monday) and end (Friday) of the current week
+let startOfWeek = window.getMonday();
+const endOfWeek = window.getFriday().setHours(24, 59, 59, 0); // Set to midnight (24, 59, 59, 0)
 
-    // Tuesday
-    { row: 1, day: 't', value: 'Physics, Mr. Green, 201', cancelled: '' },
-    { row: 2, day: 't', value: 'Physics, Mr. Green, 201', cancelled: '' },
-    { row: 3, day: 't', value: 'Chemistry, Ms. White, 202', cancelled: '' },
-    { row: 4, day: 't', value: 'Chemistry, Ms. White, 202', cancelled: '' },
-    { row: 5, day: 't', value: 'Art, Mr. Blue, 203', cancelled: 'True' },
-    { row: 6, day: 't', value: 'Art, Mr. Blue, 203', cancelled: 'True' },
-    { row: 9, day: 't', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
-    { row: 10, day: 't', value: 'Geography, Ms. Black, 204', cancelled: '' },
-    { row: 11, day: 't', value: 'Geography, Ms. Black, 204', cancelled: '' },
+// Filter lessons based on the startTime
+let scheduleData = lessons.filter(lesson => {
+    const lessonDate = new Date(lesson.startTime); // Assuming startDate is in a format compatible with Date constructor
+    return lessonDate >= startOfWeek && lessonDate <= endOfWeek;
+});
 
-    // Wednesday
-    { row: 1, day: 'w', value: 'Music, Mr. Grey, 301', cancelled: '' },
-    { row: 2, day: 'w', value: 'Music, Mr. Grey, 301', cancelled: '' },
-    { row: 3, day: 'w', value: 'Sports, Ms. Brown, Gym', cancelled: '' },
-    { row: 4, day: 'w', value: 'Sports, Ms. Brown, Gym', cancelled: '' },
-    { row: 5, day: 'w', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
-    { row: 6, day: 'w', value: 'Computer Science, Mr. Yellow, 302', cancelled: '' },
+// scheduleData = lessons;
 
+function generateLessonTableContent(lesson) {
+    const container = document.createElement('div');
+    container.classList.add('lesson-grid-container');
 
-    // Thursday
-    { row: 1, day: 'th', value: 'Math, Mr. Silver, 401', cancelled: '' },
-    { row: 2, day: 'th', value: 'Math, Mr. Silver, 401', cancelled: '' },
-    { row: 3, day: 'th', value: 'History, Mr. Brown, 402', cancelled: '' },
-    { row: 4, day: 'th', value: 'History, Mr. Brown, 402', cancelled: '' },
-    { row: 5, day: 'th', value: 'Chemistry, Ms. Green, 403', cancelled: '' },
+    // Create the subject container
+    const subjectContainer = document.createElement('span');
+    subjectContainer.classList.add('lesson-subject');
+    if (lesson.subjects && lesson.subjects.length) {
+        lesson.subjects.forEach(subject => {
+            const subjectItem = document.createElement('span');
+            subjectItem.textContent = subject.name;
+            subjectContainer.appendChild(subjectItem);
+        });
+    }
+    container.appendChild(subjectContainer);
 
-    { row: 8, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
-    { row: 9, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
-    { row: 10, day: 'th', value: 'Literature, Ms. Purple, 303', cancelled: '' },
+    // Create the room container
+    const roomContainer = document.createElement('span');
+    roomContainer.classList.add('lesson-room');
+    if (lesson.rooms && lesson.rooms.length) {
+        lesson.rooms.forEach(room => {
+            const roomItem = document.createElement('span');
+            roomItem.textContent = room.name;
+            roomContainer.appendChild(roomItem);
+        });
+    }
+    container.appendChild(roomContainer);
 
-    // Friday
-    { row: 1, day: 'f', value: 'Math, Ms. Red, 501', cancelled: '' },
-    { row: 2, day: 'f', value: 'Math, Ms. Red, 501', cancelled: '' },
-    { row: 3, day: 'f', value: 'History, Ms. Blue, 502', cancelled: '' },
-    { row: 4, day: 'f', value: 'History, Ms. Blue, 502', cancelled: '' },
-    { row: 5, day: 'f', value: 'English, Mr. Yellow, 503', cancelled: '' },
-    { row: 6, day: 'f', value: 'English, Mr. Yellow, 503', cancelled: '' },
+    // Create the teacher container
+    const teacherContainer = document.createElement('span');
+    teacherContainer.classList.add('lesson-teacher');
+    if (lesson.teachers && lesson.teachers.length) {
+        lesson.teachers.forEach(teacher => {
+            const teacherItem = document.createElement('span');
+            teacherItem.textContent = teacher.name;
+            teacherContainer.appendChild(teacherItem);
+        });
+    }
+    container.appendChild(teacherContainer);
 
-];
+    // Create the class container
+    const classContainer = document.createElement('span');
+    classContainer.classList.add('lesson-class');
+    if (lesson.classes && lesson.classes.length) {
+        lesson.classes.forEach(_class => {
+            const classItem = document.createElement('span');
+            classItem.textContent = _class.name;
+            classContainer.appendChild(classItem);
+        });
+    }
+    container.appendChild(classContainer);
+
+    // Add additional properties
+    const additionalInfo = {
+        additionalInformation: lesson.additionalInformation || '',
+        substitutionText: lesson.substitutionText || '',
+        lessonText: lesson.lessonText || '',
+        bookingText: lesson.bookingText || '',
+        // chairUp: lesson.chairUp || ''
+    };
+
+    // Create the class container
+    const infoContainer = document.createElement('span');
+    infoContainer.classList.add('lesson-addInfo');
+    for (const [key, value] of Object.entries(additionalInfo)) {
+        if (value) { // Only add if value is not empty
+            const infoSubContainer = document.createElement('span');
+            infoSubContainer.classList.add(`lesson-${key}`);
+            infoSubContainer.textContent = value;
+            infoContainer.appendChild(infoSubContainer);
+        }
+    }
+    container.appendChild(infoContainer);
+
+    return container;
+}
 
 
 function generateSchedule(data) {
@@ -83,22 +123,29 @@ function generateSchedule(data) {
             td.id = `${day}${row}`; // optional id (probably won't need that)
 
             if (cellData) {
-                td.textContent = cellData.value;
+                td.appendChild(generateLessonTableContent(cellData));
+                td.setAttribute("lessonid", cellData.id)
+                if (cellData.irregular){
+                    td.classList.add("irregular")
+                }
+                if (cellData.cancelled){
+                    
+                }
+                if (cellData.chairUp){
+                    td.classList.add("chairUp")
+                }
                 td.onclick = () => generateLessonPopup('subject', 'time', 'teacher', 'room', 'info');
                 td.style.cursor = 'pointer';
                 td.style.backgroundColor = 'var(--table-highlight)';
                 td.style.borderRadius = '10px';
 
                 // check if cancelled
-                if (cellData.cancelled === 'True') {
-                    // apply the stylle for cancelled cells
-                    td.style.backgroundColor = 'var(--table-highlight-faded)';
-                    td.style.color = 'var(--text-faded)';
-                    td.style.fontStyle = 'italic'; 
+                if (cellData.cancelled) {
+                    td.classList.add("cancelled")
 
                     // add the diagonal red line:
                     setTimeout(() => {
-                        
+
                         // rm existing lined if there are ayny
                         const existingLine = td.querySelector('.diagonal-line');
                         if (existingLine) {

@@ -15,7 +15,7 @@
                 .then(registration => {
                     console.log("Registered!");
                 }).catch(console.error);
-            }
+        }
     </script>
 </head>
 
@@ -158,11 +158,17 @@
             <p class="cooking-team"><strong>Kochteam:</strong> <span id="cooking_team"></span></p>
         </div>
     </div>
-    <script src="src/generateTable.js"></script>
-    <script src="src/generatePopup.js"></script>
+    <script type="module" src="src/utils.js"></script>
     <script type="module" src="src/statusDisplay.js"></script>
     <script type="module" src="src/foodplan.js"></script>
     <script type="module" src="src/api/refresh.js"></script>
+    <script src="src/generateTable.js" defer></script>
+    <script src="src/generatePopup.js" defer></script>
+    <script>
+        window.onload = function () {
+            window.refreshAll();
+        }
+    </script>
 </body>
 
 </html>

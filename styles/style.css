@@ -15,7 +15,7 @@ body {
 
 .topnav {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     width: 100%;
 }
@@ -27,9 +27,9 @@ body {
 
 .timerange-center {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    flex-grow: 1;  
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .timerange-item {
@@ -80,11 +80,11 @@ body {
     opacity: 0;
 }
 
-input[type="checkbox"]:checked + .switch-label #singleUserIcon {
+input[type="checkbox"]:checked+.switch-label #singleUserIcon {
     opacity: 0;
 }
 
-input[type="checkbox"]:checked + .switch-label #multiUserIcon {
+input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     opacity: 1;
 }
 
@@ -103,7 +103,8 @@ input[type="checkbox"]:checked + .switch-label #multiUserIcon {
     justify-content: flex-end;
     align-items: center;
 }
-.buttons-right{
+
+.buttons-right {
     background: none;
     border: none;
     cursor: pointer;
@@ -112,7 +113,7 @@ input[type="checkbox"]:checked + .switch-label #multiUserIcon {
 
 .week-indicator {
     text-align: center;
-    margin-top: -20px; 
+    margin-top: -20px;
     position: relative;
 }
 
@@ -132,7 +133,8 @@ table {
     table-layout: fixed;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
@@ -179,19 +181,93 @@ thead th {
 
 
 /* leftmost column */
-th:first-child, td:first-child {
+th:first-child,
+td:first-child {
     font-weight: bolder;
-    width: 5%; /* Smaller width */
+    width: 5%;
+    /* Smaller width */
     background-color: var(--accent-light);
 }
 
 /* equal width for other columns */
-th:not(:first-child), td:not(:first-child) {
+th:not(:first-child),
+td:not(:first-child) {
     width: 18%;
 }
 
+/* Table element content */
+.lesson-grid-container {
+    display: grid;
+    grid-template-areas:
+        "subject subject"
+        "room teacher"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
+    /* gap: 10px; */
+    /* Adjust spacing between elements */
+    justify-items: center;
+    /* Center elements horizontally */
+    align-items: center;
+    /* Center elements vertically */
+    height: 100%;
+    /* Adjust as needed */
+    width: 100%;
+    /* Adjust as needed */
+}
 
+.lesson-grid-container>span:empty {
+    display: none;
+}
 
+.lesson-grid-container>span>span:not(:last-child)::after {
+    content: ", ";
+    /* Add comma between items */
+}
+
+.lesson-grid-container {
+    span {
+        padding: 3px;
+    }
+    /* hide class if its the only one. 
+    TODO: Disable if not own timetable */
+    .lesson-class:has(span:only-child) { 
+        display: none;
+    }
+
+    .lesson-subject {
+        grid-area: subject;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .lesson-room {
+        grid-area: room;
+        font-size: 1.2em;
+    }
+
+    .lesson-teacher {
+        grid-area: teacher;
+        font-size: 1.2em;
+    }
+
+    .lesson-class {
+        grid-area: class;
+        font-size: 1.2em;
+    }
+    .lesson-addInfo{
+        grid-area: addInfo;
+    }
+}
+
+.cancelled {
+    background-color: var(--table-highlight-faded) !important;
+    color: var(--text-faded) !important;
+    font-style: italic !important;
+}
+.irregular {
+    /*TODO*/
+}
 /* STATUS DISPLAY */
 #status-display {
     position: fixed;
@@ -215,12 +291,17 @@ th:not(:first-child), td:not(:first-child) {
     width: 20px;
     height: 20px;
     animation: spin 1s linear infinite;
-    margin-right: 10px; 
+    margin-right: 10px;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
