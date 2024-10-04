@@ -5,7 +5,9 @@ on:
     tags:
       - 'v*.*.*'  # Triggers on version tags
   workflow_dispatch:  # Allows manual triggering
-
+permissions:
+  actions: write
+  packages: write
 jobs:
   wait_for_other_action:
     runs-on: ubuntu-latest
