@@ -27,7 +27,6 @@ async function openDatabase() {
 
 async function getConfigFromDB(db) {
     return new Promise((resolve, reject) => {
-        console.log("load1")
 
         const transaction = db.transaction('config', 'readonly');
         const store = transaction.objectStore('config');
@@ -36,7 +35,6 @@ async function getConfigFromDB(db) {
         request.onsuccess = () => {
             resolve(request.result ? request.result.data : null);
         };
-        console.log("load")
         request.onerror = () => {
             console.log("load error")
             reject(request.error);
@@ -46,17 +44,15 @@ async function getConfigFromDB(db) {
 
 async function saveConfigToDB(db, config) {
     return new Promise((resolve, reject) => {
-        console.log("save 1")
 
         const transaction = db.transaction('config', 'readwrite');
         const store = transaction.objectStore('config');
         const itemToSave = { id: 'config', data: config };
 
         // Log the data structure before saving
-        console.log('Saving to DB:', itemToSave);
+        console.debug('Saving to DB:', itemToSave);
 
         const request = store.put(itemToSave); // Store the object
-        console.log("save")
         request.onsuccess = () => resolve();
         request.onerror = () => {
             console.log("save error")
@@ -93,21 +89,21 @@ async function fetchCacheConfig() {
                     await saveConfigToDB(db, CACHE_CONFIG); // Save the fetched configuration
 
                     filesToCache = CACHE_CONFIG.force;
-                    console.log('Files to cache:', filesToCache.map(file => file.path));
+                    console.debug('Files to cache:', filesToCache.map(file => file.path));
                     permanentFiles = filesToCache.filter(file => file.maxAge === -1);
-                    console.log('Files to cache (permanent):', permanentFiles.map(file => file.path));
+                    console.debug('Files to cache (permanent):', permanentFiles.map(file => file.path));
                     alwaysUpdateFiles = filesToCache.filter(file => file.maxAge === 0);
-                    console.log('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
+                    console.debug('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
                     maxAgeFiles = filesToCache.filter(file => file.maxAge > 0);
-                    console.log('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
-                    console.log("Refetch all cached data and updated config!")
+                    console.debug('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
+                    console.debug("Refetch all cached data and updated config!")
                     fetchAllData()
                     return
                 }
             }
 
 
-            console.log('Cache config loaded from local storage:', CACHE_CONFIG);
+            console.debug('Cache config loaded from local storage:', CACHE_CONFIG);
 
         } else {
             // If not, fetch it from the server
@@ -124,19 +120,19 @@ async function fetchCacheConfig() {
                 CACHE_CONFIG.force = collectFilesToCache(CACHE_CONFIG.force);
             }
             await saveConfigToDB(db, CACHE_CONFIG); // Save the fetched configuration
-            console.log('Cache config loaded from server:', CACHE_CONFIG);
+            console.debug('Cache config loaded from server:', CACHE_CONFIG);
         }
     } catch (error) {
         console.error('Failed to fetch cache configuration:', error);
     }
     filesToCache = CACHE_CONFIG.force;
-    console.log('Files to cache:', filesToCache.map(file => file.path));
+    console.debug('Files to cache:', filesToCache.map(file => file.path));
     permanentFiles = filesToCache.filter(file => file.maxAge === -1);
-    console.log('Files to cache (permanent):', permanentFiles.map(file => file.path));
+    console.debug('Files to cache (permanent):', permanentFiles.map(file => file.path));
     alwaysUpdateFiles = filesToCache.filter(file => file.maxAge === 0);
-    console.log('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
+    console.debug('Files to cache (always update):', alwaysUpdateFiles.map(file => file.path));
     maxAgeFiles = filesToCache.filter(file => file.maxAge > 0);
-    console.log('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
+    console.debug('Files to cache (max Age):', maxAgeFiles.map(file => file.path));
 }
 async function fetchAllData() {
 
@@ -151,7 +147,7 @@ async function fetchAllData() {
             }
             await permanentCache.add(url); // Add individual URL to cache
         }
-        console.log('Permanent files cached successfully');
+        console.debug('Permanent files cached successfully');
     } catch (error) {
         console.error('Failed to cache permanent files:', error);
     }
@@ -170,7 +166,7 @@ async function fetchAllData() {
             }
             await alwaysCache.add(url); // Add individual URL to cache
         }
-        console.log('Always update files cached successfully');
+        console.debug('Always update files cached successfully');
     } catch (error) {
         console.error('Failed to cache always update files:', error);
     }
@@ -185,7 +181,7 @@ async function fetchAllData() {
             }
             await maxAgeCache.add(url); // Add individual URL to cache
         }
-        console.log('Always update files cached successfully');
+        console.debug('Always update files cached successfully');
     } catch (error) {
         console.error('Failed to cache always update files:', error);
     }
@@ -225,7 +221,7 @@ function collectFilesToCache(structure, parentPath = '', maxAge = -1) {
 self.addEventListener('install', event => {
     event.waitUntil(
         (async () => {
-            console.log('Service Worker: Installing and fetching cache config...');
+            console.debug('Service Worker: Installing and fetching cache config...');
             await fetchCacheConfig();
 
             if (!CACHE_CONFIG) return;
@@ -248,14 +244,14 @@ self.addEventListener('fetch', event => {
             if (permanentFiles.some(file => requestUrl.pathname.endsWith(file.path))) { //TODO: DOMAIN
                 const permanentCache = await (await caches.open(CACHE_NAME_PERMANENT)).match(event.request, { ignoreVary: true });
                 if (permanentCache) {
-                    console.log(`Serving from permanent cache: ${requestUrl.href}`);
+                    console.debug(`Serving from permanent cache: ${requestUrl.href}`);
                     return permanentCache;
                 } else {
                     const response = await fetch(event.request);
                     const cache = await caches.open(CACHE_NAME_ALWAYS_UPDATE);
                     try {
                         await cache.put(event.request, response.clone());
-                        console.log(`Added to permanent cache: ${requestUrl.href}`);
+                        console.debug(`Added to permanent cache: ${requestUrl.href}`);
                     } catch (error) {
                         console.error('Failed to update permanent:', error);
                     }
@@ -267,14 +263,14 @@ self.addEventListener('fetch', event => {
                 const cache = await caches.open(CACHE_NAME_ALWAYS_UPDATE);
                 try {
                     const response = await fetch(event.request);
-                    console.log("resons ok")
+                    console.debug("resons ok")
                     await cache.put(event.request, response.clone());
-                    console.log(`Always updated cache: ${requestUrl.href}`);
+                    console.debug(`Always updated cache: ${requestUrl.href}`);
                     return response;
                 } catch (error) {
                     cachedResponse = await cache.match(event.request)
                     if (cachedResponse) {
-                        console.log(`Always update: Serving from cache as fallback: ${requestUrl.href}`);
+                        console.debug(`Always update: Serving from cache as fallback: ${requestUrl.href}`);
                         return cachedResponse;
                     }
                     console.error('Failed to update always cache:', error);
@@ -290,7 +286,7 @@ self.addEventListener('fetch', event => {
                     const cachedDate = new Date(cachedResponse.headers.get('date'));
                     const ageInHours = (Date.now() - cachedDate.getTime()) / 1000 / 60 / 60;
                     if (ageInHours < maxAgeFile.maxAge) {
-                        console.log(`Serving from max-age cache: ${requestUrl.href}`);
+                        console.debug(`Serving from max-age cache: ${requestUrl.href}`);
                         return cachedResponse;
                     }
                 }
@@ -298,11 +294,11 @@ self.addEventListener('fetch', event => {
                 const networkResponse = await fetch(event.request);
                 try {
                     await cache.put(event.request, networkResponse.clone());
-                    console.log(`Max-age cache updated: ${requestUrl.href}`);
+                    console.debug(`Max-age cache updated: ${requestUrl.href}`);
                 } catch (error) {
                     cachedResponse = await cache.match(event.request, { ignoreVary: true })
                     if (cachedResponse) {
-                        console.log(`Max-age: Serving from cache as fallback: ${requestUrl.href}`);
+                        console.debug(`Max-age: Serving from cache as fallback: ${requestUrl.href}`);
                         return cachedResponse;
                     }
                     console.error('Failed to update max-age cache:', error);
@@ -317,27 +313,27 @@ self.addEventListener('fetch', event => {
                 if (autoCacheDomain) {
                     // Handle preventAutoCache logic
                     if (CACHE_CONFIG.preventAutoCache.some(pattern => new RegExp(pattern).test(requestUrl.href))) {
-                        console.log(`Prevented caching of ${requestUrl.href}`);
+                        console.debug(`Prevented caching of ${requestUrl.href}`);
                         return fetch(event.request);
                     }
                     const cache = await caches.open(CACHE_NAME_AUTO);
                     const cachedResponse = await cache.match(event.request, { ignoreVary: true });
                     if (cachedResponse) {
-                        console.log(`Serving from auto cache: ${requestUrl.href}`);
+                        console.debug(`Serving from auto cache: ${requestUrl.href}`);
                         return cachedResponse;
                     }
 
                     const networkResponse = await fetch(event.request);
                     try {
                         await cache.put(event.request, networkResponse.clone());
-                        console.log(`Auto cache updated: ${requestUrl.href}`);
+                        console.debug(`Auto cache updated: ${requestUrl.href}`);
                     } catch (error) {
                         console.error('Failed to update auto cache:', error);
                     }
                     return networkResponse;
                 }
             }
-            console.log("remote get", requestUrl);
+            console.debug("remote get", requestUrl);
             return fetch(event.request);
         })()
     );
@@ -357,7 +353,7 @@ self.addEventListener('activate', event => {
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (!cacheWhitelist.includes(cacheName)) {
-                        console.log(`Deleting old cache: ${cacheName}`);
+                        console.debug(`Deleting old cache: ${cacheName}`);
                         return caches.delete(cacheName);
                     }
                 })
