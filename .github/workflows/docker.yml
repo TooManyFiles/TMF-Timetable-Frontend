@@ -9,31 +9,69 @@ permissions:
   actions: write
   packages: write
 jobs:
-  wait_for_other_action:
+  test:
     runs-on: ubuntu-latest
+
+    services:
+      chrome:
+        image: selenium/standalone-chrome
+        options: >-
+          --shm-size 2g
+        ports:
+          - 4444:4444
+      http_server:
+        image: nginx:alpine
+        ports:
+          - 5500:80
+        volumes:
+          - ${{ github.workspace }}:/usr/share/nginx/html  # Mount the code directory
+    
     steps:
-      - name: Dispatch an action and get the run ID
-        uses: codex-/return-dispatch@v1
-        id: return_dispatch
-        with:
-          ref: ${{ github.event.ref }} # or refs/heads/target_branch
-          token: ${{ github.token }}
-          repo: ${{ github.event.repository.name }}
-          owner: ${{ github.repository_owner }}
-          workflow: screenshots.yml
-      - name: Await Run ID ${{ steps.return_dispatch.outputs.run_id }}
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ github.token }}
-          repo: ${{ github.event.repository.name }}
-          owner: ${{ github.repository_owner }}
-          run_id: ${{ steps.return_dispatch.outputs.run_id }}
-          run_timeout_seconds: 300 # Optional
-          poll_interval_ms: 5000 # Optional
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Specify your desired Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./devtools/screenshots/requirements.txt
+
+    - name: Wait for server to start
+      run: |
+        # Wait for the server to respond
+        curl -s http://localhost:5500/
+        for i in {1..10}; do
+          if curl -s http://localhost:5500/ > /dev/null; then
+            echo "Server is up!"
+            break
+          fi
+          echo "Waiting for server..."
+          sleep 5  # Wait 5 seconds before trying again
+        done
+    
+    - name: Run tests
+      run: |
+        cd ./devtools/screenshots
+        python main.py
+
+    - name: Add and commit screenshots
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add public/screenshots/*
+        git add manifest.json
+        git commit -m "Add screenshots from headless browser tests" || echo "No changes to commit"
+        git push origin HEAD:main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
 
   build:
     runs-on: ubuntu-latest
-    needs: wait_for_other_action  # Ensure this job waits for the previous job to finish
+    needs: test  # Ensure this job waits for the previous job to finish
 
     steps:
       - name: Checkout code
