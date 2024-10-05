@@ -128,9 +128,6 @@ function generateSchedule(data) {
                 if (cellData.irregular){
                     td.classList.add("irregular")
                 }
-                if (cellData.cancelled){
-                    
-                }
                 if (cellData.chairUp){
                     td.classList.add("chairUp")
                 }

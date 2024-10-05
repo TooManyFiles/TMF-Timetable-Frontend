@@ -3,7 +3,7 @@ import { apiurl } from '../config.js';
 import { timeToSchoolTimeGrid, getOneLetterDayCode } from '../utils.js';
 
 
-export async function getAllSubjects(accesstoken) {
+export async function getAllSubjects() {
   const url = `${apiurl}untis/subjects`;
 
   try {
@@ -30,7 +30,7 @@ export async function getAllSubjects(accesstoken) {
 }
 
 
-export async function getAllTeachers(accesstoken) {
+export async function getAllTeachers() {
   const url = `${apiurl}untis/teachers`;
 
   try {
