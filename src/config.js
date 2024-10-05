@@ -1,6 +1,6 @@
 let API_URL_input = '${API_URL}'
 
-if (API_URL_input.endsWith('/')) {
+if (!API_URL_input.endsWith('/')) {
     API_URL_input = API_URL_input + "/"
 }
 export const API_URL = API_URL_input;
