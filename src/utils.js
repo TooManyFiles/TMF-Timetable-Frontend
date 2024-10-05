@@ -98,7 +98,6 @@ export function dateToReadable(dateString) {
 
 export function timeToSchoolTimeGrid(dateInput) {
     
-
     const date = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
     // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const dayOfWeek = (date.getDay()+1)%7;
@@ -110,7 +109,7 @@ export function timeToSchoolTimeGrid(dateInput) {
     if (!dayGrid) return null;
 
     // Convert the time from the Date object to an integer (HHMM format)
-    const time = (date.getHours() - 2) * 100 + date.getMinutes();
+    const time = (date.getHours()) * 100 + date.getMinutes();
 
     // Find the corresponding time unit within the day's timeUnits
     const matchingTimeUnit = dayGrid.timeUnits.find(unit => time >= unit.startTime && time < unit.endTime);
