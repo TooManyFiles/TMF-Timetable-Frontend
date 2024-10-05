@@ -1,4 +1,9 @@
-export const apiurl = '${API_URL}';
+let API_URL_input = '${API_URL}'
+
+if (API_URL_input.endsWith('/')) {
+    API_URL_input = API_URL_input + "/"
+}
+export const API_URL = API_URL_input;
 export const timeGrid = [{
     "day": 2,
     "timeUnits": [

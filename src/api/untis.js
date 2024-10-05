@@ -1,10 +1,10 @@
 import { setErrorDisplay } from '../errorDisplay.js';
-import { apiurl } from '../config.js';
+import { API_URL } from '../config.js';
 import { timeToSchoolTimeGrid, getOneLetterDayCode } from '../utils.js';
 
 
 export async function getAllSubjects() {
-  const url = `${apiurl}untis/subjects`;
+  const url = `${API_URL}untis/subjects`;
 
   try {
     const response = await fetch(url, {
@@ -31,7 +31,7 @@ export async function getAllSubjects() {
 
 
 export async function getAllTeachers() {
-  const url = `${apiurl}untis/teachers`;
+  const url = `${API_URL}untis/teachers`;
 
   try {
     const response = await fetch(url, {
@@ -58,7 +58,7 @@ export async function getAllTeachers() {
 
 
 export async function getAllClasses() {
-  const url = `${apiurl}untis/classes`;
+  const url = `${API_URL}untis/classes`;
 
   try {
     const response = await fetch(url, {
@@ -84,7 +84,7 @@ export async function getAllClasses() {
 }
 
 async function getAllRooms() {
-  const url = `${apiurl}untis/rooms`;
+  const url = `${API_URL}untis/rooms`;
 
   try {
     const response = await fetch(url, {
@@ -110,7 +110,7 @@ async function getAllRooms() {
 }
 
 export async function fetchStaticData() {
-  const url = `${apiurl}untis/fetch`;
+  const url = `${API_URL}untis/fetch`;
 
   try {
     const response = await fetch(url, {

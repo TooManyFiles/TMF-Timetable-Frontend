@@ -1,11 +1,11 @@
 import { setErrorDisplay } from '../errorDisplay.js';
-import { apiurl } from '../config.js';
+import { API_URL } from '../config.js';
 
 export async function getMenu(date, duration) {
     const query = `?date=${date}&duration=${duration}`;
 
     try {
-        const response = await fetch(`${apiurl}/cafeteria${query}`, {
+        const response = await fetch(`${API_URL}/cafeteria${query}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'

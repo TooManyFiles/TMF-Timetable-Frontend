@@ -1,9 +1,9 @@
-import { apiurl } from "../config.js";
+import { API_URL } from "../config.js";
 
 // Login function
 export async function login(username, password) {
     try {
-        const response = await fetch(apiurl + 'login', {
+        const response = await fetch(API_URL + 'login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export async function logout() {
     try {
         const token = localStorage.getItem('token');
         if (token) {
-            const response = await fetch(apiurl + 'logout', {
+            const response = await fetch(API_URL + 'logout', {
                 method: 'POST',
                 credentials: "include"
             });
