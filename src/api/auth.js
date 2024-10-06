@@ -34,6 +34,7 @@ export async function logout() {
             });
             if (response.ok) {
                 localStorage.removeItem('token');
+                document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             } else {
                 throw new Error('Failed to logout');
             }
