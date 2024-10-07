@@ -1,5 +1,6 @@
 // WHEN ITS SAT / SUN, THESE DATE FUNCTIONS RETURN THE DATES OF THE NEXT WEEK!!
 import { timeGrid } from "./config.js";
+import { getCurrentUser } from "./api/auth.js";
 
 export function getMonday() {
     const today = new Date();
@@ -64,6 +65,16 @@ export function datestringToReadable(dateString) {
     };
     return date.toLocaleDateString('de-DE', options);
 }
+
+export function datestringToReadableSHORT(dateString) {
+    const date = new Date(dateString);
+    const options = {
+        day: 'numeric',
+        month: 'long'
+    };
+    return date.toLocaleDateString('de-DE', options);
+}
+
 export function dateAndTimeToReadable(dateString) {
     const options = { 
         year: 'numeric', 
@@ -127,6 +138,29 @@ export function getOneLetterDayCode(dateInput) {
     return dayCodes[dayIndex]; // Return the corresponding one-letter code
 }
 
+async function isLoggedIn() {
+    try {
+        // Call getCurrentUser to fetch the current user
+        const user = await getCurrentUser();
+
+        // If user is not found or if there's a 401 error, redirect to login page
+        if (!user) {
+            window.location.href = '/index.html';
+        } else {
+            console.log("User is logged in:", user);
+        }
+    } catch (error) {
+        // Handle specific error codes
+        if (error.message.includes("401")) {
+            window.location.href = '/index.html'; // Redirect on 401 error
+        } else {
+            console.error("Error checking login status:", error);
+        }
+    }
+}
+
+
+window.isLoggedIn = isLoggedIn;
 window.getMonday = getMonday;
 window.getTuesday = getTuesday;
 window.getWednesday = getWednesday;
@@ -134,6 +168,7 @@ window.getThursday = getThursday;
 window.dateToString = dateToString;
 window.getFriday = getFriday;
 window.datestringToReadable = datestringToReadable;
+window.datestringToReadableSHORT = datestringToReadableSHORT;
 window.dateAndTimeToReadable = dateAndTimeToReadable;
 window.timeToReadable = timeToReadable;
 window.dateToReadable = dateToReadable;

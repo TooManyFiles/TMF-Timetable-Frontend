@@ -19,7 +19,7 @@
     </script>
 </head>
 
-<body onload="setLastRefreshed(getCurrentTime());">
+<body onload="setLastRefreshed(getCurrentTime())">
     <div class="head">
         <div class="topnav">
             <div class="controls-left">
@@ -46,9 +46,10 @@
                         <polygon points="30,50 50,30 50,40 70,40 70,60 50,60 50,70" fill="black" />
                     </svg>
                 </button>
-                <h2 class="timerange-item" id="startdate">30. Juli</h2>
+                <h2 class="timerange-item"><span id="startdate"></span></h2>
                 <h2 class="timerange-item">-</h2>
-                <h2 class="timerange-item" id="enddate">5. August</h2>
+                <h2 class="timerange-item"><span  id="enddate"></span></h2>
+
                 <button class="timerange-controls">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40"
                         class="timerange-controls">
@@ -151,15 +152,19 @@
         </div>
     </div>
     <script type="module" src="src/utils.js"></script>
+    <script type="module" src="src/api/auth.js"></script>
     <script type="module" src="src/statusDisplay.js"></script>
     <script type="module" src="src/foodplan.js"></script>
     <script type="module" src="src/api/refresh.js"></script>
+    <script src="src/timeControl.js" defer></script>
     <script src="src/generateTable.js" defer></script>
     <script src="src/generatePopup.js" defer></script>
     <script>
-        window.onload = function () {
-            window.refreshAll();
-        }
+    window.onload = function () {
+        window.refreshAll();
+        // isLoggedIn();
+        setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
+    }
     </script>
 </body>
 
