@@ -54,17 +54,15 @@ function generateLessonPopup(id) {
         popupContent.appendChild(createField("Raum", "room", lesson.rooms ? lesson.rooms.map(r=>r.name).join(", ") : ""));
         popupContent.appendChild(createField("Klasse", "info", lesson.classes ? lesson.classes.map(c=>c.name).join(", ") : ""));
         popupContent.appendChild(createField("Info", "info", lesson.additionalInformation));
-
-        popupContent.appendChild(createField("Cancelled", "cancelled", lesson.cancelled ? "Yes" : ""));
-        popupContent.appendChild(createField("Irregular", "irregular", lesson.irregular ? "Yes" : ""));
-        popupContent.appendChild(createField("Substitution Text", "substitutionText", lesson.substitutionText));
-        popupContent.appendChild(createField("Lesson Text", "lessonText", lesson.lessonText));
-        popupContent.appendChild(createField("Booking Text", "bookingText", lesson.bookingText));
-        popupContent.appendChild(createField("Homework", "homework", lesson.homework));
-        popupContent.appendChild(createField("Last Update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
-        popupContent.appendChild(createField("Chair Up", "chairUp", lesson.chairUp ? "Yes" : ""));
-
-
+        popupContent.appendChild(createField("Entfall", "cancelled", lesson.cancelled ? "Ja" : ""));
+        popupContent.appendChild(createField("Irregulär", "irregular", lesson.irregular ? "Ja" : ""));
+        popupContent.appendChild(createField("Vertretungsinfo", "substitutionText", lesson.substitutionText));
+        popupContent.appendChild(createField("Stundeninfo", "lessonText", lesson.lessonText));
+        popupContent.appendChild(createField("Buchungsinfo", "bookingText", lesson.bookingText));
+        popupContent.appendChild(createField("Hausaufgaben", "homework", lesson.homework));
+        popupContent.appendChild(createField("Aufstuhlen", "chairUp", lesson.chairUp ? "Ja" : ""));
+        popupContent.appendChild(createField("Letztes update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
+    
         // Display the popup
         document.getElementById('lesson-popup').style.display = 'flex';
     }
