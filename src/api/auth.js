@@ -14,6 +14,7 @@ export async function login(username, password) {
         const data = await response.json();
         if (response.ok) {
             localStorage.setItem('token', data.token);
+            localStorage.removeItem('lessons'); //TEST THIS!!!!
             return data;
         } else {
             throw new Error(data.message);
@@ -33,7 +34,11 @@ export async function logout() {
                 credentials: "include"
             });
             if (response.ok) {
-                localStorage.removeItem('token');
+                //Delete all localstorage items
+                for (let i = localStorage.length - 1; i >= 0; i--) {
+                    const key = localStorage.key(i);
+                    localStorage.removeItem(key);
+                }                  
                 document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             } else {
                 throw new Error('Failed to logout');
