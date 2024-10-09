@@ -160,11 +160,14 @@
     <script src="src/generateTable.js" defer></script>
     <script src="src/generatePopup.js" defer></script>
     <script>
-    window.onload = function () {
-        window.refreshAll();
-        // isLoggedIn();
-        setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
-    }
+        window.onload = async function () {
+            if (!await isLoggedIn()) {
+                location.href = "/login.html";
+                return;
+            }
+            window.refreshAll();
+            setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
+        }
     </script>
 </body>
 

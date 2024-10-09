@@ -140,24 +140,29 @@ export function getOneLetterDayCode(dateInput) {
 
 async function isLoggedIn() {
     try {
-        // Call getCurrentUser to fetch the current user
-        const user = await getCurrentUser();
+        // Check if token exists in localStorage
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            return false;
+        }
 
-        // If user is not found or if there's a 401 error, redirect to login page
+        const user = await getCurrentUser();
         if (!user) {
-            window.location.href = '/index.html';
+            return false;
         } else {
-            console.log("User is logged in:", user);
+            return true;
         }
     } catch (error) {
-        // Handle specific error codes
         if (error.message.includes("401")) {
-            window.location.href = '/index.html'; // Redirect on 401 error
+            console.log("Session expired or unauthorized, redirecting to login...");
+            return false;
         } else {
             console.error("Error checking login status:", error);
         }
     }
 }
+
 
 
 window.isLoggedIn = isLoggedIn;

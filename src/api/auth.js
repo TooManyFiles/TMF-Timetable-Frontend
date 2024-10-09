@@ -39,7 +39,28 @@ export async function logout() {
                 throw new Error('Failed to logout');
             }
         }
+        window.location.href = '/login.html';
     } catch (error) {
         throw error;
     }
 }
+
+export async function getCurrentUser() {
+    try {
+        const response = await fetch(API_URL + 'currentUser', {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+
+    } catch (error) {
+        console.error("Error in getCurrentUser:", error);
+        throw error;
+    }
+}
+
+window.getCurrentUser = getCurrentUser;
+window.logout = logout;

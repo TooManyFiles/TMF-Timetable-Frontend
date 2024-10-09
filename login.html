@@ -38,5 +38,16 @@
         </div>
     </div>
     <script type="module" src="src/login.js"></script>
+    <script type="module" src="src/utils.js"></script>
+    <script>
+        window.onload = async function () {
+            if (await isLoggedIn()) {
+                location.href = "/index.html";
+                return;
+            }
+            window.refreshAll();
+            setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
+        }
+    </script>
 </body>
 </html>
