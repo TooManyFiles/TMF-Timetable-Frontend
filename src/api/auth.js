@@ -1,4 +1,5 @@
 import { API_URL } from "../config.js";
+import { setErrorDisplay } from "../errorDisplay.js";
 
 // Login function
 export async function login(username, password) {
@@ -17,10 +18,12 @@ export async function login(username, password) {
             localStorage.removeItem('lessons'); //TEST THIS!!!!
             return data;
         } else {
-            throw new Error(data.message);
+            // throw new Error(data.message);
+            setErrorDisplay(data.message);
         }
     } catch (error) {
-        throw error;
+        // throw error;
+        setErrorDisplay(error);
     }
 }
 
