@@ -63,7 +63,53 @@ function generateLessonTableContent(lesson) {
         });
     }
     container.appendChild(classContainer);
+    // Create the subject container
+    const subjectOriginalContainer = document.createElement('span');
+    subjectOriginalContainer.classList.add('lesson-origsubject');
+    if (lesson.originalSubjects && lesson.originalSubjects.length) {
+        lesson.originalSubjects.forEach(subject => {
+            const subjectItem = document.createElement('span');
+            subjectItem.textContent = subject.name;
+            subjectOriginalContainer.appendChild(subjectItem);
+        });
+    }
+    container.appendChild(subjectOriginalContainer);
 
+    // Create the room container
+    const roomOriginalContainer = document.createElement('span');
+    roomOriginalContainer.classList.add('lesson-origroom');
+    if (lesson.originalRooms && lesson.originalRooms.length) {
+        lesson.originalRooms.forEach(room => {
+            const roomItem = document.createElement('span');
+            roomItem.textContent = room.name;
+            roomOriginalContainer.appendChild(roomItem);
+        });
+    }
+    container.appendChild(roomOriginalContainer);
+
+    // Create the teacher container
+    const teacherOriginalContainer = document.createElement('span');
+    teacherOriginalContainer.classList.add('lesson-origteacher');
+    if (lesson.originalTeachers && lesson.originalTeachers.length) {
+        lesson.originalTeachers.forEach(teacher => {
+            const teacherItem = document.createElement('span');
+            teacherItem.textContent = teacher.name;
+            teacherOriginalContainer.appendChild(teacherItem);
+        });
+    }
+    container.appendChild(teacherOriginalContainer);
+
+    // Create the class container
+    const classOriginalContainer = document.createElement('span');
+    classOriginalContainer.classList.add('lesson-origclass');
+    if (lesson.originalClasses && lesson.originalClasses.length) {
+        lesson.originalClasses.forEach(_class => {
+            const classItem = document.createElement('span');
+            classItem.textContent = _class.name;
+            classOriginalContainer.appendChild(classItem);
+        });
+    }
+    container.appendChild(classOriginalContainer);
     // Add additional properties
     const additionalInfo = {
         additionalInformation: lesson.additionalInformation || '',

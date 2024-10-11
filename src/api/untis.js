@@ -183,6 +183,18 @@ export async function parseLessons(lessons) {
     classes: staticData.classes.filter(classA =>
       (lesson.classes || []).some(classB => classB === classA.id)
     ),
+    originalSubjects: staticData.subjects.filter(subjectA =>
+      (lesson.origSubjects || []).some(subject => subject === subjectA.id)
+    ),
+    originalTeachers: staticData.teachers.filter(teacherA =>
+      (lesson.origTeachers || []).some(teacher => teacher === teacherA.id)
+    ),
+    originalRooms: staticData.rooms.filter(roomA =>
+      (lesson.origRooms || []).some(room => room === roomA.id)
+    ),
+    originalClasses: staticData.classes.filter(classA =>
+      (lesson.origClasses || []).some(classB => classB === classA.id)
+    ),
     startTime: lesson.startTime,
     endTime: lesson.endTime,
     row: timeToSchoolTimeGrid(lesson.startTime).name - 0,
