@@ -1,5 +1,5 @@
 import { API_URL } from "../config.js";
-import { setErrorDisplay } from "../errorDisplay.js";
+import { setErrorDisplay } from "../generic/errorDisplay.js";
 
 export async function login(username, password) {
     try {

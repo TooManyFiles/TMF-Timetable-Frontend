@@ -1,6 +1,6 @@
 // WHEN ITS SAT / SUN, THESE DATE FUNCTIONS RETURN THE DATES OF THE NEXT WEEK!!
-import { timeGrid } from "./config.js";
-import { getCurrentUser } from "./api/auth.js";
+import { timeGrid } from "../config.js";
+import { getCurrentUser } from "../api/auth.js";
 
 export function getMonday() {
     const today = new Date();

@@ -1,6 +1,6 @@
 
 import { API_URL } from "../config.js";
-import { getMonday } from "../utils.js";
+import { getMonday } from "../utils/utils.js";
 import { parseLessons } from "./untis.js";
 export async function getView(date, duration) {
     const query = `?date=${date}&duration=${duration}`;

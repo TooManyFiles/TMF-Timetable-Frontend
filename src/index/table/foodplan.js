@@ -1,6 +1,6 @@
-import { dateToString, getMonday, getThursday, getTuesday, getWednesday } from './utils.js';
-import { getMenu } from './api/cafe.js';
-import { setErrorDisplay } from './errorDisplay.js';
+import { dateToString, getMonday, getThursday, getTuesday, getWednesday } from '../../utils/utils.js';
+import { getMenu } from '../../api/cafe.js';
+import { setErrorDisplay } from '../../generic/errorDisplay.js';
 
 // Check for existing stored data on page load
 document.addEventListener('DOMContentLoaded', async function() {

@@ -1,0 +1,36 @@
+
+/* STATUS DISPLAY */
+#status-display {
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 999;
+    color: var(--table-highlight-faded);
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f479;
+    border-radius: 15px;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--table-highlight-faded);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

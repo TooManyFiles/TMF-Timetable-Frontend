@@ -1,4 +1,4 @@
-import { setErrorDisplay } from '../errorDisplay.js';
+import { setErrorDisplay } from '../generic/errorDisplay.js';
 import { API_URL } from '../config.js';
 
 export async function getMenu(date, duration) {

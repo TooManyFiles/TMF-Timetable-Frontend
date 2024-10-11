@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="/styles/index/index.css">
+    <link rel="stylesheet" href="/styles/index/table/popup.css">
+    <link rel="stylesheet" href="/styles/index/table/table.css">
+    <link rel="stylesheet" href="/styles/index/table/statusDisplay.css">
+    <link rel="stylesheet" href="/styles/general/errorDisplay.css">
     <title>BetterUntis</title>
     <script src="src/viewToggle.js"></script>
     <link rel="manifest" href="manifest.json">
@@ -27,8 +31,8 @@
                 <div class="toggle-switch">
                     <input type="checkbox" id="view-toggle" style="display:none" />
                     <label for="view-toggle" class="switch-label">
-                        <img src="public/user_single.png" width="25" height="25" class="userIcon" id="singleUserIcon">
-                        <img src="public/user_multiple.png" width="25" height="25" class="userIcon" id="multiUserIcon">
+                        <img src="/public/user_single.png" width="25" height="25" class="userIcon" id="singleUserIcon">
+                        <img src="/public/user_multiple.png" width="25" height="25" class="userIcon" id="multiUserIcon">
                     </label>
                 </div>
                 <!-- Profile-switch -->
@@ -68,10 +72,10 @@
                     <img src="public/notifications.png" width="auto" height="30">
                 </button> -->
                 <button class="buttons-right" onclick="refreshAll()">
-                    <img src="public/refresh.png" width="auto" height="30">
+                    <img src="/public/refresh.png" width="auto" height="30">
                 </button>
                 <button class="buttons-right" onclick="(async () => { await logout(); })()">
-                    <img src="public/user.png" width="auto" height="30">
+                    <img src="/public/user.png" width="auto" height="30">
                 </button>
             </div>
         </div>
@@ -151,14 +155,14 @@
             <p class="cooking-team"><strong>Kochteam:</strong> <span id="cooking_team"></span></p>
         </div>
     </div>
-    <script type="module" src="src/utils.js"></script>
+    <script type="module" src="src/utils/utils.js"></script>
     <script type="module" src="src/api/auth.js"></script>
-    <script type="module" src="src/statusDisplay.js"></script>
-    <script type="module" src="src/foodplan.js"></script>
+    <script type="module" src="src/index/table/statusDisplay.js"></script>
+    <script type="module" src="src/index/table/foodplan.js"></script>
     <script type="module" src="src/api/refresh.js"></script>
-    <script src="src/timeControl.js" defer></script>
-    <script src="src/generateTable.js" defer></script>
-    <script src="src/generatePopup.js" defer></script>
+    <script src="src/index/timeControl.js" defer></script>
+    <script src="src/index/table/generateTable.js" defer></script>
+    <script src="src/index/table/generatePopup.js" defer></script>
     <script>
         window.onload = async function () {
             if (!await isLoggedIn()) {

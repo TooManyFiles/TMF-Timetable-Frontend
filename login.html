@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | TMF Timetable</title>
-    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="/styles/auth/login.css">
+    <link rel="stylesheet" href="/styles/general/errorDisplay.css">
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
@@ -47,9 +48,9 @@
         <h4>Error:</h4>
         <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
     </div>
-    <script type="module" src="src/login.js"></script>
-    <script type="module" src="src/utils.js"></script>
-    <script type="module" src="src/errorDisplay.js"></script>
+    <script type="module" src="src/auth/login.js"></script>
+    <script type="module" src="src/utils/utils.js"></script>
+    <script type="module" src="src/generic/errorDisplay.js"></script>
     <script>
         window.onload = async function () {
             if (await isLoggedIn()) {
