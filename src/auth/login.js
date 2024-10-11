@@ -1,4 +1,4 @@
-import { login } from "./api/auth.js";
+import { login } from "../api/auth.js";
 
 document.getElementById('login-form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent form from submitting the traditional way
