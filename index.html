@@ -70,7 +70,7 @@
                 <button class="buttons-right" onclick="refreshAll()">
                     <img src="public/refresh.png" width="auto" height="30">
                 </button>
-                <button class="buttons-right">
+                <button class="buttons-right" onclick="(async () => { await logout(); })()">
                     <img src="public/user.png" width="auto" height="30">
                 </button>
             </div>

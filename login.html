@@ -32,7 +32,12 @@
                     <span class="bar"></span>
                     <label>Passwort</label>
                 </div>
-                <button class="button" style="vertical-align:middle" type="submit"><span>Login! </span></button>
+                <button class="button" style="vertical-align:middle" type="submit">
+                    <span class="button-text">Login!</span>
+                    <span class="loading-dots" style="display:none">
+                        Loading<span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>
+                    </span>
+                </button>
                 <p><a href="/forgotpw" style="color: var(--highlight-faded)">Passwort vergessen</a> | <a href="/register.html" style="color: var(--highlight-faded)">Account erstellen</a></p>
             </form>          
         </div>
@@ -51,8 +56,6 @@
                 location.href = "/index.html";
                 return;
             }
-            window.refreshAll();
-            setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
         }
     </script>
 </body>
