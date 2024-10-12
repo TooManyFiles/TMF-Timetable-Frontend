@@ -132,7 +132,6 @@ input:focus ~ .highlight {
 
 
 /* BUTTON */
-
 .button {
   position: relative;
   border: 2px solid var(--highlight);
@@ -147,7 +146,7 @@ input:focus ~ .highlight {
   margin-bottom: 10px;
 }
 
-.button a{
+.button a {
   color: white;
 }
 
@@ -158,7 +157,8 @@ input:focus ~ .highlight {
   transition: 0.5s;
 }
 
-.button span:after {
+/* Hide the arrow when the button is in loading state */
+.button:not(.loading) span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -167,11 +167,12 @@ input:focus ~ .highlight {
   transition: 0.5s;
 }
 
-.button:hover span {
+/* Only apply hover effect if the button is not loading */
+.button:not(.loading):hover span {
   padding-right: 25px;
 }
 
-.button:hover span:after {
+.button:not(.loading):hover span:after {
   opacity: 1;
   right: 0;
 }
@@ -211,4 +212,44 @@ input:focus ~ .highlight {
 
 #close-button:hover {
   color: darkred;
+}
+
+/* Loading Dots Animation */
+@keyframes loadingDots {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Apply the animation to each dot with delay */
+.dot-1 {
+  animation: loadingDots 1s infinite;
+}
+
+.dot-2 {
+  animation: loadingDots 1s infinite;
+  animation-delay: 0.2s;
+}
+
+.dot-3 {
+  animation: loadingDots 1s infinite;
+  animation-delay: 0.4s;
+}
+
+/* Button Loading Styles */
+.button.loading .button-text {
+  display: none;
+}
+
+.button.loading .loading-dots {
+  display: inline-block;
 }

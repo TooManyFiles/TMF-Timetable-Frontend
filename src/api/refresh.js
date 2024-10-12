@@ -1,5 +1,5 @@
-import { fetchAndDisplayMenu } from '../foodplan.js';
-import { setLastRefreshed, setLoading, getCurrentTime } from '../statusDisplay.js'
+import { fetchAndDisplayMenu } from '../index/table/foodplan.js';
+import { setLastRefreshed, setLoading, getCurrentTime } from '../index/table/statusDisplay.js'
 import { getView } from './view.js';
 
 async function refreshAll(){

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | TMF Timetable</title>
-    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="/styles/auth/login.css">
+    <link rel="stylesheet" href="/styles/general/errorDisplay.css">
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
@@ -32,7 +33,12 @@
                     <span class="bar"></span>
                     <label>Passwort</label>
                 </div>
-                <button class="button" style="vertical-align:middle" type="submit"><span>Login! </span></button>
+                <button class="button" style="vertical-align:middle" type="submit">
+                    <span class="button-text">Login!</span>
+                    <span class="loading-dots" style="display:none">
+                        Loading<span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>
+                    </span>
+                </button>
                 <p><a href="/forgotpw" style="color: var(--highlight-faded)">Passwort vergessen</a> | <a href="/register.html" style="color: var(--highlight-faded)">Account erstellen</a></p>
             </form>          
         </div>
@@ -42,17 +48,15 @@
         <h4>Error:</h4>
         <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
     </div>
-    <script type="module" src="src/login.js"></script>
-    <script type="module" src="src/utils.js"></script>
-    <script type="module" src="src/errorDisplay.js"></script>
+    <script type="module" src="src/auth/login.js"></script>
+    <script type="module" src="src/utils/utils.js"></script>
+    <script type="module" src="src/generic/errorDisplay.js"></script>
     <script>
         window.onload = async function () {
             if (await isLoggedIn()) {
                 location.href = "/index.html";
                 return;
             }
-            window.refreshAll();
-            setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
         }
     </script>
 </body>

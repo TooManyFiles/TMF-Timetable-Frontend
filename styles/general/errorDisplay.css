@@ -1,0 +1,36 @@
+
+/* ERROR DISPLAY */
+#error-display {
+    position: fixed;
+    bottom: 7.5vh;
+    border: 1px solid red;
+    right: 45px;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 999;
+    color: red;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #ff00003b;
+    border-radius: 15px;
+    width: 15%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Close button style */
+#close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: red;
+}
+
+#close-button:hover {
+    color: darkred;
+}

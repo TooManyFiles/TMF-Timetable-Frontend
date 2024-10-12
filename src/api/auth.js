@@ -1,7 +1,6 @@
 import { API_URL } from "../config.js";
-import { setErrorDisplay } from "../errorDisplay.js";
+import { setErrorDisplay } from "../generic/errorDisplay.js";
 
-// Login function
 export async function login(username, password) {
     try {
         const response = await fetch(API_URL + 'login', {
@@ -12,20 +11,35 @@ export async function login(username, password) {
             credentials: 'include',
             body: JSON.stringify({ username, password }),
         });
-        const data = await response.json();
+
+        const contentType = response.headers.get('Content-Type');
+        let data;
+
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json(); // Parse JSONs
+        } else {
+            data = {}; // Default to an empty object if no JSON is returned
+        }
+
+        // Handle success response
         if (response.ok) {
             localStorage.setItem('token', data.token);
-            localStorage.removeItem('lessons'); //TEST THIS!!!!
-            return data;
+            localStorage.removeItem('lessons');
+            return { status: 200, token: data.token };
         } else {
-            // throw new Error(data.message);
-            setErrorDisplay(data.message);
+            const errorMessage = data.message || 'An error occurred. Most likely wrong login credentials.';
+            setErrorDisplay(errorMessage);
+            return { status: response.status, message: errorMessage };
         }
     } catch (error) {
-        // throw error;
-        setErrorDisplay(error);
+        //network or other unexpected errors
+        setErrorDisplay(error.message);
+        return { status: 500, message: error.message };
     }
 }
+
+
+
 
 // Logout function
 export async function logout() {

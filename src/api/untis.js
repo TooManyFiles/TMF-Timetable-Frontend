@@ -1,6 +1,6 @@
-import { setErrorDisplay } from '../errorDisplay.js';
+import { setErrorDisplay } from '../generic/errorDisplay.js';
 import { API_URL } from '../config.js';
-import { timeToSchoolTimeGrid, getOneLetterDayCode } from '../utils.js';
+import { timeToSchoolTimeGrid, getOneLetterDayCode } from '../utils/utils.js';
 
 
 export async function getAllSubjects() {
