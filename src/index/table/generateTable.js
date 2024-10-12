@@ -21,17 +21,35 @@ function generateLessonTableContent(lesson) {
     subjectContainer.classList.add('lesson-subject');
     if (lesson.subjects && lesson.subjects.length) {
         lesson.subjects.forEach(subject => {
-            const subjectItem = document.createElement('span');
-            subjectItem.textContent = subject.name;
-            subjectContainer.appendChild(subjectItem);
+            const subjectElement = document.createElement('span');
+            
+            const subjectItemLong = document.createElement('span');
+            subjectItemLong.classList.add('long');
+            subjectItemLong.textContent = subject.name;
+            subjectElement.appendChild(subjectItemLong);
+            const subjectItemShort = document.createElement('span');
+            subjectItemShort.classList.add('short');
+            subjectItemShort.textContent = subject.shortName;
+            subjectElement.appendChild(subjectItemShort);
+
+            subjectContainer.appendChild(subjectElement);
         });
     }
     if (lesson.originalSubjects && lesson.originalSubjects.length) {
         lesson.originalSubjects.forEach(subject => {
-            const subjectItem = document.createElement('span');
-            subjectItem.classList.add('originalData');
-            subjectItem.textContent = subject.name;
-            subjectContainer.appendChild(subjectItem);
+            const subjectElement = document.createElement('span');
+
+            const subjectItemLong = document.createElement('span');
+            subjectItemLong.classList.add('long');
+            subjectItemLong.textContent = subject.name;
+            subjectElement.appendChild(subjectItemLong);
+            const subjectItemShort = document.createElement('span');
+            subjectItemShort.classList.add('short');
+            subjectItemShort.textContent = subject.shortName;
+            subjectElement.appendChild(subjectItemShort);
+
+            subjectElement.classList.add('originalData');
+            subjectContainer.appendChild(subjectElement);
         });
     }
     container.appendChild(subjectContainer);
@@ -62,15 +80,41 @@ function generateLessonTableContent(lesson) {
     if (lesson.teachers && lesson.teachers.length) {
         lesson.teachers.forEach(teacher => {
             const teacherItem = document.createElement('span');
-            teacherItem.textContent = teacher.name;
+
+            const teacherItemForename = document.createElement('span');
+            teacherItemForename.classList.add('forename');
+            teacherItemForename.textContent = teacher.firstName;
+            teacherItem.appendChild(teacherItemForename);
+            const teacherItemLong = document.createElement('span');
+            teacherItemLong.classList.add('long');
+            teacherItemLong.textContent = teacher.name;
+            teacherItem.appendChild(teacherItemLong);
+            const teacherItemShort = document.createElement('span');
+            teacherItemShort.classList.add('short');
+            teacherItemShort.textContent = teacher.shortName;
+            teacherItem.appendChild(teacherItemShort);
+
             teacherContainer.appendChild(teacherItem);
         });
     }
     if (lesson.originalTeachers && lesson.originalTeachers.length) {
         lesson.originalTeachers.forEach(teacher => {
             const teacherItem = document.createElement('span');
+
+            const teacherItemForename = document.createElement('span');
+            teacherItemForename.classList.add('forename');
+            teacherItemForename.textContent = teacher.firstName;
+            teacherItem.appendChild(teacherItemForename);
+            const teacherItemLong = document.createElement('span');
+            teacherItemLong.classList.add('long');
+            teacherItemLong.textContent = teacher.name;
+            teacherItem.appendChild(teacherItemLong);
+            const teacherItemShort = document.createElement('span');
+            teacherItemShort.classList.add('short');
+            teacherItemShort.textContent = teacher.shortName;
+            teacherItem.appendChild(teacherItemShort);
+
             teacherItem.classList.add('originalData');
-            teacherItem.textContent = teacher.name;
             teacherContainer.appendChild(teacherItem);
         });
     }
@@ -156,10 +200,10 @@ function generateSchedule(data) {
             if (cellData) {
                 td.appendChild(generateLessonTableContent(cellData));
                 td.setAttribute("lessonid", cellData.id)
-                if (cellData.irregular){
+                if (cellData.irregular) {
                     td.classList.add("irregular")
                 }
-                if (cellData.chairUp){
+                if (cellData.chairUp) {
                     td.classList.add("chairUp")
                 }
                 td.onclick = () => generateLessonPopup(cellData.id);
