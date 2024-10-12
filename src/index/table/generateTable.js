@@ -167,40 +167,14 @@ function generateScheduleTable(data) {
                     if (cellData.chairUp) {
                         lessonContainer.classList.add("chairUp")
                     }
+                    // check if cancelled
+                    if (cellData.cancelled) {
+                        lessonContainer.classList.add("cancelled")
+                    }
                     lessonContainer.style.cursor = 'pointer';
                     lessonContainer.style.backgroundColor = 'var(--table-highlight)';
                     lessonContainer.style.borderRadius = '10px';
 
-                    // check if cancelled
-                    if (cellData.cancelled) {
-                        lessonContainer.classList.add("cancelled")
-
-                        // add the diagonal red line:
-                        setTimeout(() => {
-
-                            // rm existing lined if there are ayny
-                            const existingLine = lessonContainer.querySelector('.diagonal-line');
-                            if (existingLine) {
-                                existingLine.remove();
-                            }
-                            const width = lessonContainer.offsetWidth;
-                            const height = lessonContainer.offsetHeight;
-                            // calc the angle
-                            const angle = Math.atan(height / width) * (180 / Math.PI);
-                            // create the line element
-                            const line = document.createElement('div');
-                            line.classList.add('diagonal-line');
-                            line.style.position = 'absolute';
-                            line.style.top = '0';
-                            line.style.left = '0';
-                            line.style.width = '999%';
-                            line.style.height = '100%';
-                            line.style.borderTop = '2px solid red';
-                            line.style.transform = `rotate(${angle}deg)`;
-                            line.style.transformOrigin = 'top left';
-                            lessonContainer.appendChild(line);
-                        }, 0);
-                    }
 
                     // check if next row has the same subject
                     const nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
@@ -220,7 +194,7 @@ function generateScheduleTable(data) {
                             td.id = `${day}${row}`; // optional id (probably won't need that)
                             td.colSpan = maxLessenSimultaneouslyPerDay[day] - cellsData.length
                             tr.appendChild(td);
-                            
+
                         }
                     }
                     td.colSpan = maxLessenSimultaneouslyPerDay[day] - SimultaneousLessen + 1
@@ -237,33 +211,5 @@ function generateScheduleTable(data) {
     const scheduleBody = document.getElementById("scheduleBody");
     scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
 }
-
-// recalculate diagonal lines on window resize
-window.addEventListener('resize', () => {
-    const cancelledCells = document.querySelectorAll('.lesson-grid-container .diagonal-line');
-    cancelledCells.forEach(line => {
-        const lessonContainer = line.parentElement;
-        line.remove(); // rm old line
-        setTimeout(() => {
-            const width = lessonContainer.offsetWidth;
-            const height = lessonContainer.offsetHeight;
-            const angle = Math.atan(height / width) * (180 / Math.PI);
-
-            const newLine = document.createElement('div');
-            newLine.classList.add('diagonal-line');
-            newLine.style.position = 'absolute';
-            newLine.style.top = '0';
-            newLine.style.left = '0';
-            newLine.style.width = '999%';
-            newLine.style.height = '100%';
-            newLine.style.borderTop = '2px solid red';
-            newLine.style.transform = `rotate(${angle}deg)`;
-            newLine.style.transformOrigin = 'top left';
-
-            lessonContainer.appendChild(newLine);
-        }, 0);
-    });
-});
-
 
 generateSchedule()
