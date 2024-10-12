@@ -1,4 +1,5 @@
-function generateLessonPopup(id) {
+import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer  } from "./dataContainer.js";
+export function generateLessonPopup(id) {
     // Retrieve the lessons from local storage (or wherever your data is stored)
     const lessons = JSON.parse(localStorage.getItem('lessons')) || [];
 
@@ -9,7 +10,7 @@ function generateLessonPopup(id) {
     if (lesson) {
         // Display the relevant data in the popup
         let popup = document.getElementById('lesson-popup')
-        popupContent = popup.getElementsByClassName("popup-content")[0]
+        let popupContent = popup.getElementsByClassName("popup-content")[0]
         if (lesson.cancelled){
             popupContent.classList.add('cancelled')
         }else{
@@ -24,8 +25,10 @@ function generateLessonPopup(id) {
         subjectDiv.classList.add('popup-centered');
 
         const subjectHeading = document.createElement('h2');
-        subjectHeading.id = 'subject';
-        subjectHeading.textContent = lesson.subjects ? lesson.subjects.map(s=>s.name).join(", ") : "Sonderstunde";
+        subjectHeading.id = 'subjects';
+        const subjectContainer = createSubjectContainer(lesson.subjects, lesson.originalSubjects);
+        subjectContainer.classList.add('multiElement');
+        subjectHeading.appendChild(subjectContainer);
         subjectDiv.appendChild(subjectHeading);
 
         const divider = document.createElement('hr');
@@ -46,18 +49,35 @@ function generateLessonPopup(id) {
             label.textContent = `${labelText}: `;
             fieldPara.appendChild(label);
 
-            const valueSpan = document.createElement('span');
-            valueSpan.id = fieldId;
-            valueSpan.textContent = fieldValue || "";
-            fieldPara.appendChild(valueSpan);
+            if (fieldValue instanceof HTMLElement) {
+                fieldValue.id = fieldId;
+                fieldValue.classList.add('multiElement');
+                fieldPara.appendChild(fieldValue);
+
+            } else {
+                const valueSpan = document.createElement('span');
+                valueSpan.id = fieldId;
+                valueSpan.textContent = fieldValue || "";
+                fieldPara.appendChild(valueSpan);
+            }
 
             return fieldPara;
         }
 
         // Generate all fields dynamically
-        popupContent.appendChild(createField("Lehrkraft", "teacher", lesson.teachers ? lesson.teachers.map(t=>t.name).join(", ") : ""));
-        popupContent.appendChild(createField("Raum", "room", lesson.rooms ? lesson.rooms.map(r=>r.name).join(", ") : ""));
-        popupContent.appendChild(createField("Klasse", "info", lesson.classes ? lesson.classes.map(c=>c.name).join(", ") : ""));
+
+        // Teacher container
+        const teacherContainer = createTeacherContainer(lesson.teachers, lesson.originalTeachers);
+        popupContent.appendChild(createField("Lehrkraft", "teachers", teacherContainer));
+
+        // Room container
+        const roomContainer = createRoomContainer(lesson.rooms, lesson.originalRooms);
+        popupContent.appendChild(createField("Raum", "rooms", roomContainer));
+
+        // Class container
+        const classContainer = createClassContainer(lesson.classes, lesson.originalClasses);
+        popupContent.appendChild(createField("Klasse", "classes", classContainer));
+
         popupContent.appendChild(createField("Info", "info", lesson.additionalInformation));
         popupContent.appendChild(createField("Entfall", "cancelled", lesson.cancelled ? "Ja" : ""));
         popupContent.appendChild(createField("Irregulär", "irregular", lesson.irregular ? "Ja" : ""));
@@ -66,8 +86,9 @@ function generateLessonPopup(id) {
         popupContent.appendChild(createField("Buchungsinfo", "bookingText", lesson.bookingText));
         popupContent.appendChild(createField("Hausaufgaben", "homework", lesson.homework));
         popupContent.appendChild(createField("Aufstuhlen", "chairUp", lesson.chairUp ? "Ja" : ""));
-        popupContent.appendChild(createField("Letztes update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
-    
+        popupContent.appendChild(createField("Letztes Update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
+        
+
         // Display the popup
         document.getElementById('lesson-popup').style.display = 'flex';
         updateGradientRatio(popupContent);
@@ -77,7 +98,6 @@ function generateLessonPopup(id) {
 function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
 }
-
 // Attach the event listener to a parent element, like the document or a specific container
 document.addEventListener('click', (event) => {
     // Check if the clicked element has a 'lessonid' attribute
@@ -93,7 +113,7 @@ document.addEventListener('click', (event) => {
 });
 
 // CAFE POPUP
-function generateCafePopup(date, main_dish, vegetarian_dish, salad, desert, cooking_team) {
+export function generateCafePopup(date, main_dish, vegetarian_dish, salad, desert, cooking_team) {
     document.getElementById('date').textContent = date;
     document.getElementById('main_dish').textContent = main_dish;
     document.getElementById('vegetarian_dish').textContent = vegetarian_dish;
@@ -119,3 +139,6 @@ function updateGradientRatio(element) {
     const ratio = height / width;
     element.style.setProperty('--ratio', ratio);
 }
+
+window.generateCafePopup = generateCafePopup
+window.generateLessonPopup = generateLessonPopup

@@ -107,11 +107,9 @@ td:not(:first-child) {
 .lesson-grid-container {
     overflow: hidden;
     position: relative;
-
-    span {
-        padding: 3px;
+    span > span > span:not(:last-child)::after{
+        content: ' ';
     }
-
     /* hide class if its the only one. 
     TODO: Disable if not own timetable */
     .lesson-class:has(span:only-child) {
@@ -166,3 +164,4 @@ td:not(:first-child) {
 .irregular {
     /*TODO*/
 }
+

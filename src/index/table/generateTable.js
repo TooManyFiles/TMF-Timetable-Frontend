@@ -1,3 +1,5 @@
+import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer } from "./dataContainer.js";
+
 function generateSchedule() {
     let lessons = localStorage.getItem('lessons');
     lessons = JSON.parse(lessons);
@@ -14,58 +16,24 @@ function generateSchedule() {
 }
 
 
+
 function generateLessonTableContent(lesson) {
     const container = document.createElement('div');
     container.classList.add('lesson-grid-container');
 
     // Create the subject container
-    const subjectContainer = document.createElement('span');
-    subjectContainer.classList.add('lesson-subject');
-    if (lesson.subjects && lesson.subjects.length) {
-        lesson.subjects.forEach(subject => {
-            const subjectItem = document.createElement('span');
-            subjectItem.textContent = subject.name;
-            subjectContainer.appendChild(subjectItem);
-        });
-    }
+    // Use the helper functions to generate each section
+    const subjectContainer = createSubjectContainer(lesson.subjects, lesson.originalSubjects);
     container.appendChild(subjectContainer);
 
-    // Create the room container
-    const roomContainer = document.createElement('span');
-    roomContainer.classList.add('lesson-room');
-    if (lesson.rooms && lesson.rooms.length) {
-        lesson.rooms.forEach(room => {
-            const roomItem = document.createElement('span');
-            roomItem.textContent = room.name;
-            roomContainer.appendChild(roomItem);
-        });
-    }
+    const roomContainer = createRoomContainer(lesson.rooms, lesson.originalRooms);
     container.appendChild(roomContainer);
 
-    // Create the teacher container
-    const teacherContainer = document.createElement('span');
-    teacherContainer.classList.add('lesson-teacher');
-    if (lesson.teachers && lesson.teachers.length) {
-        lesson.teachers.forEach(teacher => {
-            const teacherItem = document.createElement('span');
-            teacherItem.textContent = teacher.name;
-            teacherContainer.appendChild(teacherItem);
-        });
-    }
+    const teacherContainer = createTeacherContainer(lesson.teachers, lesson.originalTeachers);
     container.appendChild(teacherContainer);
 
-    // Create the class container
-    const classContainer = document.createElement('span');
-    classContainer.classList.add('lesson-class');
-    if (lesson.classes && lesson.classes.length) {
-        lesson.classes.forEach(_class => {
-            const classItem = document.createElement('span');
-            classItem.textContent = _class.name;
-            classContainer.appendChild(classItem);
-        });
-    }
+    const classContainer = createClassContainer(lesson.classes, lesson.originalClasses);
     container.appendChild(classContainer);
-
     // Add additional properties
     const additionalInfo = {
         additionalInformation: lesson.additionalInformation || '',
@@ -90,8 +58,9 @@ function generateLessonTableContent(lesson) {
 
     return container;
 }
+
 function updateColspan(columns) {
-    days = ['m', 't', 'w', 'th', 'f']
+    const days = ['m', 't', 'w', 'th', 'f']
     const thElements = document.querySelectorAll('#schedule th:not(:first-child)');
     thElements.forEach((th, index) => {
         th.colSpan = columns[days[index % 5]];
@@ -130,6 +99,7 @@ function generateScheduleTable(data) {
     const maxSimultaneousLessonsPerDay = getMaxSimultaneousLessonsPerDay(data)
     updateColspan(maxSimultaneousLessonsPerDay)
 
+
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = []
 
@@ -148,6 +118,7 @@ function generateScheduleTable(data) {
                 td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
                 tr.appendChild(td);
             }
+            
             cellsData.forEach(cellData => {
                 if (alreadyDrawn.includes(cellData.id)) {
                     return
@@ -176,16 +147,16 @@ function generateScheduleTable(data) {
 
 
                     // check if next row has the same subject
-                    const nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
+                    let nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
                     let SimultaneousLessons = cellsData.length
                     if (nextCellData) {
                         let rowspan = 1;
                         SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
                         // calc how many rows to merge (find consecutive same subjects)
-                        while (next = data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
+                        while (nextCellData = data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
                             SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
                             rowspan++;
-                            alreadyDrawn.push(next.id)
+                            alreadyDrawn.push(nextCellData.id)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
                         for (let index = 0; index < SimultaneousLessons - cellsData.length; index++) {
@@ -200,11 +171,13 @@ function generateScheduleTable(data) {
 
                 }
 
+
                 tr.appendChild(td);
             });
         });
 
         // append row to the table body
+        dummyScheduleBody.appendChild(tr);
         dummyScheduleBody.appendChild(tr);
     }
     const scheduleBody = document.getElementById("scheduleBody");
