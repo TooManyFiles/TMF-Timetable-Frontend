@@ -105,10 +105,9 @@ td:not(:first-child) {
 }
 
 .lesson-grid-container {
-    span {
-        padding: 3px;
+    span > span > span:not(:last-child)::after{
+        content: ' ';
     }
-
     /* hide class if its the only one. 
     TODO: Disable if not own timetable */
     .lesson-class:has(span:only-child) {
@@ -143,6 +142,28 @@ td:not(:first-child) {
     .originalData {
         text-decoration: line-through;
         text-decoration-color: red;
+    }
+    .lesson-teacher .short::before{
+        content: '(';
+    }
+    .lesson-teacher .short::after{
+        content: ')';
+    }
+    .originalData {
+        text-decoration: line-through;
+        text-decoration-color: red;
+    }
+    .lesson-room .info::before{
+        content: '(';
+    }
+    .lesson-room .info::after{
+        content: ')';
+    }
+    .lesson-subject .short::before{
+        content: '(';
+    }
+    .lesson-subject .short::after{
+        content: ')';
     }
 }
 
