@@ -98,7 +98,7 @@ function updateColspan(columns) {
     });
 
 }
-function getMaxLessenSimultaneouslyPerDay(data) {
+function getMaxSimultaneousLessonsPerDay(data) {
     const countMap = {};
     const maxCount = {};
 
@@ -127,9 +127,8 @@ function generateScheduleTable(data) {
     // find highest row number in the data (--> latest session) to know how many rows to create
     const maxRow = Math.max(...data.map(item => item.row));
 
-    const maxLessenSimultaneouslyPerDay = getMaxLessenSimultaneouslyPerDay(data)
-    console.log(maxLessenSimultaneouslyPerDay)
-    updateColspan(maxLessenSimultaneouslyPerDay)
+    const maxSimultaneousLessonsPerDay = getMaxSimultaneousLessonsPerDay(data)
+    updateColspan(maxSimultaneousLessonsPerDay)
 
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = []
@@ -146,7 +145,7 @@ function generateScheduleTable(data) {
             if (cellsData.length == 0) {
                 const td = document.createElement('td');
                 td.id = `${day}${row}`; // optional id (probably won't need that)
-                td.colSpan = maxLessenSimultaneouslyPerDay[day] - cellsData.length
+                td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
                 tr.appendChild(td);
             }
             cellsData.forEach(cellData => {
@@ -178,26 +177,26 @@ function generateScheduleTable(data) {
 
                     // check if next row has the same subject
                     const nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
-                    let SimultaneousLessen = cellsData.length
+                    let SimultaneousLessons = cellsData.length
                     if (nextCellData) {
                         let rowspan = 1;
-                        SimultaneousLessen = Math.max(SimultaneousLessen, data.filter(item => item.row === row + rowspan && item.day === day).length)
+                        SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
                         // calc how many rows to merge (find consecutive same subjects)
                         while (next = data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
-                            SimultaneousLessen = Math.max(SimultaneousLessen, data.filter(item => item.row === row + rowspan && item.day === day).length)
+                            SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
                             rowspan++;
                             alreadyDrawn.push(next.id)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
-                        for (let index = 0; index < SimultaneousLessen - cellsData.length; index++) {
+                        for (let index = 0; index < SimultaneousLessons - cellsData.length; index++) {
                             const td = document.createElement('td');
                             td.id = `${day}${row}`; // optional id (probably won't need that)
-                            td.colSpan = maxLessenSimultaneouslyPerDay[day] - cellsData.length
+                            td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
                             tr.appendChild(td);
 
                         }
                     }
-                    td.colSpan = maxLessenSimultaneouslyPerDay[day] - SimultaneousLessen + 1
+                    td.colSpan = maxSimultaneousLessonsPerDay[day] - SimultaneousLessons + 1
 
                 }
 
