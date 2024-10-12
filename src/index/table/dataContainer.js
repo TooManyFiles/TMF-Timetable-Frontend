@@ -5,6 +5,7 @@ export function createTeacherContainer(teachers, originalTeachers = []) {
 
     function appendTeacherData(teacher, isOriginal = false) {
         const teacherItem = document.createElement('span');
+        teacherItem.setAttribute("teacherid", teacher.id)
 
         const teacherPronoun = document.createElement('span');
         teacherPronoun.classList.add('pronoun');
@@ -49,6 +50,7 @@ export function createRoomContainer(rooms, originalRooms = []) {
 
     function appendRoomData(room, isOriginal = false) {
         const roomItem = document.createElement('span');
+        roomItem.setAttribute("roomid", room.id)
 
         const roomName = document.createElement('span');
         roomName.classList.add('name');
@@ -81,6 +83,7 @@ export function createClassContainer(classes, originalClasses = []) {
     function appendClassData(_class, isOriginal = false) {
         const classItem = document.createElement('span');
         classItem.textContent = _class.name;
+        classItem.setAttribute("classid", _class.id)
 
         if (isOriginal) classItem.classList.add('originalData');
 
@@ -100,6 +103,7 @@ export function createSubjectContainer(subjects, originalSubjects = []) {
 
     function appendClassData(subject, isOriginal = false) {
         const subjectItem = document.createElement('span');
+        subjectItem.setAttribute("subjectid", subject.id)
 
         const subjectItemLong = document.createElement('span');
         subjectItemLong.classList.add('long');
