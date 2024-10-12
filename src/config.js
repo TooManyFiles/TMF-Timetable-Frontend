@@ -1,4 +1,4 @@
-let API_URL_input = 'http://localhost:8080'
+let API_URL_input = '${API_URL}'
 
 if (!API_URL_input.endsWith('/')) {
     API_URL_input = API_URL_input + "/"
