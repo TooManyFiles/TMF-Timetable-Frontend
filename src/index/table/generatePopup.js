@@ -72,6 +72,19 @@ function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
 }
 
+// Attach the event listener to a parent element, like the document or a specific container
+document.addEventListener('click', (event) => {
+    // Check if the clicked element has a 'lessonid' attribute
+    const target = event.target.closest('[lessonid]');
+    
+    if (target) {
+        // Get the lessonid attribute value
+        const lessonid = target.getAttribute('lessonid');
+        
+        // Call the function with lessonid
+        generateLessonPopup(lessonid-0);
+    }
+});
 
 // CAFE POPUP
 function generateCafePopup(date, main_dish, vegetarian_dish, salad, desert, cooking_team) {

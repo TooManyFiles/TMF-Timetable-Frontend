@@ -167,7 +167,6 @@ function generateScheduleTable(data) {
                     if (cellData.chairUp) {
                         lessonContainer.classList.add("chairUp")
                     }
-                    lessonContainer.onclick = () => generateLessonPopup(cellData.id);
                     lessonContainer.style.cursor = 'pointer';
                     lessonContainer.style.backgroundColor = 'var(--table-highlight)';
                     lessonContainer.style.borderRadius = '10px';
