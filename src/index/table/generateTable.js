@@ -99,6 +99,7 @@ function generateScheduleTable(data) {
     const maxSimultaneousLessonsPerDay = getMaxSimultaneousLessonsPerDay(data)
     updateColspan(maxSimultaneousLessonsPerDay)
 
+
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = []
 
@@ -117,6 +118,7 @@ function generateScheduleTable(data) {
                 td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
                 tr.appendChild(td);
             }
+            
             cellsData.forEach(cellData => {
                 if (alreadyDrawn.includes(cellData.id)) {
                     return
@@ -169,11 +171,13 @@ function generateScheduleTable(data) {
 
                 }
 
+
                 tr.appendChild(td);
             });
         });
 
         // append row to the table body
+        dummyScheduleBody.appendChild(tr);
         dummyScheduleBody.appendChild(tr);
     }
     const scheduleBody = document.getElementById("scheduleBody");
