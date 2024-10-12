@@ -12,6 +12,8 @@ function generateLessonPopup(id) {
         popupContent = popup.getElementsByClassName("popup-content")[0]
         if (lesson.cancelled){
             popupContent.classList.add('cancelled')
+        }else{
+            popupContent.classList.remove('cancelled')
         }
 
         const existingPTags = popupContent.querySelectorAll('p, div');
