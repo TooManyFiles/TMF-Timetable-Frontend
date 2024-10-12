@@ -107,6 +107,7 @@ td:not(:first-child) {
 .lesson-grid-container {
     overflow: hidden;
     position: relative;
+
     span {
         padding: 3px;
     }
@@ -143,20 +144,23 @@ td:not(:first-child) {
     }
 }
 
-.cancelled {
-    background-color: var(--table-highlight-faded) !important;
-    color: var(--text-faded) !important;
-    font-style: italic !important;
-}
-.cancelled::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+#scheduleBody {
+    .cancelled {
+        background-color: var(--table-highlight-faded) !important;
+        color: var(--text-faded) !important;
+        font-style: italic !important;
+    }
+
+    .cancelled::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: red;
+        clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+    }
 }
 
 .irregular {

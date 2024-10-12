@@ -69,8 +69,15 @@
 .popup-content .close-btn:hover {
     color: #ccc;
 }
-#lesson-popup{
-    p:has(span:empty){
+
+#lesson-popup {
+    p:has(span:empty) {
         display: none;
     }
+}
+
+.popup-content.cancelled {
+
+    background: linear-gradient(atan(var(--ratio)), var(--table-highlight) 49%, red 49%, red 51%, var(--table-highlight) 51%);
+
 }
