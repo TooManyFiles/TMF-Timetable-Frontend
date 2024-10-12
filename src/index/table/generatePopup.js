@@ -50,9 +50,13 @@ function generateLessonPopup(id) {
         }
 
         // Generate all fields dynamically
+        popupContent.appendChild(createField("Original Fach", "teacher", lesson.originalSubjects ? lesson.originalSubjects.map(t=>t.name).join(", ") : ""));
         popupContent.appendChild(createField("Lehrkraft", "teacher", lesson.teachers ? lesson.teachers.map(t=>t.name).join(", ") : ""));
+        popupContent.appendChild(createField("Original Lehrkraft", "teacher", lesson.originalTeachers ? lesson.originalTeachers.map(t=>t.name).join(", ") : ""));
         popupContent.appendChild(createField("Raum", "room", lesson.rooms ? lesson.rooms.map(r=>r.name).join(", ") : ""));
+        popupContent.appendChild(createField("Original Raum", "room", lesson.originalRooms ? lesson.originalRooms.map(r=>r.name).join(", ") : ""));
         popupContent.appendChild(createField("Klasse", "info", lesson.classes ? lesson.classes.map(c=>c.name).join(", ") : ""));
+        popupContent.appendChild(createField("Original Klasse", "info", lesson.originalClasses ? lesson.originalClasses.map(c=>c.name).join(", ") : ""));
         popupContent.appendChild(createField("Info", "info", lesson.additionalInformation));
         popupContent.appendChild(createField("Entfall", "cancelled", lesson.cancelled ? "Ja" : ""));
         popupContent.appendChild(createField("Irregulär", "irregular", lesson.irregular ? "Ja" : ""));
