@@ -22,7 +22,7 @@ function generateLessonTableContent(lesson) {
     if (lesson.subjects && lesson.subjects.length) {
         lesson.subjects.forEach(subject => {
             const subjectElement = document.createElement('span');
-            
+
             const subjectItemLong = document.createElement('span');
             subjectItemLong.classList.add('long');
             subjectItemLong.textContent = subject.name;
@@ -206,7 +206,7 @@ function generateSchedule(data) {
                 if (cellData.chairUp) {
                     td.classList.add("chairUp")
                 }
-                td.onclick = () => generateLessonPopup(cellData.id);
+                td.onclick = () => window.generateLessonPopup(cellData.id);
                 td.style.cursor = 'pointer';
                 td.style.backgroundColor = 'var(--table-highlight)';
                 td.style.borderRadius = '10px';

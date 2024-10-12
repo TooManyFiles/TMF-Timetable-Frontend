@@ -97,5 +97,11 @@
         #room .info::after{
             content: ')';
         }
+        #subject .short::before{
+            content: '(';
+        }
+        #subject .short::after{
+            content: ')';
+        }
     }
 }

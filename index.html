@@ -99,16 +99,16 @@
                 <tr class="subheading-row">
                     <th></th>
                     <th><span id="cafepreview-mon"
-                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)"
+                            onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)"
                             style="cursor: pointer;"></span></th>
                     <th><span id="cafepreview-tue"
-                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)"
+                            onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)"
                             style="cursor: pointer;"></span></th>
                     <th><span id="cafepreview-wed"
-                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)"
+                            onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)"
                             style="cursor: pointer;"></span></th>
                     <th><span id="cafepreview-thu"
-                            onclick="generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)"
+                            onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)"
                             style="cursor: pointer;"></span></th>
                     <th>Kein Kochtag</th>
                 </tr>
@@ -160,9 +160,9 @@
     <script type="module" src="src/index/table/statusDisplay.js"></script>
     <script type="module" src="src/index/table/foodplan.js"></script>
     <script type="module" src="src/api/refresh.js"></script>
+    <script type="module" src="src/index/table/generatePopup.js" defer></script>
     <script src="src/index/timeControl.js" defer></script>
     <script src="src/index/table/generateTable.js" defer></script>
-    <script src="src/index/table/generatePopup.js" defer></script>
     <script>
         window.onload = async function () {
             if (!await isLoggedIn()) {
