@@ -20,7 +20,7 @@ export function generateLessonPopup(id) {
         subjectDiv.classList.add('popup-centered');
 
         const subjectHeading = document.createElement('h2');
-        subjectHeading.id = 'subject';
+        subjectHeading.id = 'subjects';
         const subjectContainer = createSubjectContainer(lesson.subjects, lesson.originalSubjects);
         subjectContainer.classList.add('multiElement');
         subjectHeading.appendChild(subjectContainer);
@@ -63,11 +63,11 @@ export function generateLessonPopup(id) {
 
         // Teacher container
         const teacherContainer = createTeacherContainer(lesson.teachers, lesson.originalTeachers);
-        popupContent.appendChild(createField("Lehrkraft", "teacher", teacherContainer));
+        popupContent.appendChild(createField("Lehrkraft", "teachers", teacherContainer));
 
         // Room container
         const roomContainer = createRoomContainer(lesson.rooms, lesson.originalRooms);
-        popupContent.appendChild(createField("Raum", "room", roomContainer));
+        popupContent.appendChild(createField("Raum", "rooms", roomContainer));
 
         // Class container
         const classContainer = createClassContainer(lesson.classes, lesson.originalClasses);
@@ -81,7 +81,7 @@ export function generateLessonPopup(id) {
         popupContent.appendChild(createField("Buchungsinfo", "bookingText", lesson.bookingText));
         popupContent.appendChild(createField("Hausaufgaben", "homework", lesson.homework));
         popupContent.appendChild(createField("Aufstuhlen", "chairUp", lesson.chairUp ? "Ja" : ""));
-        popupContent.appendChild(createField("Letztes update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
+        popupContent.appendChild(createField("Letztes Update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
         
 
         // Display the popup

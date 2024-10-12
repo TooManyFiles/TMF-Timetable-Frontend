@@ -17,10 +17,10 @@ export function createTeacherContainer(teachers, originalTeachers = []) {
         teacherTitle.textContent = teacher.title;
         teacherItem.appendChild(teacherTitle);
 
-        const teacherForename = document.createElement('span');
-        teacherForename.classList.add('forename');
-        teacherForename.textContent = teacher.firstName;
-        teacherItem.appendChild(teacherForename);
+        const teacherFirstName = document.createElement('span');
+        teacherFirstName.classList.add('firstName');
+        teacherFirstName.textContent = teacher.firstName;
+        teacherItem.appendChild(teacherFirstName);
 
         const teacherName = document.createElement('span');
         teacherName.classList.add('long');

@@ -81,26 +81,26 @@
         p > span > span > span:not(:last-child)::after{
             content: ' ';
         }
-        #teacher .short::before{
+        #teachers .short::before{
             content: '(';
         }
-        #teacher .short::after{
+        #teachers .short::after{
             content: ')';
         }
         .originalData {
             text-decoration: line-through;
             text-decoration-color: red;
         }
-        #room .info::before{
+        #rooms .info::before{
             content: '(';
         }
-        #room .info::after{
+        #rooms .info::after{
             content: ')';
         }
-        #subject .short::before{
+        #subjects .short::before{
             content: '(';
         }
-        #subject .short::after{
+        #subjects .short::after{
             content: ')';
         }
     }
