@@ -150,3 +150,8 @@ td:not(:first-child) {
 .irregular {
     /*TODO*/
 }
+
+.originalData {
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
