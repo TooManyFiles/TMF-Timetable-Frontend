@@ -1,17 +1,21 @@
 import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer } from "./dataContainer.js";
-let lessons = localStorage.getItem('lessons');
-lessons = JSON.parse(lessons);
-// Get the start (Monday) and end (Friday) of the current week
-let startOfWeek = window.getMonday();
-const endOfWeek = window.getFriday().setHours(24, 59, 59, 0); // Set to midnight (24, 59, 59, 0)
 
-// Filter lessons based on the startTime
-let scheduleData = lessons.filter(lesson => {
-    const lessonDate = new Date(lesson.startTime); // Assuming startDate is in a format compatible with Date constructor
-    return lessonDate >= startOfWeek && lessonDate <= endOfWeek;
-});
+function generateSchedule() {
+    let lessons = localStorage.getItem('lessons');
+    lessons = JSON.parse(lessons);
+    // Get the start (Monday) and end (Friday) of the current week
+    let startOfWeek = window.getMonday();
+    const endOfWeek = window.getFriday().setHours(24, 59, 59, 0); // Set to midnight (24, 59, 59, 0)
 
-// scheduleData = lessons;
+    // Filter lessons based on the startTime
+    let scheduleData = lessons.filter(lesson => {
+        const lessonDate = new Date(lesson.startTime); // Assuming startDate is in a format compatible with Date constructor
+        return lessonDate >= startOfWeek && lessonDate <= endOfWeek;
+    });
+    generateScheduleTable(scheduleData);
+}
+
+
 
 function generateLessonTableContent(lesson) {
     const container = document.createElement('div');
@@ -55,20 +59,48 @@ function generateLessonTableContent(lesson) {
     return container;
 }
 
+function updateColspan(columns) {
+    const days = ['m', 't', 'w', 'th', 'f']
+    const thElements = document.querySelectorAll('#schedule th:not(:first-child)');
+    thElements.forEach((th, index) => {
+        th.colSpan = columns[days[index % 5]];
+    });
 
-function generateSchedule(data) {
-    const scheduleBody = document.getElementById("scheduleBody");
+}
+function getMaxSimultaneousLessonsPerDay(data) {
+    const countMap = {};
+    const maxCount = {};
+
+    data.forEach(item => {
+        // Initialize countMap for each day if not already initialized
+        if (!countMap[item.day]) {
+            countMap[item.day] = {};
+        }
+
+        // Initialize the row count for each day if not already initialized
+        countMap[item.day][item.row] = (countMap[item.day][item.row] || 0) + 1;
+
+        // Initialize maxCount for each day if not already initialized
+        if (!maxCount[item.day]) {
+            maxCount[item.day] = 1;
+        }
+
+        // Update maxCount for the current day
+        maxCount[item.day] = Math.max(maxCount[item.day], countMap[item.day][item.row]);
+    });
+
+    return maxCount;
+}
+function generateScheduleTable(data) {
+    const dummyScheduleBody = document.createElement('tbody');
     // find highest row number in the data (--> latest session) to know how many rows to create
     const maxRow = Math.max(...data.map(item => item.row));
 
-    // keep track on how many lessons to merge on each day
-    const rowspanMap = {
-        'm': 0,
-        't': 0,
-        'w': 0,
-        'th': 0,
-        'f': 0
-    };
+    const maxSimultaneousLessonsPerDay = getMaxSimultaneousLessonsPerDay(data)
+    updateColspan(maxSimultaneousLessonsPerDay)
+
+    // keep track on witch lessons already have been drawn as a combination
+    let alreadyDrawn = []
 
     for (let row = 1; row <= maxRow; row++) {
         const tr = document.createElement('tr');
@@ -78,111 +110,74 @@ function generateSchedule(data) {
         tr.appendChild(tdNumber);
 
         ['m', 't', 'w', 'th', 'f'].forEach(day => {
-            const cellData = data.find(item => item.row === row && item.day === day);
-            // if in the middle of a rowspan, skip creating a new cell for that day
-            if (rowspanMap[day] > 0) {
-                rowspanMap[day]--;
-                return;
+            const cellsData = data.filter(item => item.row === row && item.day === day);
+            if (cellsData.length == 0) {
+                const td = document.createElement('td');
+                td.id = `${day}${row}`; // optional id (probably won't need that)
+                td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
+                tr.appendChild(td);
             }
-
-            const td = document.createElement('td');
-            td.id = `${day}${row}`; // optional id (probably won't need that)
-
-            if (cellData) {
-                td.appendChild(generateLessonTableContent(cellData));
-                td.setAttribute("lessonid", cellData.id)
-                if (cellData.irregular) {
-                    td.classList.add("irregular")
-                }
-                if (cellData.chairUp) {
-                    td.classList.add("chairUp")
-                }
-                td.onclick = () => window.generateLessonPopup(cellData.id);
-                td.style.cursor = 'pointer';
-                td.style.backgroundColor = 'var(--table-highlight)';
-                td.style.borderRadius = '10px';
-
-                // check if cancelled
-                if (cellData.cancelled) {
-                    td.classList.add("cancelled")
-
-                    // add the diagonal red line:
-                    setTimeout(() => {
-
-                        // rm existing lined if there are ayny
-                        const existingLine = td.querySelector('.diagonal-line');
-                        if (existingLine) {
-                            existingLine.remove();
-                        }
-                        const width = td.offsetWidth;
-                        const height = td.offsetHeight;
-                        // calc the angle
-                        const angle = Math.atan(height / width) * (180 / Math.PI);
-                        // create the line element
-                        const line = document.createElement('div');
-                        line.classList.add('diagonal-line');
-                        line.style.position = 'absolute';
-                        line.style.top = '0';
-                        line.style.left = '0';
-                        line.style.width = '999%';
-                        line.style.height = '100%';
-                        line.style.borderTop = '2px solid red';
-                        line.style.transform = `rotate(${angle}deg)`;
-                        line.style.transformOrigin = 'top left';
-
-                        td.appendChild(line);
-                    }, 0);
+            cellsData.forEach(cellData => {
+                if (alreadyDrawn.includes(cellData.id)) {
+                    return
                 }
 
-                // check if next row has the same subject
-                const nextCellData = data.find(item => item.row === row + 1 && item.day === day);
-                if (nextCellData && nextCellData.value === cellData.value && nextCellData.cancelled === cellData.cancelled) {
-                    let rowspan = 1;
+                const td = document.createElement('td');
+                td.id = `${day}${row}`; // optional id (probably won't need that)
 
-                    // calc how many rows to merge (find consecutive same subjects)
-                    while (data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
-                        rowspan++;
+                if (cellData) {
+                    const lessonContainer = generateLessonTableContent(cellData);
+                    td.appendChild(lessonContainer);
+                    lessonContainer.setAttribute("lessonid", cellData.id)
+                    if (cellData.irregular) {
+                        lessonContainer.classList.add("irregular")
                     }
+                    if (cellData.chairUp) {
+                        lessonContainer.classList.add("chairUp")
+                    }
+                    // check if cancelled
+                    if (cellData.cancelled) {
+                        lessonContainer.classList.add("cancelled")
+                    }
+                    lessonContainer.style.cursor = 'pointer';
+                    lessonContainer.style.backgroundColor = 'var(--table-highlight)';
+                    lessonContainer.style.borderRadius = '10px';
 
-                    td.rowSpan = rowspan; // set rowspan for merging cells
-                    rowspanMap[day] = rowspan - 1; // Skip following rows for this day
+
+                    // check if next row has the same subject
+                    let nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
+                    let SimultaneousLessons = cellsData.length
+                    if (nextCellData) {
+                        let rowspan = 1;
+                        SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
+                        // calc how many rows to merge (find consecutive same subjects)
+                        while (nextCellData = data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
+                            SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
+                            rowspan++;
+                            alreadyDrawn.push(nextCellData.id)
+                        }
+                        td.rowSpan = rowspan; // set rowspan for merging cells
+                        for (let index = 0; index < SimultaneousLessons - cellsData.length; index++) {
+                            const td = document.createElement('td');
+                            td.id = `${day}${row}`; // optional id (probably won't need that)
+                            td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
+                            tr.appendChild(td);
+
+                        }
+                    }
+                    td.colSpan = maxSimultaneousLessonsPerDay[day] - SimultaneousLessons + 1
+
                 }
-            }
 
-            tr.appendChild(td);
+                tr.appendChild(td);
+            });
         });
 
         // append row to the table body
-        scheduleBody.appendChild(tr);
+        dummyScheduleBody.appendChild(tr);
     }
+    const scheduleBody = document.getElementById("scheduleBody");
+    scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
 }
 
-// recalculate diagonal lines on window resize
-window.addEventListener('resize', () => {
-    const cancelledCells = document.querySelectorAll('td .diagonal-line');
-    cancelledCells.forEach(line => {
-        const td = line.parentElement;
-        line.remove(); // rm old line
-        setTimeout(() => {
-            const width = td.offsetWidth;
-            const height = td.offsetHeight;
-            const angle = Math.atan(height / width) * (180 / Math.PI);
-
-            const newLine = document.createElement('div');
-            newLine.classList.add('diagonal-line');
-            newLine.style.position = 'absolute';
-            newLine.style.top = '0';
-            newLine.style.left = '0';
-            newLine.style.width = '999%';
-            newLine.style.height = '100%';
-            newLine.style.borderTop = '2px solid red';
-            newLine.style.transform = `rotate(${angle}deg)`;
-            newLine.style.transformOrigin = 'top left';
-
-            td.appendChild(newLine);
-        }, 0);
-    });
-});
-
-
-generateSchedule(scheduleData);
+generateSchedule()
