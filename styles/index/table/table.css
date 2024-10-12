@@ -139,6 +139,11 @@ td:not(:first-child) {
     .lesson-addInfo {
         grid-area: addInfo;
     }
+
+    .originalData {
+        text-decoration: line-through;
+        text-decoration-color: red;
+    }
 }
 
 .cancelled {
@@ -151,7 +156,3 @@ td:not(:first-child) {
     /*TODO*/
 }
 
-.originalData {
-    text-decoration: line-through;
-    text-decoration-color: red;
-}

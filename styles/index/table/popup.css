@@ -70,7 +70,32 @@
     color: #ccc;
 }
 #lesson-popup{
-    p:has(span:empty){
-        display: none;
+    .popup-content {
+        p:not(:has(span > span)):has(span:empty){
+            display: none;
+        }
+        .multiElement > span:not(:last-child)::after {
+            content: ", ";
+            /* Add comma between items */
+        }
+        p > span > span > span:not(:last-child)::after{
+            content: ' ';
+        }
+        #teacher .short::before{
+            content: '(';
+        }
+        #teacher .short::after{
+            content: ')';
+        }
+        .originalData {
+            text-decoration: line-through;
+            text-decoration-color: red;
+        }
+        #room .info::before{
+            content: '(';
+        }
+        #room .info::after{
+            content: ')';
+        }
     }
 }
