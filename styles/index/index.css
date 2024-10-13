@@ -107,12 +107,19 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     position: relative;
 }
 
+.bottomnav {
+    display: none;
+}
+
 @media (max-width: 1023px) {
     .controls-left {
         display: none;
     }
     .controls-right {
         display: none;
+    }
+    .bottomnav {
+        display: flex;
     }
 }
 
