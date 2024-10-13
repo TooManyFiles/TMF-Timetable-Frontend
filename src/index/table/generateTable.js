@@ -118,7 +118,7 @@ function generateScheduleTable(data) {
                 td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
                 tr.appendChild(td);
             }
-            
+
             cellsData.forEach(cellData => {
                 if (alreadyDrawn.includes(cellData.id)) {
                     return
@@ -159,21 +159,19 @@ function generateScheduleTable(data) {
                             alreadyDrawn.push(nextCellData.id)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
-                        for (let index = 0; index < SimultaneousLessons - cellsData.length; index++) {
-                            const td = document.createElement('td');
-                            td.id = `${day}${row}`; // optional id (probably won't need that)
-                            td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
-                            tr.appendChild(td);
-
-                        }
                     }
-                    td.colSpan = maxSimultaneousLessonsPerDay[day] - SimultaneousLessons + 1
-
+                    td.colSpan = 1;
+                    (maxSimultaneousLessonsPerDay[day] / cellsData.length)
                 }
-
-
                 tr.appendChild(td);
             });
+            if ((maxSimultaneousLessonsPerDay[day] - cellsData.length) > 0) {
+                const td = document.createElement('td');
+                td.id = `${day}${row}`; // optional id (probably won't need that)
+                td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
+                tr.appendChild(td);
+
+            }
         });
 
         // append row to the table body
