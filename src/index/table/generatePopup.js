@@ -129,4 +129,6 @@ document.getElementById('cafe-popup').addEventListener('click', function () {
 });
 
 window.generateCafePopup = generateCafePopup
+window.closeCafePopup = closeCafePopup
 window.generateLessonPopup = generateLessonPopup
+window.closeLessonPopup = closeLessonPopup
