@@ -109,6 +109,23 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
 
 .bottomnav {
     display: none;
+    background-color: var(--accent-light);
+    width: 95%;
+    height: 7vh;
+    margin: auto;
+    margin-top: 1vh;
+
+    border-radius: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottomnav_img {
+    height: 4.5vh;
+}
+.bottomnav_img:hover{
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 @media (max-width: 1023px) {
