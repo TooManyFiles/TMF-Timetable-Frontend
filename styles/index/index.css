@@ -121,6 +121,9 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     .bottomnav {
         display: flex;
     }
+    #status-display {
+        display: none !important;
+    }
 }
 
 @media (max-width: 600px) {
