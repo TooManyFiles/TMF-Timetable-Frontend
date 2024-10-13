@@ -115,3 +115,18 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
         display: none;
     }
 }
+
+@media (max-width: 600px) {
+    .timerange-controls {
+        margin: 0;
+    }
+    .timerange-center  {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 400px) {
+    .timerange-item {
+        font-size: medium;
+    }
+}
