@@ -111,7 +111,7 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     display: none;
     background-color: var(--accent-light);
     width: 95%;
-    height: 7vh;
+    height: 5.5vh;
     margin: auto;
     margin-top: 1vh;
 
@@ -121,7 +121,7 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
 }
 
 .bottomnav_img {
-    height: 4.5vh;
+    height: 4vh;
 }
 .bottomnav_img:hover{
     cursor: pointer;
