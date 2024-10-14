@@ -195,7 +195,7 @@ function generateScheduleTable(data) {
                             alreadyDrawn.push(nextCellData)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
-                        if (SimultaneousLessons != cellsData.length){
+                        if (SimultaneousLessons != cellsData.length) {
                             elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (SimultaneousLessons - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
                         }
                         for (let index = 0; index < rowspan - 1; index++) {
@@ -223,5 +223,12 @@ function generateScheduleTable(data) {
     scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
 }
 
-generateSchedule()
 window.generateSchedule = generateSchedule
+let lastLessons = localStorage.getItem('lessons');
+setInterval(() => {
+    const currentLessons = localStorage.getItem('lessons');
+    if (currentLessons !== lastLessons) {
+        lastLessons = currentLessons;
+        window.generateSchedule();
+    }
+}, 1000); // Adjust the interval as needed

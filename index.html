@@ -170,7 +170,7 @@
     <script type="module" src="src/index/table/generatePopup.js" defer></script>
     <script type="module" src="src/index/table/generateTable.js" defer></script>
     <script src="src/index/timeControl.js" defer></script>
-    <script>
+    <script defer>
         window.onload = async function () {
             if (!await isLoggedIn()) {
                 location.href = "/login.html";
@@ -179,15 +179,6 @@
             window.refreshAll();
             setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
         }
-        window.addEventListener('storage', (event) => {
-            if (event.storageArea === localStorage) {
-                // Check if a specific key changed, if needed
-                if (event.key === 'lessons') {
-                    window.generateSchedule();
-                }
-            }
-        });
-
     </script>
 </body>
 
