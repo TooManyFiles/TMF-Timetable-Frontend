@@ -1,15 +1,20 @@
 import { login } from "../api/auth.js";
+import { hashPasswordBool } from "../config.js";
+import { hashPassword } from "./hash.js";
 
 document.getElementById('login-form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent form from submitting the traditional way
     
     const button = document.querySelector('.button');
     const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    let password = document.getElementById('password').value;
 
     setLoadingButton(button, true);
     
     try {
+        if (hashPasswordBool) {
+            password = hashPassword(password);
+        }
         const result = await login(username, password);
 
         if (result.status === 401) {
