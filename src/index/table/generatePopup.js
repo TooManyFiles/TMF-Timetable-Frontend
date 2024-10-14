@@ -11,6 +11,11 @@ export function generateLessonPopup(id) {
         // Display the relevant data in the popup
         let popup = document.getElementById('lesson-popup')
         let popupContent = popup.getElementsByClassName("popup-content")[0]
+        if (lesson.cancelled){
+            popupContent.classList.add('cancelled')
+        }else{
+            popupContent.classList.remove('cancelled')
+        }
 
         const existingPTags = popupContent.querySelectorAll('p, div');
         existingPTags.forEach(p => p.remove());
@@ -86,6 +91,7 @@ export function generateLessonPopup(id) {
 
         // Display the popup
         document.getElementById('lesson-popup').style.display = 'flex';
+        updateGradientRatio(popupContent);
     }
 }
 
@@ -127,6 +133,12 @@ document.getElementById('lesson-popup').addEventListener('click', function () {
 document.getElementById('cafe-popup').addEventListener('click', function () {
     closeCafePopup();
 });
+function updateGradientRatio(element) {
+    const height = element.offsetHeight;
+    const width = element.offsetWidth;
+    const ratio = height / width;
+    element.style.setProperty('--ratio', ratio);
+}
 
 window.generateCafePopup = generateCafePopup
 window.closeCafePopup = closeCafePopup

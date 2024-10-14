@@ -1,7 +1,10 @@
-let API_URL_input = '${API_URL}'
+let API_URL_input = '${API_URL}';
+const hashPasswordBool_input = '${HASH_PASSWORD}';
+
+export const hashPasswordBool = /^(true|1|yes)$/i.test(hashPasswordBool_input.trim());
 
 if (!API_URL_input.endsWith('/')) {
-    API_URL_input = API_URL_input + "/"
+    API_URL_input = API_URL_input + "/";
 }
 export const API_URL = API_URL_input;
 export const timeGrid = [{

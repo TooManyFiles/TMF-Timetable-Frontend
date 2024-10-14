@@ -140,49 +140,25 @@ td:not(:first-child) {
     .lesson-addInfo {
         grid-area: addInfo;
     }
-
-    .originalData {
-        text-decoration: line-through;
-        text-decoration-color: red;
-    }
-    .lesson-teacher .short::before{
-        content: '(';
-    }
-    .lesson-teacher .short::after{
-        content: ')';
-    }
-    .originalData {
-        text-decoration: line-through;
-        text-decoration-color: red;
-    }
-    .lesson-room .info::before{
-        content: '(';
-    }
-    .lesson-room .info::after{
-        content: ')';
-    }
-    .lesson-subject .short::before{
-        content: '(';
-    }
-    .lesson-subject .short::after{
-        content: ')';
-    }
 }
 
-.cancelled {
-    background-color: var(--table-highlight-faded) !important;
-    color: var(--text-faded) !important;
-    font-style: italic !important;
-}
-.cancelled::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+#scheduleBody {
+    .cancelled {
+        background-color: var(--table-highlight-faded) !important;
+        color: var(--text-faded) !important;
+        font-style: italic !important;
+    }
+
+    .cancelled::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: red;
+        clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+    }
 }
 
 .irregular {
