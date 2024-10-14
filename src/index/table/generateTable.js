@@ -114,18 +114,18 @@ function sortTDElementsByRowSpan(tr, className) {
         // Get the colspan values, defaulting to 1 if not set
         const colspanA = a.rowSpan;
         const colspanB = b.rowSpan;
-        return colspanB - colspanA ;
+        return colspanB - colspanA;
     });
 
     // Create a DocumentFragment to improve performance
     const fragment = document.createDocumentFragment();
-    
+
     // Append sorted elements to the fragment
     tdElements.forEach(td => {
         tr.removeChild(td);  // Remove the element from its original position
         fragment.appendChild(td);  // Add it to the fragment in sorted order
     });
-    
+
     // Append the sorted elements back to the <tr> in sorted order
     tr.appendChild(fragment);
 }
@@ -140,8 +140,8 @@ function generateScheduleTable(data) {
 
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = [];
-    let takenSpaces = {};
-    ['m', 't', 'w', 'th', 'f'].forEach(day => { takenSpaces[day] = [] });
+    let previouslyTakenSpaces = {};
+    ['m', 't', 'w', 'th', 'f'].forEach(day => { previouslyTakenSpaces[day] = [] });
     for (let row = 1; row <= maxRow; row++) {
         const tr = document.createElement('tr');
         // first cell = lesson number
@@ -150,13 +150,9 @@ function generateScheduleTable(data) {
         tr.appendChild(tdNumber);
         dummyScheduleBody.appendChild(tr);
         ['m', 't', 'w', 'th', 'f'].forEach(day => {
+            let takenSpaces = 0;
             const cellsData = data.filter(item => item.row === row && item.day === day);
-            if (cellsData.length == 0) {
-                const td = document.createElement('td');
-                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
-                td.colSpan = ColumnsPerDay[day]
-                tr.appendChild(td);
-            }
+
 
             cellsData.forEach(cellData => {
                 if (alreadyDrawn.map(lesson => (lesson.id)).includes(cellData.id)) {
@@ -188,7 +184,7 @@ function generateScheduleTable(data) {
                     // check if next row has the same subject
                     let nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
                     let SimultaneousLessons = cellsData.length
-                    const elementWith = (ColumnsPerDay[day] - (takenSpaces[day][row - 1] || 0)) / (cellsData.length - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
+                    const elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (cellsData.length - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
                     if (nextCellData) {
                         let rowspan = 1;
                         SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
@@ -200,22 +196,29 @@ function generateScheduleTable(data) {
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
                         for (let index = 0; index < rowspan - 1; index++) {
-                            takenSpaces[day][row + index] = (takenSpaces[day][row + index] || 0) + elementWith;
+                            previouslyTakenSpaces[day][row + index] = (previouslyTakenSpaces[day][row + index] || 0) + elementWith;
                         }
                     }
                     td.colSpan = elementWith;
+                    takenSpaces += elementWith
                 }
                 tr.appendChild(td);
             });
-            if (day ==="w") debugger
-            sortTDElementsByRowSpan(tr,`${day}${row}`)
+            sortTDElementsByRowSpan(tr, `${day}${row}`)
+            if ((ColumnsPerDay[day] - takenSpaces - (previouslyTakenSpaces[day][row - 1] || 0)) > 0) {
+                const td = document.createElement('td');
+                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
+                td.colSpan = ColumnsPerDay[day] - takenSpaces - (previouslyTakenSpaces[day][row - 1] || 0)
+                tr.appendChild(td);
+            }
         });
 
         // append row to the table body
-        
+
     }
     const scheduleBody = document.getElementById("scheduleBody");
     scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
 }
 
 generateSchedule()
+window.generateSchedule = generateSchedule
