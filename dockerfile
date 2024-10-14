@@ -4,8 +4,9 @@ FROM nginx:alpine
 # Install envsubst for dynamic variable substitution
 RUN apk add --no-cache gettext
 
-# Set the API_URL environment variable
+# Set environment variables
 ENV API_URL=http://localhost:8080
+ENV HASH_PASSWORD=true
 
 # Copy the website files to Nginx
 COPY ./ /usr/share/nginx/html
