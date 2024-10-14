@@ -184,7 +184,7 @@ function generateScheduleTable(data) {
                     // check if next row has the same subject
                     let nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
                     let SimultaneousLessons = cellsData.length
-                    const elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (cellsData.length - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
+                    let elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (cellsData.length - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
                     if (nextCellData) {
                         let rowspan = 1;
                         SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
@@ -195,6 +195,9 @@ function generateScheduleTable(data) {
                             alreadyDrawn.push(nextCellData)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
+                        if (SimultaneousLessons != cellsData.length){
+                            elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (SimultaneousLessons - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
+                        }
                         for (let index = 0; index < rowspan - 1; index++) {
                             previouslyTakenSpaces[day][row + index] = (previouslyTakenSpaces[day][row + index] || 0) + elementWith;
                         }
