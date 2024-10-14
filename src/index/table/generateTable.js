@@ -131,7 +131,7 @@ function sortTDElementsByRowSpan(tr, className) {
 }
 
 function generateScheduleTable(data) {
-    const dummyScheduleBody = document.getElementById("scheduleBody");
+    const dummyScheduleBody = document.createElement("tbody");
     // find highest row number in the data (--> latest session) to know how many rows to create
     const maxRow = Math.max(...data.map(item => item.row));
 
