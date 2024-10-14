@@ -105,6 +105,31 @@ function getLCMofAmoutOfSimultaneousLessonsPerDay(data) {
 
     return lcmMap;
 }
+function sortTDElementsByRowSpan(tr, className) {
+    // Select all <td> elements with the specific class within the given <tr>
+    const tdElements = Array.from(tr.querySelectorAll(`td.${className}`));
+
+    // Sort the elements based on the colspan attribute
+    tdElements.sort((a, b) => {
+        // Get the colspan values, defaulting to 1 if not set
+        const colspanA = a.rowSpan;
+        const colspanB = b.rowSpan;
+        return colspanB - colspanA ;
+    });
+
+    // Create a DocumentFragment to improve performance
+    const fragment = document.createDocumentFragment();
+    
+    // Append sorted elements to the fragment
+    tdElements.forEach(td => {
+        tr.removeChild(td);  // Remove the element from its original position
+        fragment.appendChild(td);  // Add it to the fragment in sorted order
+    });
+    
+    // Append the sorted elements back to the <tr> in sorted order
+    tr.appendChild(fragment);
+}
+
 function generateScheduleTable(data) {
     const dummyScheduleBody = document.getElementById("scheduleBody");
     // find highest row number in the data (--> latest session) to know how many rows to create
@@ -116,30 +141,30 @@ function generateScheduleTable(data) {
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = [];
     let takenSpaces = {};
-    ['m', 't', 'w', 'th', 'f'].forEach(day => {takenSpaces[day] = []});
+    ['m', 't', 'w', 'th', 'f'].forEach(day => { takenSpaces[day] = [] });
     for (let row = 1; row <= maxRow; row++) {
         const tr = document.createElement('tr');
         // first cell = lesson number
         const tdNumber = document.createElement('td');
         tdNumber.textContent = row;
         tr.appendChild(tdNumber);
-
+        dummyScheduleBody.appendChild(tr);
         ['m', 't', 'w', 'th', 'f'].forEach(day => {
             const cellsData = data.filter(item => item.row === row && item.day === day);
             if (cellsData.length == 0) {
                 const td = document.createElement('td');
-                td.id = `${day}${row}`; // optional id (probably won't need that)
+                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
                 td.colSpan = ColumnsPerDay[day]
                 tr.appendChild(td);
             }
 
             cellsData.forEach(cellData => {
-                if (alreadyDrawn.map(lesson=>(lesson.id)).includes(cellData.id)) {
+                if (alreadyDrawn.map(lesson => (lesson.id)).includes(cellData.id)) {
                     return
                 }
 
                 const td = document.createElement('td');
-                td.id = `${day}${row}`; // optional id (probably won't need that)
+                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
 
                 if (cellData) {
                     const lessonContainer = generateLessonTableContent(cellData);
@@ -174,7 +199,7 @@ function generateScheduleTable(data) {
                             alreadyDrawn.push(nextCellData)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
-                        for (let index = 0; index < rowspan-1; index++) {
+                        for (let index = 0; index < rowspan - 1; index++) {
                             takenSpaces[day][row + index] = (takenSpaces[day][row + index] || 0) + elementWith;
                         }
                     }
@@ -182,10 +207,12 @@ function generateScheduleTable(data) {
                 }
                 tr.appendChild(td);
             });
+            if (day ==="w") debugger
+            sortTDElementsByRowSpan(tr,`${day}${row}`)
         });
 
         // append row to the table body
-        dummyScheduleBody.appendChild(tr);
+        
     }
     const scheduleBody = document.getElementById("scheduleBody");
     scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
