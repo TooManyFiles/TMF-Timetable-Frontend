@@ -52,7 +52,7 @@
                 </button>
                 <h2 class="timerange-item"><span id="startdate"></span></h2>
                 <h2 class="timerange-item">-</h2>
-                <h2 class="timerange-item"><span  id="enddate"></span></h2>
+                <h2 class="timerange-item"><span id="enddate"></span></h2>
 
                 <button class="timerange-controls">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40"
@@ -172,6 +172,15 @@
             window.refreshAll();
             setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
         }
+        window.addEventListener('storage', (event) => {
+            if (event.storageArea === localStorage) {
+                // Check if a specific key changed, if needed
+                if (event.key === 'lessons') {
+                    window.generateSchedule();
+                }
+            }
+        });
+
     </script>
 </body>
 
