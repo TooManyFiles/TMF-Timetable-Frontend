@@ -165,7 +165,6 @@ export async function getStaticData() {
   return { rooms: rooms, teachers: teachers, classes: classes, subjects: subjects };
 }
 function sort(array) {
-  if (array.length >=2) debugger
   return array.slice().sort((a, b) => Number(a) - Number(b));
 }
 export async function parseLessons(lessons) {
