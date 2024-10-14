@@ -164,7 +164,10 @@ export async function getStaticData() {
   }
   return { rooms: rooms, teachers: teachers, classes: classes, subjects: subjects };
 }
-
+function sort(array) {
+  if (array.length >=2) debugger
+  return array.slice().sort((a, b) => Number(a) - Number(b));
+}
 export async function parseLessons(lessons) {
   let staticData = await getStaticData()
   console.log(staticData)
@@ -209,7 +212,7 @@ export async function parseLessons(lessons) {
     lastUpdate: lesson.lastUpdate || '',
     chairUp: lesson.chairUp || '',
 
-    value: (lesson.subjects || []).join("") + (lesson.teachers || []).join(",") + (lesson.rooms || []).join("") + (lesson.classes || []).join("") + (lesson.cancelled?1:0) + (lesson.description || '')
+    value: sort(lesson.subjects || []).join("") + sort(lesson.teachers || []).join("") + sort(lesson.rooms || []).join("") + sort(lesson.classes || []).join("") + (lesson.cancelled?1:0) + (lesson.description || '')
   }));
 
   localStorage.setItem('lessons', JSON.stringify(parsedLessons));
