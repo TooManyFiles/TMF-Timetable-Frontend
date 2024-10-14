@@ -6,7 +6,8 @@ async function refreshAll(){
     setLoading();
     await fetchAndDisplayMenu();
     setLastRefreshed(getCurrentTime());
-    getView(dateToString(getMonday()), 6);
+    await getView(dateToString(getMonday()), 6);
+    window.generateSchedule();
 }
 
 window.refreshAll = refreshAll;
