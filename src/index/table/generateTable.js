@@ -67,9 +67,21 @@ function updateColspan(columns) {
     });
 
 }
-function getMaxSimultaneousLessonsPerDay(data) {
+function gcd(a, b) {
+    return b === 0 ? Math.abs(a) : gcd(b, a % b);
+}
+// Function to compute LCM of two numbers
+function lcm(a, b) {
+    return Math.abs(a * b) / gcd(a, b);
+}
+
+// Function to compute LCM of an array of numbers
+function lcmOfArray(arr) {
+    return arr.reduce((acc, num) => lcm(acc, num), arr[0]);
+}
+
+function getLCMofAmoutOfSimultaneousLessonsPerDay(data) {
     const countMap = {};
-    const maxCount = {};
 
     data.forEach(item => {
         // Initialize countMap for each day if not already initialized
@@ -77,55 +89,78 @@ function getMaxSimultaneousLessonsPerDay(data) {
             countMap[item.day] = {};
         }
 
-        // Initialize the row count for each day if not already initialized
+        // Increment the row count for each day
         countMap[item.day][item.row] = (countMap[item.day][item.row] || 0) + 1;
-
-        // Initialize maxCount for each day if not already initialized
-        if (!maxCount[item.day]) {
-            maxCount[item.day] = 1;
-        }
-
-        // Update maxCount for the current day
-        maxCount[item.day] = Math.max(maxCount[item.day], countMap[item.day][item.row]);
     });
 
-    return maxCount;
+    const lcmMap = {};
+
+    // Calculate LCM for each day
+    for (const day in countMap) {
+        const rowCounts = Object.values(countMap[day]);
+        if (rowCounts.length > 0) {
+            lcmMap[day] = lcmOfArray(rowCounts);
+        }
+    }
+
+    return lcmMap;
 }
+function sortTDElementsByRowSpan(tr, className) {
+    // Select all <td> elements with the specific class within the given <tr>
+    const tdElements = Array.from(tr.querySelectorAll(`td.${className}`));
+
+    // Sort the elements based on the colspan attribute
+    tdElements.sort((a, b) => {
+        // Get the colspan values, defaulting to 1 if not set
+        const colspanA = a.rowSpan;
+        const colspanB = b.rowSpan;
+        return colspanB - colspanA;
+    });
+
+    // Create a DocumentFragment to improve performance
+    const fragment = document.createDocumentFragment();
+
+    // Append sorted elements to the fragment
+    tdElements.forEach(td => {
+        tr.removeChild(td);  // Remove the element from its original position
+        fragment.appendChild(td);  // Add it to the fragment in sorted order
+    });
+
+    // Append the sorted elements back to the <tr> in sorted order
+    tr.appendChild(fragment);
+}
+
 function generateScheduleTable(data) {
-    const dummyScheduleBody = document.createElement('tbody');
+    const dummyScheduleBody = document.getElementById("scheduleBody");
     // find highest row number in the data (--> latest session) to know how many rows to create
     const maxRow = Math.max(...data.map(item => item.row));
 
-    const maxSimultaneousLessonsPerDay = getMaxSimultaneousLessonsPerDay(data)
-    updateColspan(maxSimultaneousLessonsPerDay)
-
+    const ColumnsPerDay = getLCMofAmoutOfSimultaneousLessonsPerDay(data)
+    updateColspan(ColumnsPerDay)
 
     // keep track on witch lessons already have been drawn as a combination
-    let alreadyDrawn = []
-
+    let alreadyDrawn = [];
+    let previouslyTakenSpaces = {};
+    ['m', 't', 'w', 'th', 'f'].forEach(day => { previouslyTakenSpaces[day] = [] });
     for (let row = 1; row <= maxRow; row++) {
         const tr = document.createElement('tr');
         // first cell = lesson number
         const tdNumber = document.createElement('td');
         tdNumber.textContent = row;
         tr.appendChild(tdNumber);
-
+        dummyScheduleBody.appendChild(tr);
         ['m', 't', 'w', 'th', 'f'].forEach(day => {
+            let takenSpaces = 0;
             const cellsData = data.filter(item => item.row === row && item.day === day);
-            if (cellsData.length == 0) {
-                const td = document.createElement('td');
-                td.id = `${day}${row}`; // optional id (probably won't need that)
-                td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
-                tr.appendChild(td);
-            }
-            
+
+
             cellsData.forEach(cellData => {
-                if (alreadyDrawn.includes(cellData.id)) {
+                if (alreadyDrawn.map(lesson => (lesson.id)).includes(cellData.id)) {
                     return
                 }
 
                 const td = document.createElement('td');
-                td.id = `${day}${row}`; // optional id (probably won't need that)
+                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
 
                 if (cellData) {
                     const lessonContainer = generateLessonTableContent(cellData);
@@ -149,6 +184,7 @@ function generateScheduleTable(data) {
                     // check if next row has the same subject
                     let nextCellData = data.find(item => item.row === row + 1 && item.day === day && item.value === cellData.value);
                     let SimultaneousLessons = cellsData.length
+                    let elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (cellsData.length - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
                     if (nextCellData) {
                         let rowspan = 1;
                         SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
@@ -156,32 +192,36 @@ function generateScheduleTable(data) {
                         while (nextCellData = data.find(item => item.row === row + rowspan && item.day === day && item.value === cellData.value)) {
                             SimultaneousLessons = Math.max(SimultaneousLessons, data.filter(item => item.row === row + rowspan && item.day === day).length)
                             rowspan++;
-                            alreadyDrawn.push(nextCellData.id)
+                            alreadyDrawn.push(nextCellData)
                         }
                         td.rowSpan = rowspan; // set rowspan for merging cells
-                        for (let index = 0; index < SimultaneousLessons - cellsData.length; index++) {
-                            const td = document.createElement('td');
-                            td.id = `${day}${row}`; // optional id (probably won't need that)
-                            td.colSpan = maxSimultaneousLessonsPerDay[day] - cellsData.length
-                            tr.appendChild(td);
-
+                        if (SimultaneousLessons != cellsData.length){
+                            elementWith = (ColumnsPerDay[day] - (previouslyTakenSpaces[day][row - 1] || 0)) / (SimultaneousLessons - (alreadyDrawn.filter(item => item.row === row && item.day === day)).length)
+                        }
+                        for (let index = 0; index < rowspan - 1; index++) {
+                            previouslyTakenSpaces[day][row + index] = (previouslyTakenSpaces[day][row + index] || 0) + elementWith;
                         }
                     }
-                    td.colSpan = maxSimultaneousLessonsPerDay[day] - SimultaneousLessons + 1
-
+                    td.colSpan = elementWith;
+                    takenSpaces += elementWith
                 }
-
-
                 tr.appendChild(td);
             });
+            sortTDElementsByRowSpan(tr, `${day}${row}`)
+            if ((ColumnsPerDay[day] - takenSpaces - (previouslyTakenSpaces[day][row - 1] || 0)) > 0) {
+                const td = document.createElement('td');
+                td.classList.add(`${day}${row}`); // optional id (probably won't need that)
+                td.colSpan = ColumnsPerDay[day] - takenSpaces - (previouslyTakenSpaces[day][row - 1] || 0)
+                tr.appendChild(td);
+            }
         });
 
         // append row to the table body
-        dummyScheduleBody.appendChild(tr);
-        dummyScheduleBody.appendChild(tr);
+
     }
     const scheduleBody = document.getElementById("scheduleBody");
     scheduleBody.innerHTML = dummyScheduleBody.innerHTML;
 }
 
 generateSchedule()
+window.generateSchedule = generateSchedule
