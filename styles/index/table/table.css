@@ -1,3 +1,7 @@
+:root{
+    --divider-color: rgba(0, 0, 0, 0.397);
+    --divider-width: 2px;
+}
 /* TABLE */
 .table-wrapper {
     display: flex;
@@ -20,6 +24,31 @@ td {
     vertical-align: middle;
     width: 20%;
 }
+
+/* DIVIDERS BETWEEN DAYS: */
+/* --> add this to settings later on? */
+/* Or: only display when 3 or more lessons at the same time on a da<? */
+
+tbody td {
+    border-left: var(--divider-width) solid var(--divider-color);
+    border-right: var(--divider-width) solid var(--divider-color);
+}
+/* Remove the left border from the first cell in each row */
+tbody td:first-child {
+    border-left: none;
+    border-right: none;
+}
+
+/* Remove the left border from the second cell in each row */
+tbody td:first-child + * {
+    border-left: none;
+}
+
+/* Remove the right border from the last cell in each row */
+tbody td:last-child {
+    border-right: none;
+}
+
 
 th {
     background-color: #f2f2f2;
