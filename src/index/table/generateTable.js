@@ -61,7 +61,7 @@ function generateLessonTableContent(lesson) {
 
 function updateColspan(columns) {
     const days = ['m', 't', 'w', 'th', 'f']
-    const thElements = document.querySelectorAll('#schedule th:not(:first-child)');
+    const thElements = document.querySelectorAll('#schedule th:not(:first-child):not(.separator)');
     thElements.forEach((th, index) => {
         th.colSpan = columns[days[index % 5]];
     });
@@ -212,6 +212,11 @@ function generateScheduleTable(data) {
                 const td = document.createElement('td');
                 td.classList.add(`${day}${row}`); // optional id (probably won't need that)
                 td.colSpan = ColumnsPerDay[day] - takenSpaces - (previouslyTakenSpaces[day][row - 1] || 0)
+                tr.appendChild(td);
+            }
+            if (day != 'f') {
+                const td = document.createElement('td');
+                td.classList.add(`separator`); // optional id (probably won't need that)
                 tr.appendChild(td);
             }
         });

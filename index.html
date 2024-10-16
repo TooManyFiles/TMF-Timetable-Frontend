@@ -91,9 +91,13 @@
                 <tr class="mainheading-row">
                     <th><img src="/public/calendar.png" height="30px" width="auto" style="margin-top: 15px;" /></th>
                     <th>Montag</th>
+                    <th class="separator"></th>
                     <th>Dienstag</th>
+                    <th class="separator"></th>
                     <th>Mittwoch</th>
+                    <th class="separator"></th>
                     <th>Donnerstag</th>
+                    <th class="separator"></th>
                     <th>Freitag</th>
                 </tr>
                 <tr class="subheading-row">
@@ -101,27 +105,32 @@
                     <th><span id="cafepreview-mon"
                             onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getMonday())).mainDish, getMenuDetails(dateToString(getMonday())).mainDishVeg,getMenuDetails(dateToString(getMonday())).garnish , getMenuDetails(dateToString(getMonday())).dessert, getMenuDetails(dateToString(getMonday())).cookteam)"
                             style="cursor: pointer;"></span></th>
+                    <th class="separator"></th>
                     <th><span id="cafepreview-tue"
                             onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getTuesday())).date), getMenuDetails(dateToString(getTuesday())).mainDish, getMenuDetails(dateToString(getTuesday())).mainDishVeg,getMenuDetails(dateToString(getTuesday())).garnish , getMenuDetails(dateToString(getTuesday())).dessert, getMenuDetails(dateToString(getTuesday())).cookteam)"
                             style="cursor: pointer;"></span></th>
+                    <th class="separator"></th>
                     <th><span id="cafepreview-wed"
                             onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getMonday())).date), getMenuDetails(dateToString(getWednesday())).mainDish, getMenuDetails(dateToString(getWednesday())).mainDishVeg,getMenuDetails(dateToString(getWednesday())).garnish , getMenuDetails(dateToString(getWednesday())).dessert, getMenuDetails(dateToString(getWednesday())).cookteam)"
                             style="cursor: pointer;"></span></th>
+                    <th class="separator"></th>
                     <th><span id="cafepreview-thu"
                             onclick="window.generateCafePopup(datestringToReadable(getMenuDetails(dateToString(getThursday())).date), getMenuDetails(dateToString(getThursday())).mainDish, getMenuDetails(dateToString(getThursday())).mainDishVeg,getMenuDetails(dateToString(getThursday())).garnish , getMenuDetails(dateToString(getThursday())).dessert, getMenuDetails(dateToString(getThursday())).cookteam)"
                             style="cursor: pointer;"></span></th>
+                    <th class="separator"></th>
                     <th>Kein Kochtag</th>
                 </tr>
             </thead>
             <tbody id="scheduleBody">
+                
                 <!-- Dynamic rows will be added here -->
-                <tr><td>1</td><td class="m1" colspan="1"></td><td class="t1" colspan="1"></td><td class="w1" colspan="1"></td><td class="th1" colspan="1"></td><td class="f1" colspan="1"></td></tr>
-                <tr><td>2</td><td class="m2" colspan="1"></td><td class="t2" colspan="1"></td><td class="w2" colspan="1"></td><td class="th2" colspan="1"></td><td class="f2" colspan="1"></td></tr>
-                <tr><td>3</td><td class="m3" colspan="1"></td><td class="t3" colspan="1"></td><td class="w3" colspan="1"></td><td class="th3" colspan="1"></td><td class="f3" colspan="1"></td></tr>
-                <tr><td>4</td><td class="m4" colspan="1"></td><td class="t4" colspan="1"></td><td class="w4" colspan="1"></td><td class="th4" colspan="1"></td><td class="f4" colspan="1"></td></tr>
-                <tr><td>5</td><td class="m5" colspan="1"></td><td class="t5" colspan="1"></td><td class="w5" colspan="1"></td><td class="th5" colspan="1"></td><td class="f5" colspan="1"></td></tr>
-                <tr><td>6</td><td class="m6" colspan="1"></td><td class="t6" colspan="1"></td><td class="w6" colspan="1"></td><td class="th6" colspan="1"></td><td class="f6" colspan="1"></td></tr>
-                <tr><td>7</td><td class="m7" colspan="1"></td><td class="t7" colspan="1"></td><td class="w7" colspan="1"></td><td class="th7" colspan="1"></td><td class="f7" colspan="1"></td></tr>
+                <tr><td>1</td><td class="m1" colspan="1"></td><td class="separator"></td><td class="t1" colspan="1"></td><td class="separator"></td><td class="w1" colspan="1"></td><td class="separator"></td><td class="th1" colspan="1"></td><td class="separator"></td> <td class="f1" colspan="1"></td></tr>
+                <tr><td>2</td><td class="m2" colspan="1"></td><td class="separator"></td><td class="t2" colspan="1"></td><td class="separator"></td><td class="w2" colspan="1"></td><td class="separator"></td><td class="th2" colspan="1"></td><td class="separator"></td> <td class="f2" colspan="1"></td></tr>
+                <tr><td>3</td><td class="m3" colspan="1"></td><td class="separator"></td><td class="t3" colspan="1"></td><td class="separator"></td><td class="w3" colspan="1"></td><td class="separator"></td><td class="th3" colspan="1"></td><td class="separator"></td> <td class="f3" colspan="1"></td></tr>
+                <tr><td>4</td><td class="m4" colspan="1"></td><td class="separator"></td><td class="t4" colspan="1"></td><td class="separator"></td><td class="w4" colspan="1"></td><td class="separator"></td><td class="th4" colspan="1"></td><td class="separator"></td> <td class="f4" colspan="1"></td></tr>
+                <tr><td>5</td><td class="m5" colspan="1"></td><td class="separator"></td><td class="t5" colspan="1"></td><td class="separator"></td><td class="w5" colspan="1"></td><td class="separator"></td><td class="th5" colspan="1"></td><td class="separator"></td> <td class="f5" colspan="1"></td></tr>
+                <tr><td>6</td><td class="m6" colspan="1"></td><td class="separator"></td><td class="t6" colspan="1"></td><td class="separator"></td><td class="w6" colspan="1"></td><td class="separator"></td><td class="th6" colspan="1"></td><td class="separator"></td> <td class="f6" colspan="1"></td></tr>
+                <tr><td>7</td><td class="m7" colspan="1"></td><td class="separator"></td><td class="t7" colspan="1"></td><td class="separator"></td><td class="w7" colspan="1"></td><td class="separator"></td><td class="th7" colspan="1"></td><td class="separator"></td> <td class="f7" colspan="1"></td></tr>
             </tbody>
         </table>
     </div>
