@@ -45,6 +45,7 @@
     border-radius: 20px;
     position: relative;
     font-family: Arial, sans-serif;
+    max-width: 60%;
 }
 
 .popup-content h2 {
