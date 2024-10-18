@@ -23,9 +23,8 @@ export async function login(username, password) {
 
         // Handle success response
         if (response.ok) {
-            localStorage.setItem('token', data.token);
             localStorage.removeItem('lessons');
-            return { status: 200, token: data.token };
+            return { status: 200 };
         } else {
             const errorMessage = data.message || 'An error occurred. Most likely wrong login credentials.';
             setErrorDisplay(errorMessage);
@@ -44,23 +43,21 @@ export async function login(username, password) {
 // Logout function
 export async function logout() {
     try {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const response = await fetch(API_URL + 'logout', {
-                method: 'POST',
-                credentials: "include"
-            });
-            if (response.ok) {
-                //Delete all localstorage items
-                for (let i = localStorage.length - 1; i >= 0; i--) {
-                    const key = localStorage.key(i);
-                    localStorage.removeItem(key);
-                }                  
-                document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            } else {
-                throw new Error('Failed to logout');
-            }
+        const response = await fetch(API_URL + 'logout', {
+            method: 'POST',
+            credentials: "include"
+        });
+        if (response.ok) {
+            //Delete all localstorage items
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                localStorage.removeItem(key);
+            }                  
+            document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        } else {
+            throw new Error('Failed to logout');
         }
+            
         window.location.href = '/login.html';
     } catch (error) {
         throw error;
