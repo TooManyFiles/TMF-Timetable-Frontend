@@ -140,13 +140,6 @@ export function getOneLetterDayCode(dateInput) {
 
 async function isLoggedIn() {
     try {
-        // Check if token exists in localStorage
-        const token = localStorage.getItem('token');
-        
-        if (!token) {
-            return false;
-        }
-
         const user = await getCurrentUser();
         if (!user) {
             return false;
