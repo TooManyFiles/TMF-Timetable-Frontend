@@ -9,12 +9,13 @@ export function generateLessonPopup(id) {
     // Check if the lesson was found
     if (lesson) {
         // Display the relevant data in the popup
-        let popup = document.getElementById('lesson-popup')
-        let popupContent = popup.getElementsByClassName("popup-content")[0]
+        let popup = document.getElementById('lesson-popup');
+        let popupContent = popup.getElementsByClassName("popup-content")[0];
+
         if (lesson.cancelled){
-            popupContent.classList.add('cancelled')
-        }else{
-            popupContent.classList.remove('cancelled')
+            popupContent.classList.add('cancelled');
+        } else {
+            popupContent.classList.remove('cancelled');
         }
 
         const existingPTags = popupContent.querySelectorAll('p, div');
@@ -37,7 +38,7 @@ export function generateLessonPopup(id) {
 
         const timePara = document.createElement('p');
         timePara.id = 'time';
-        timePara.textContent = `${window.timeToReadable(lesson.startTime)} - ${window.timeToReadable(lesson.endTime)}`;//TODO: wrong endTime when combined
+        timePara.textContent = `${window.timeToReadable(lesson.startTime)} - ${window.timeToReadable(lesson.endTime)}`;
         subjectDiv.appendChild(timePara);
 
         popupContent.appendChild(subjectDiv);
@@ -53,7 +54,6 @@ export function generateLessonPopup(id) {
                 fieldValue.id = fieldId;
                 fieldValue.classList.add('multiElement');
                 fieldPara.appendChild(fieldValue);
-
             } else {
                 const valueSpan = document.createElement('span');
                 valueSpan.id = fieldId;
@@ -65,16 +65,12 @@ export function generateLessonPopup(id) {
         }
 
         // Generate all fields dynamically
-
-        // Teacher container
         const teacherContainer = createTeacherContainer(lesson.teachers, lesson.originalTeachers);
         popupContent.appendChild(createField("Lehrkraft", "teachers", teacherContainer));
 
-        // Room container
         const roomContainer = createRoomContainer(lesson.rooms, lesson.originalRooms);
         popupContent.appendChild(createField("Raum", "rooms", roomContainer));
 
-        // Class container
         const classContainer = createClassContainer(lesson.classes, lesson.originalClasses);
         popupContent.appendChild(createField("Klasse", "classes", classContainer));
 
@@ -87,7 +83,9 @@ export function generateLessonPopup(id) {
         popupContent.appendChild(createField("Hausaufgaben", "homework", lesson.homework));
         popupContent.appendChild(createField("Aufstuhlen", "chairUp", lesson.chairUp ? "Ja" : ""));
         popupContent.appendChild(createField("Letztes Update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
-        
+
+        // Disable scrolling
+        document.body.style.overflow = 'hidden';
 
         // Display the popup
         document.getElementById('lesson-popup').style.display = 'flex';
@@ -95,9 +93,14 @@ export function generateLessonPopup(id) {
     }
 }
 
+
 function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
+    
+    // Re-enable scrolling
+    document.body.style.overflow = '';
 }
+
 // Attach the event listener to a parent element, like the document or a specific container
 document.addEventListener('click', (event) => {
     // Check if the clicked element has a 'lessonid' attribute
@@ -120,12 +123,20 @@ export function generateCafePopup(date, main_dish, vegetarian_dish, salad, deser
     document.getElementById('salad').textContent = salad;
     document.getElementById('desert').textContent = desert;
     document.getElementById('cooking_team').textContent = cooking_team;
+    
+    // Disable scrolling
+    document.body.style.overflow = 'hidden';
+
     document.getElementById('cafe-popup').style.display = 'flex';
 }
 
 function closeCafePopup() {
     document.getElementById('cafe-popup').style.display = 'none';
+    
+    // Re-enable scrolling
+    document.body.style.overflow = '';
 }
+
 
 document.getElementById('lesson-popup').addEventListener('click', function () {
     closeLessonPopup();
