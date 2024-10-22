@@ -1,4 +1,27 @@
-import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer  } from "./dataContainer.js";
+import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer } from "./dataContainer.js";
+
+function disableScroll() {
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('keydown', preventKeyScroll, { passive: false });
+}
+
+function enableScroll() {
+    document.removeEventListener('wheel', preventScroll);
+    document.removeEventListener('touchmove', preventScroll);
+    document.removeEventListener('keydown', preventKeyScroll);
+}
+
+function preventScroll(e) {
+    e.preventDefault();
+}
+
+function preventKeyScroll(e) {
+    if (['Space', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown'].includes(e.code)) {
+        e.preventDefault();
+    }
+}
+
 export function generateLessonPopup(id) {
     // Retrieve the lessons from local storage (or wherever your data is stored)
     const lessons = JSON.parse(localStorage.getItem('lessons')) || [];
@@ -12,7 +35,7 @@ export function generateLessonPopup(id) {
         let popup = document.getElementById('lesson-popup');
         let popupContent = popup.getElementsByClassName("popup-content")[0];
 
-        if (lesson.cancelled){
+        if (lesson.cancelled) {
             popupContent.classList.add('cancelled');
         } else {
             popupContent.classList.remove('cancelled');
@@ -85,7 +108,7 @@ export function generateLessonPopup(id) {
         popupContent.appendChild(createField("Letztes Update", "lastUpdate", window.dateAndTimeToReadable(lesson.lastUpdate)));
 
         // Disable scrolling
-        document.body.style.overflow = 'hidden';
+        disableScroll();
 
         // Display the popup
         document.getElementById('lesson-popup').style.display = 'flex';
@@ -93,12 +116,11 @@ export function generateLessonPopup(id) {
     }
 }
 
-
 function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
     
     // Re-enable scrolling
-    document.body.style.overflow = '';
+    enableScroll();
 }
 
 // Attach the event listener to a parent element, like the document or a specific container
@@ -111,7 +133,7 @@ document.addEventListener('click', (event) => {
         const lessonid = target.getAttribute('lessonid');
         
         // Call the function with lessonid
-        generateLessonPopup(lessonid-0);
+        generateLessonPopup(lessonid - 0);
     }
 });
 
@@ -125,7 +147,7 @@ export function generateCafePopup(date, main_dish, vegetarian_dish, salad, deser
     document.getElementById('cooking_team').textContent = cooking_team;
     
     // Disable scrolling
-    document.body.style.overflow = 'hidden';
+    disableScroll();
 
     document.getElementById('cafe-popup').style.display = 'flex';
 }
@@ -134,9 +156,8 @@ function closeCafePopup() {
     document.getElementById('cafe-popup').style.display = 'none';
     
     // Re-enable scrolling
-    document.body.style.overflow = '';
+    enableScroll();
 }
-
 
 document.getElementById('lesson-popup').addEventListener('click', function () {
     closeLessonPopup();
@@ -144,6 +165,7 @@ document.getElementById('lesson-popup').addEventListener('click', function () {
 document.getElementById('cafe-popup').addEventListener('click', function () {
     closeCafePopup();
 });
+
 function updateGradientRatio(element) {
     const height = element.offsetHeight;
     const width = element.offsetWidth;
@@ -151,7 +173,7 @@ function updateGradientRatio(element) {
     element.style.setProperty('--ratio', ratio);
 }
 
-window.generateCafePopup = generateCafePopup
-window.closeCafePopup = closeCafePopup
-window.generateLessonPopup = generateLessonPopup
-window.closeLessonPopup = closeLessonPopup
+window.generateCafePopup = generateCafePopup;
+window.closeCafePopup = closeCafePopup;
+window.generateLessonPopup = generateLessonPopup;
+window.closeLessonPopup = closeLessonPopup;
