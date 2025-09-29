@@ -1,8 +1,14 @@
 import { API_URL } from "../config.js";
 import { setErrorDisplay } from "../generic/errorDisplay.js";
+import { hashPasswordBool } from "../config.js";
+import { hashPassword } from "../auth/hash.js";
+
 
 export async function login(username, password) {
     try {
+        if (hashPasswordBool) {
+            password = hashPassword(password);
+        }
         const response = await fetch(API_URL + 'login', {
             method: 'POST',
             headers: {
@@ -52,12 +58,12 @@ export async function logout() {
             for (let i = localStorage.length - 1; i >= 0; i--) {
                 const key = localStorage.key(i);
                 localStorage.removeItem(key);
-            }                  
+            }
             document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         } else {
             throw new Error('Failed to logout');
         }
-            
+
         window.location.href = '/login.html';
     } catch (error) {
         throw error;
@@ -80,6 +86,70 @@ export async function getCurrentUser() {
         throw error;
     }
 }
+
+
+// register function
+
+export async function register(userData, password) {
+    try {
+        if (hashPasswordBool) {
+            password = hashPassword(password);
+        }
+        const response = await fetch(API_URL + 'users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ userData, password }),
+        });
+
+        const contentType = response.headers.get('Content-Type');
+        let data;
+
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            data = {};
+        }
+
+        if (response.ok) {
+            return { status: response.status, data };
+        } else {
+            const errorMessage = data.message || 'Registrierung fehlgeschlagen.';
+            setErrorDisplay(errorMessage);
+            return { status: response.status, message: errorMessage };
+        }
+    } catch (error) {
+        setErrorDisplay(error.message);
+        return { status: 500, message: error.message };
+    }
+}
+
+export async function updateUntisAccount(forename, surname, userName, untisPWD) {
+    try {
+        const response = await fetch(API_URL + 'user/untisAcc', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ forename, surname, userName, untisPWD }),
+        });
+
+        if (response.ok) {
+            return { status: response.status };
+        } else {
+            const errorMessage = await response.text();
+            setErrorDisplay(errorMessage || 'Aktualisierung fehlgeschlagen.');
+            return { status: response.status, message: errorMessage };
+        }
+    } catch (error) {
+        setErrorDisplay(error.message);
+        return { status: 500, message: error.message };
+    }
+}
+
 
 window.getCurrentUser = getCurrentUser;
 window.logout = logout;
