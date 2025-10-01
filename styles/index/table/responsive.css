@@ -1,19 +1,71 @@
-/* Default: lange Wochentage anzeigen, kurze ausblenden */
-#schedule .mainheading-row .full {
-    display: inline;
-}
-
-#schedule .mainheading-row .short {
-    display: none;
-}
-
-/* Optional: etwas Abstand zwischen Tagen */
+/* Default: show long weekday names, hide short ones */
 #schedule th {
     padding: 4px 8px;
     text-align: center;
-    white-space: nowrap; /* verhindert Zeilenumbruch */
-    
+    white-space: nowrap; /* prevent line break */
 }
-#scheduleBody .lesson-room .info{
-    display: none; /* Bild vertikal zentrieren */
+
+#scheduleBody .lesson-room .info {
+    display: none; /* hide room info */
+}
+
+/* Table wrapper for container queries */
+.table-wrapper {
+    container-type: inline-size; /* track width */
+}
+
+/* React to #schedule width */
+@container (max-width: 600px) {
+    .mainheading-row .full { display: none; }
+    .mainheading-row .short { display: inline; }
+}
+
+@container (min-width: 600px) {
+    .mainheading-row .full { display: inline; }
+    .mainheading-row .short { display: none; }
+}
+
+/* Lesson grid container */
+.lesson-grid-container-wrapper {
+    container-type: inline-size; /* enable container queries */
+}
+
+.lesson-grid-container span .long,
+.lesson-grid-container span .firstName {
+    display: inline;
+}
+
+.lesson-grid-container span .short {
+    display: none;
+}
+
+/* Switch long vs short spans based on container width */
+@container (max-width: 200px) {
+    .lesson-grid-container span.lesson-subject .long { display: none; }
+    .lesson-grid-container span.lesson-subject .short { display: inline; }
+
+    .lesson-grid-container span.lesson-teacher .long,
+    .lesson-grid-container span.lesson-teacher .firstName { display: none; }
+    .lesson-grid-container span.lesson-teacher .short { display: inline; }
+}
+
+/* Stack room & teacher / adjust layout for narrow containers */
+@container (max-width: 100px) {
+    .lesson-grid-container {
+        grid-template-areas:
+            "subject subject"
+            "room room"
+            "teacher teacher"
+            "class class"
+            "addInfo addInfo"
+            "addInfo addInfo";
+    }
+}
+
+/* Optional text truncation for small widths */
+.lesson-grid-container span .long,
+.lesson-grid-container span .firstName,
+.lesson-grid-container span .short {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

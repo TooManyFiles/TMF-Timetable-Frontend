@@ -49,7 +49,7 @@ td {
     vertical-align: middle;
     position: relative;
     overflow: hidden;
-    height:100%;
+    height: 100%;
 }
 
 thead th {
@@ -64,7 +64,7 @@ thead th {
 th:first-child,
 td:first-child {
     font-weight: bolder;
-    width: 5%;
+    width: 3%;
     /* Smaller width */
     background-color: var(--accent-light);
 }
@@ -73,6 +73,12 @@ td:first-child {
 th:not(:first-child),
 td:not(:first-child) {
     width: 18%;
+}
+
+#schedule tbody tr {
+    height: 7.5vh;
+    vertical-align: middle;
+
 }
 
 /* Table element content */
@@ -93,17 +99,15 @@ td:not(:first-child) {
     height: 100%;
     /* Adjust as needed */
     width: 100%;
-    gap:10px;
+    gap: 10px;
 }
-.lesson-grid-container.stack-room-teacher {
-    grid-template-areas:
-        "subject subject"
-        "room room"
-        "teacher teacher"
-        "class class"
-        "addInfo addInfo"
-        "addInfo addInfo";
+
+.lesson-grid-container-wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
+
 .lesson-grid-container>span:empty {
     display: none;
 }
@@ -116,6 +120,7 @@ td:not(:first-child) {
 .lesson-grid-container {
     overflow: hidden;
     position: relative;
+    justify-content: center;
 
     span>span>span:not(:last-child)::after {
         content: ' ';
