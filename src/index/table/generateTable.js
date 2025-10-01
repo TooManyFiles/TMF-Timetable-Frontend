@@ -230,5 +230,6 @@ setInterval(() => {
     if (currentLessons !== lastLessons) {
         lastLessons = currentLessons;
         window.generateSchedule();
+        window.updateResponsive();
     }
 }, 1000); // Adjust the interval as needed

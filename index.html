@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/index/index.css">
     <link rel="stylesheet" href="/styles/index/table/popup.css">
     <link rel="stylesheet" href="/styles/index/table/table.css">
+    <link rel="stylesheet" href="/styles/index/table/responsive.css">
     <link rel="stylesheet" href="/styles/index/table/statusDisplay.css">
     <link rel="stylesheet" href="/styles/general/errorDisplay.css">
     <title>BetterUntis</title>
@@ -89,11 +90,11 @@
             <thead>
                 <tr class="mainheading-row">
                     <th><img src="/public/calendar.png" height="30px" width="auto" style="margin-top: 15px;" /></th>
-                    <th>Montag</th>
-                    <th>Dienstag</th>
-                    <th>Mittwoch</th>
-                    <th>Donnerstag</th>
-                    <th>Freitag</th>
+                    <th><span class="full">Montag</span><span class="short">Mo</span></th>
+                    <th><span class="full">Dienstag</span><span class="short">Di</span></th>
+                    <th><span class="full">Mittwoch</span><span class="short">Mi</span></th>
+                    <th><span class="full">Donnerstag</span><span class="short">Do</span></th>
+                    <th><span class="full">Freitag</span><span class="short">Fr</span></th>
                 </tr>
                 <tr class="subheading-row">
                     <th></th>
@@ -190,6 +191,7 @@
     <script type="module" src="src/api/refresh.js"></script>
     <script type="module" src="src/index/table/generatePopup.js" defer></script>
     <script type="module" src="src/index/table/generateTable.js" defer></script>
+    <script type="module" src="src/index/table/responsive.js"></script>
     <script type="module" src="src/index/week.js" defer></script>
     <script type="module" src="src/index/timeControl.js"></script>
     <script defer>
@@ -200,7 +202,6 @@
             }
             window.refreshAll();
             window.updateTopbarDate();
-            
         }
     </script>
 </body>

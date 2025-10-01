@@ -1,0 +1,19 @@
+/* Default: lange Wochentage anzeigen, kurze ausblenden */
+#schedule .mainheading-row .full {
+    display: inline;
+}
+
+#schedule .mainheading-row .short {
+    display: none;
+}
+
+/* Optional: etwas Abstand zwischen Tagen */
+#schedule th {
+    padding: 4px 8px;
+    text-align: center;
+    white-space: nowrap; /* verhindert Zeilenumbruch */
+    
+}
+#scheduleBody .lesson-room .info{
+    display: none; /* Bild vertikal zentrieren */
+}

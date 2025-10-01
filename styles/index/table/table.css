@@ -49,6 +49,7 @@ td {
     vertical-align: middle;
     position: relative;
     overflow: hidden;
+    height:100%;
 }
 
 thead th {
@@ -92,9 +93,17 @@ td:not(:first-child) {
     height: 100%;
     /* Adjust as needed */
     width: 100%;
-    /* Adjust as needed */
+    gap:10px;
 }
-
+.lesson-grid-container.stack-room-teacher {
+    grid-template-areas:
+        "subject subject"
+        "room room"
+        "teacher teacher"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
+}
 .lesson-grid-container>span:empty {
     display: none;
 }
