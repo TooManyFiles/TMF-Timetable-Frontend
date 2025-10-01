@@ -107,9 +107,11 @@ td:not(:first-child) {
 .lesson-grid-container {
     overflow: hidden;
     position: relative;
-    span > span > span:not(:last-child)::after{
+
+    span>span>span:not(:last-child)::after {
         content: ' ';
     }
+
     /* hide class if its the only one. 
     TODO: Disable if not own timetable */
     .lesson-class:has(span:only-child) {
@@ -140,6 +142,12 @@ td:not(:first-child) {
     .lesson-addInfo {
         grid-area: addInfo;
     }
+
+    .originalData {
+        text-decoration: line-through;
+        text-decoration-color: red;
+        text-decoration-thickness: 3px;
+    }
 }
 
 #scheduleBody {
@@ -164,4 +172,3 @@ td:not(:first-child) {
 .irregular {
     /*TODO*/
 }
-
