@@ -111,7 +111,22 @@ td:not(:first-child) {
 .lesson-grid-container>span:empty {
     display: none;
 }
-
+.lesson-grid-container:has(span.lesson-room:empty){
+    grid-template-areas:
+        "subject subject"
+        "teacher teacher"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
+}
+.lesson-grid-container:has(span.lesson-teacher:empty){
+    grid-template-areas:
+        "subject subject"
+        "room room"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
+}
 .lesson-grid-container>span>span:not(:last-child)::after {
     content: ", ";
     /* Add comma between items */
