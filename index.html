@@ -43,7 +43,7 @@
             </div>
             <div class="timerange-center">
                 <button class="timerange-controls">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                         <!-- Outer circle -->
                         <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
                         <!-- Left arrow -->
@@ -55,8 +55,7 @@
                 <h2 class="timerange-item"><span id="enddate"></span></h2>
 
                 <button class="timerange-controls">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40"
-                        class="timerange-controls">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                         <!-- Outer circle -->
                         <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none" />
                         <!-- Right arrow -->
@@ -125,6 +124,27 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Lower Navigation Bar -->
+    <div class="bottomnav">
+        <div id="nav_calendar">
+            <img src="/assets/calendar.png" class="bottomnav_img"/>
+        </div>
+        <div id="nav_tasks">
+            <img src="/assets/clipboard.png" class="bottomnav_img"/>
+        </div>
+        <div id="nav_messages">
+            <img src="/assets/mail.png" class="bottomnav_img"/>
+        </div>
+        <div id="nav_users">
+            <img src="/assets/users.png" class="bottomnav_img"/>
+        </div>
+        <div id="nav_settings">
+            <img src="/assets/settings.png" class="bottomnav_img"/>
+        </div>
+    </div>
+
+    <!-- Overlays and more -->
 
     <div id="status-display">
         <div id="loader" class="loader"></div>
