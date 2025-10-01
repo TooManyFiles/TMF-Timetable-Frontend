@@ -211,8 +211,25 @@ export async function parseLessons(lessons) {
     lastUpdate: lesson.lastUpdate || '',
     chairUp: lesson.chairUp || '',
 
-    value: sort(lesson.subjects || []).join("") + sort(lesson.teachers || []).join("") + sort(lesson.rooms || []).join("") + sort(lesson.classes || []).join("") + (lesson.cancelled?1:0) + (lesson.description || '')
+    value: sort(lesson.subjects || []).join("") + sort(lesson.teachers || []).join("") + sort(lesson.rooms || []).join("") + sort(lesson.classes || []).join("") + (lesson.cancelled ? 1 : 0) + (lesson.description || '')
   }));
+  //TODO: handle deleted lessons
+  let oldData = JSON.parse(localStorage.getItem('lessons') || "[]");
 
-  localStorage.setItem('lessons', JSON.stringify(parsedLessons));
+  for (let i = 0; i < parsedLessons.length; i++) {
+    const newLesson = parsedLessons[i];
+    const oldIndex = oldData.findIndex(l => l.id === newLesson.id);
+
+    if (oldIndex !== -1) {
+      // Update if newer
+      if (newLesson.lastUpdate > oldData[oldIndex].lastUpdate) {
+        oldData[oldIndex] = newLesson;
+      }
+    } else {
+      // Add new lesson
+      oldData.push(newLesson);
+    }
+  }
+
+  localStorage.setItem('lessons', JSON.stringify(oldData));
 }

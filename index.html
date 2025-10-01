@@ -171,7 +171,7 @@
     <script type="module" src="src/index/table/generatePopup.js" defer></script>
     <script type="module" src="src/index/table/generateTable.js" defer></script>
     <script type="module" src="src/index/week.js" defer></script>
-    <script src="src/index/timeControl.js" defer></script>
+    <script type="module" src="src/index/timeControl.js"></script>
     <script defer>
         window.onload = async function () {
             if (!await isLoggedIn()) {
@@ -179,7 +179,8 @@
                 return;
             }
             window.refreshAll();
-            setTopbarDate(datestringToReadableSHORT(getMonday()), datestringToReadableSHORT(getFriday()));
+            window.updateTopbarDate();
+            
         }
     </script>
 </body>
