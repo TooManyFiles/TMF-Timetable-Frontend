@@ -178,8 +178,18 @@ td:not(:first-child) {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: red;
-        clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+        pointer-events: none;
+        --cancelled-line-thickness: 1.5px;
+        background-image: linear-gradient(to bottom left,
+                transparent calc(50% - var(--cancelled-line-thickness)),
+                /* before the line */
+                red calc(50% - var(--cancelled-line-thickness)),
+                /* start of line */
+                red calc(50% + var(--cancelled-line-thickness)),
+                /* end of line */
+                transparent calc(50% + var(--cancelled-line-thickness))
+                /* after the line */
+            );
     }
 }
 

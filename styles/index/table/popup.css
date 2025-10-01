@@ -77,33 +77,42 @@
         p:not(:has(span > span)):has(span:empty) {
             display: none;
         }
-        .multiElement > span:not(:last-child)::after {
+
+        .multiElement>span:not(:last-child)::after {
             content: ", ";
             /* Add comma between items */
         }
-        p > span > span > span:not(:last-child)::after{
+
+        p>span>span>span:not(:last-child)::after {
             content: ' ';
         }
-        #teachers .short::before{
+
+        #teachers .short::before {
             content: '(';
         }
-        #teachers .short::after{
+
+        #teachers .short::after {
             content: ')';
         }
+
         .originalData {
             text-decoration: line-through;
             text-decoration-color: red;
         }
-        #rooms .info::before{
+
+        #rooms .info::before {
             content: '(';
         }
-        #rooms .info::after{
+
+        #rooms .info::after {
             content: ')';
         }
-        #subjects .short::before{
+
+        #subjects .short::before {
             content: '(';
         }
-        #subjects .short::after{
+
+        #subjects .short::after {
             content: ')';
         }
     }
@@ -111,5 +120,16 @@
 
 .popup-content.cancelled {
     /* background-color: var(--table-highlight-faded-solid); */
-    background: linear-gradient(atan(var(--ratio)), var(--table-highlight-faded-solid) 49%, rgb(255, 132, 132) 49%, rgb(255, 132, 132) 51%, var(--table-highlight-faded-solid) 51%);
+
+    --cancelled-line-thickness: 5px;
+    background-image: linear-gradient(to bottom left,
+            var(--table-highlight-faded-solid) calc(50% - var(--cancelled-line-thickness)),
+            /* before the line */
+            rgb(255, 132, 132) calc(50% - var(--cancelled-line-thickness)),
+            /* start of line */
+            rgb(255, 132, 132) calc(50% + var(--cancelled-line-thickness)),
+            /* end of line */
+            var(--table-highlight-faded-solid) calc(50% + var(--cancelled-line-thickness))
+            /* after the line */
+        );
 }
