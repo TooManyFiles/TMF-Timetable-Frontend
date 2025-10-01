@@ -1,19 +1,66 @@
 import { createClassContainer, createTeacherContainer, createRoomContainer, createSubjectContainer } from "./dataContainer.js";
-
+let popup = null;
+let startY = 0;
 function disableScroll() {
+    popup = document.getElementById('popup-content');
     document.addEventListener('wheel', preventScroll, { passive: false });
-    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('touchstart', preventTouchStart, { passive: false });
+    document.addEventListener('touchmove', preventTouchMove, { passive: false });
     document.addEventListener('keydown', preventKeyScroll, { passive: false });
 }
 
 function enableScroll() {
     document.removeEventListener('wheel', preventScroll);
-    document.removeEventListener('touchmove', preventScroll);
+    document.removeEventListener('touchstart', preventTouchStart);
+    document.removeEventListener('touchmove', preventTouchMove);
     document.removeEventListener('keydown', preventKeyScroll);
 }
 
 function preventScroll(e) {
-    e.preventDefault();
+    if (!popup) popup = document.getElementsByClassName('popup-content')[0];
+    const scrollable = popup;
+    if (!scrollable) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+    if (!popup.contains(e.target)) {
+        e.preventDefault();
+    }
+    const atTop = scrollable.scrollTop === 0;
+    const atBottom = scrollable.scrollHeight - scrollable.scrollTop === scrollable.clientHeight;
+
+    // If trying to scroll past top/bottom, prevent default
+    if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault();
+
+    }
+    e.stopPropagation();
+}
+// For touch events
+function preventTouchStart(e) {
+    startY = e.touches[0].clientY;
+}
+
+function preventTouchMove(e) {
+    if (!popup) popup = document.getElementsByClassName('popup-content')[0];
+
+    if (!popup || !popup.contains(e.target)) {
+        e.preventDefault();
+        return;
+    }
+
+    const scrollable = popup;
+    const currentY = e.touches[0].clientY;
+    const deltaY = startY - currentY;
+
+    const atTop = scrollable.scrollTop === 0;
+    const atBottom = scrollable.scrollHeight - scrollable.scrollTop === scrollable.clientHeight;
+
+    if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
 }
 
 function preventKeyScroll(e) {

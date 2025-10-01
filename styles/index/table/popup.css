@@ -27,15 +27,30 @@
     color: var(--accent-light);
 }
 
+@media (max-width: 600px) {
+    .popup-content {
+        min-width: 90%;
+        max-width: 90%;
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+@media (min-width: 601px) {
+    .popup-content {
+    max-width: 60%;
+    min-width: 500px;
+    }
+}
 .popup-content {
     background-color: var(--table-highlight);
     color: white;
-    min-width: 500px;
     padding: 20px;
     border-radius: 20px;
     position: relative;
     font-family: Arial, sans-serif;
     max-width: 60%;
+    overflow-y: auto;
+    max-height: 100vh;
 }
 
 .popup-content h2 {
