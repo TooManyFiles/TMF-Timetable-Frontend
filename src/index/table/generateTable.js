@@ -179,9 +179,6 @@ function generateScheduleTable(data) {
                     if (cellData.cancelled) {
                         lessonContainer.classList.add("cancelled")
                     }
-                    lessonContainer.style.cursor = 'pointer';
-                    lessonContainer.style.backgroundColor = 'var(--table-highlight)';
-                    lessonContainer.style.borderRadius = '10px';
 
 
                     // check if next row has the same subject

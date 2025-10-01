@@ -40,7 +40,11 @@ export function generateLessonPopup(id) {
         } else {
             popupContent.classList.remove('cancelled');
         }
-
+        if (lesson.irregular) {
+            popupContent.classList.add('irregular');
+        } else {
+            popupContent.classList.remove('irregular');
+        }
         const existingPTags = popupContent.querySelectorAll('p, div');
         existingPTags.forEach(p => p.remove());
 
@@ -118,7 +122,7 @@ export function generateLessonPopup(id) {
 
 function closeLessonPopup() {
     document.getElementById('lesson-popup').style.display = 'none';
-    
+
     // Re-enable scrolling
     enableScroll();
 }
@@ -127,11 +131,11 @@ function closeLessonPopup() {
 document.addEventListener('click', (event) => {
     // Check if the clicked element has a 'lessonid' attribute
     const target = event.target.closest('[lessonid]');
-    
+
     if (target) {
         // Get the lessonid attribute value
         const lessonid = target.getAttribute('lessonid');
-        
+
         // Call the function with lessonid
         generateLessonPopup(lessonid - 0);
     }
@@ -145,7 +149,7 @@ export function generateCafePopup(date, main_dish, vegetarian_dish, salad, deser
     document.getElementById('salad').textContent = salad;
     document.getElementById('desert').textContent = desert;
     document.getElementById('cooking_team').textContent = cooking_team;
-    
+
     // Disable scrolling
     disableScroll();
 
@@ -154,7 +158,7 @@ export function generateCafePopup(date, main_dish, vegetarian_dish, salad, deser
 
 function closeCafePopup() {
     document.getElementById('cafe-popup').style.display = 'none';
-    
+
     // Re-enable scrolling
     enableScroll();
 }

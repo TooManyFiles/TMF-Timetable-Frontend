@@ -140,6 +140,10 @@ td:not(:first-child) {
     position: relative;
     justify-content: center;
 
+    cursor: pointer;
+    background-color: var(--table-highlight);
+    border-radius: 10px;
+
     >span:not(.lesson-room)>span>span:not(:last-child)::after,
     >span.lesson-teacher>span>span.long>span:not(:last-child)::after {
         content: ' ';
@@ -215,8 +219,9 @@ td:not(:first-child) {
                 /* after the line */
             );
     }
-}
 
-.irregular {
-    /*TODO*/
+    .irregular {
+        background-color: var(--table-highlight-irregular) !important;
+    }
+
 }
