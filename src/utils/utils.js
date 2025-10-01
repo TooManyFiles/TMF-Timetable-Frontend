@@ -1,7 +1,7 @@
 // WHEN ITS SAT / SUN, THESE DATE FUNCTIONS RETURN THE DATES OF THE NEXT WEEK!!
 import { timeGrid } from "../config.js";
 import { getCurrentUser } from "../api/auth.js";
-let currentMonday;
+let currentMonday = null;
 
 function setCurrentMonday(date) {
     if (date) {
@@ -27,7 +27,7 @@ function setCurrentMonday(date) {
 }
 
 export function switchWeek(offset) {
-    // offset = Anzahl Wochen (z.B. -1 = zurück, +1 = vor)
+    // offset = number of weeks (e.g., -1 = previous, +1 = next)
     if (!currentMonday) {
         currentMonday = getMonday();
     }
@@ -45,7 +45,7 @@ function getMondayofDate(date) {
     const dayOfWeek = dateDate.getDay();
     let differenceToMonday;
 
-    if (dayOfWeek >= 6) { // Samstag/Sonntag → nächste Woche
+    if (dayOfWeek >= 6) { // Saturday/Sunday → next week
         differenceToMonday = dayOfWeek - 8;
     } else {
         differenceToMonday = dayOfWeek - 1;
@@ -61,14 +61,19 @@ export function getMonday() {
         return new Date(currentMonday);
     }
 
-    // URL-Parameter prüfen
+    // Check URL parameters
     const params = new URLSearchParams(window.location.search);
     const kwParam = parseInt(params.get("kw"));
     const yearParam = parseInt(params.get("year"));
 
     if (!isNaN(kwParam) && !isNaN(yearParam)) {
-        // Montag aus KW/Jahr berechnen
-        const simpleDate = new Date(yearParam, 0, 1 + (kwParam - 1) * 7);
+        // Calculate Monday from week/year
+        // ISO 8601: Week 1 is the week with the first Thursday of the year
+        // Set date to the Thursday in the target week
+        const simpleDate = new Date(yearParam, 0, 4); // Jan 4th is always in week 1
+        const dayOfWeek = simpleDate.getDay() || 7; // Make Sunday (0) become 7
+        simpleDate.setDate(simpleDate.getDate() - (dayOfWeek - 1) + (kwParam - 1) * 7);
+        // Now simpleDate is the Monday of the desired week
 
         currentMonday = new Date(getMondayofDate(simpleDate));
         return currentMonday;

@@ -213,7 +213,7 @@ export async function parseLessons(lessons) {
 
     value: sort(lesson.subjects || []).join("") + sort(lesson.teachers || []).join("") + sort(lesson.rooms || []).join("") + sort(lesson.classes || []).join("") + (lesson.cancelled ? 1 : 0) + (lesson.description || '')
   }));
-  //TODO: handel deleted lessons
+  //TODO: handle deleted lessons
   let oldData = JSON.parse(localStorage.getItem('lessons') || "[]");
 
   for (let i = 0; i < parsedLessons.length; i++) {
@@ -221,12 +221,12 @@ export async function parseLessons(lessons) {
     const oldIndex = oldData.findIndex(l => l.id === newLesson.id);
 
     if (oldIndex !== -1) {
-      // Update falls neuer
+      // Update if newer
       if (newLesson.lastUpdate > oldData[oldIndex].lastUpdate) {
         oldData[oldIndex] = newLesson;
       }
     } else {
-      // Neu hinzufügen
+      // Add new lesson
       oldData.push(newLesson);
     }
   }
