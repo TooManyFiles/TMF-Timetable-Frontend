@@ -111,7 +111,8 @@ td:not(:first-child) {
 .lesson-grid-container>span:empty {
     display: none;
 }
-.lesson-grid-container:has(span.lesson-room:empty){
+
+.lesson-grid-container:has(span.lesson-room:empty) {
     grid-template-areas:
         "subject subject"
         "teacher teacher"
@@ -119,7 +120,8 @@ td:not(:first-child) {
         "addInfo addInfo"
         "addInfo addInfo";
 }
-.lesson-grid-container:has(span.lesson-teacher:empty){
+
+.lesson-grid-container:has(span.lesson-teacher:empty) {
     grid-template-areas:
         "subject subject"
         "room room"
@@ -127,6 +129,7 @@ td:not(:first-child) {
         "addInfo addInfo"
         "addInfo addInfo";
 }
+
 .lesson-grid-container>span>span:not(:last-child)::after {
     content: ", ";
     /* Add comma between items */
@@ -137,8 +140,14 @@ td:not(:first-child) {
     position: relative;
     justify-content: center;
 
-    span>span>span:not(:last-child)::after {
+    >span:not(.lesson-room)>span>span:not(:last-child)::after,
+    >span.lesson-teacher>span>span.long>span:not(:last-child)::after {
         content: ' ';
+    }
+
+    .lesson-room .info {
+        display: none;
+        /* hide room info */
     }
 
     /* hide class if its the only one. 

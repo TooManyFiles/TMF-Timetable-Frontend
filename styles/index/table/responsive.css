@@ -5,9 +5,7 @@
     white-space: nowrap; /* prevent line break */
 }
 
-#scheduleBody .lesson-room .info {
-    display: none; /* hide room info */
-}
+
 
 /* Table wrapper for container queries */
 .table-wrapper {

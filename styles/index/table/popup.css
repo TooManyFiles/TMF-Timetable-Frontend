@@ -83,7 +83,8 @@
             /* Add comma between items */
         }
 
-        p>span#teachers>span>span.long>span:not(:last-child)::after,p>span>span>span:not(:last-child)::after {
+        p>span#teachers>span>span.long>span:not(:last-child)::after,
+        p>span>span>span:not(:last-child)::after {
             content: ' ';
         }
 
