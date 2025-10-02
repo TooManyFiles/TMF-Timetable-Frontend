@@ -78,7 +78,6 @@ td:not(:first-child) {
 #schedule tbody tr {
     height: 7.5vh;
     vertical-align: middle;
-
 }
 
 /* Table element content */
