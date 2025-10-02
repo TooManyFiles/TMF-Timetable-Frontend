@@ -46,7 +46,7 @@
     .lesson-grid-container span.lesson-teacher .firstName { display: none; }
     .lesson-grid-container span.lesson-teacher .short { display: inline; }
 }
-@container (min-width: 140px) and (max-width: 250px){
+@container (min-width: 140px) and (max-width: 250px) {
     .lesson-grid-container:has(span.lesson-room:empty) span.lesson-teacher .long,
     .lesson-grid-container:has(span.lesson-room:empty) span.lesson-teacher .firstName { display: inline; }
     .lesson-grid-container:has(span.lesson-room:empty) span.lesson-teacher .short { display: none; }
