@@ -49,6 +49,7 @@ td {
     vertical-align: middle;
     position: relative;
     overflow: hidden;
+    height: 100%;
 }
 
 thead th {
@@ -63,7 +64,7 @@ thead th {
 th:first-child,
 td:first-child {
     font-weight: bolder;
-    width: 5%;
+    width: 3%;
     /* Smaller width */
     background-color: var(--accent-light);
 }
@@ -72,6 +73,11 @@ td:first-child {
 th:not(:first-child),
 td:not(:first-child) {
     width: 18%;
+}
+
+#schedule tbody tr {
+    height: 7.5vh;
+    vertical-align: middle;
 }
 
 /* Table element content */
@@ -92,11 +98,35 @@ td:not(:first-child) {
     height: 100%;
     /* Adjust as needed */
     width: 100%;
-    /* Adjust as needed */
+    gap: 10px;
+}
+
+.lesson-grid-container-wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .lesson-grid-container>span:empty {
     display: none;
+}
+
+.lesson-grid-container:has(span.lesson-room:empty) {
+    grid-template-areas:
+        "subject subject"
+        "teacher teacher"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
+}
+
+.lesson-grid-container:has(span.lesson-teacher:empty) {
+    grid-template-areas:
+        "subject subject"
+        "room room"
+        "class class"
+        "addInfo addInfo"
+        "addInfo addInfo";
 }
 
 .lesson-grid-container>span>span:not(:last-child)::after {
@@ -107,9 +137,22 @@ td:not(:first-child) {
 .lesson-grid-container {
     overflow: hidden;
     position: relative;
-    span > span > span:not(:last-child)::after{
+    justify-content: center;
+
+    cursor: pointer;
+    background-color: var(--table-highlight);
+    border-radius: 10px;
+
+    >span:not(.lesson-room)>span>span:not(:last-child)::after,
+    >span.lesson-teacher>span>span.long>span:not(:last-child)::after {
         content: ' ';
     }
+
+    .lesson-room .info {
+        display: none;
+        /* hide room info */
+    }
+
     /* hide class if its the only one. 
     TODO: Disable if not own timetable */
     .lesson-class:has(span:only-child) {
@@ -140,6 +183,12 @@ td:not(:first-child) {
     .lesson-addInfo {
         grid-area: addInfo;
     }
+
+    .originalData {
+        text-decoration: line-through;
+        text-decoration-color: red;
+        text-decoration-thickness: 3px;
+    }
 }
 
 #scheduleBody {
@@ -156,12 +205,22 @@ td:not(:first-child) {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: red;
-        clip-path: polygon(3px 0, calc(100% + 3px) 100%, calc(100% - 3px) 100%, -3px 0);
+        pointer-events: none;
+        --cancelled-line-thickness: 1.5px;
+        background-image: linear-gradient(to bottom left,
+                transparent calc(50% - var(--cancelled-line-thickness)),
+                /* before the line */
+                red calc(50% - var(--cancelled-line-thickness)),
+                /* start of line */
+                red calc(50% + var(--cancelled-line-thickness)),
+                /* end of line */
+                transparent calc(50% + var(--cancelled-line-thickness))
+                /* after the line */
+            );
     }
-}
 
-.irregular {
-    /*TODO*/
-}
+    .irregular {
+        background-color: var(--table-highlight-irregular) !important;
+    }
 
+}

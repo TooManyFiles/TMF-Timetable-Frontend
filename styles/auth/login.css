@@ -28,12 +28,20 @@ a {
   text-align: center;
 }
 
-.container { 
-  width: 600px;
+.container {
   margin: 20px auto; 
   padding: 50px;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+@media (min-width: 725px) {
+  .container {
+    width: 600px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .input {
+    padding: 10px 10px 10px 5px;
+  }
 }
 
 .group { 
@@ -45,7 +53,7 @@ a {
 
 input {
   font-size: 18px;
-  padding: 10px 10px 10px 5px;
+  padding: 10px 0px 10px 5px;
   display: block;
   width: 100%;
   border: none;

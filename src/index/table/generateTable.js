@@ -18,6 +18,8 @@ function generateSchedule() {
 
 
 function generateLessonTableContent(lesson) {
+    const containerOutside = document.createElement('div');
+    containerOutside.classList.add('lesson-grid-container-wrapper');
     const container = document.createElement('div');
     container.classList.add('lesson-grid-container');
 
@@ -55,8 +57,8 @@ function generateLessonTableContent(lesson) {
         }
     }
     container.appendChild(infoContainer);
-
-    return container;
+    containerOutside.appendChild(container);
+    return containerOutside;
 }
 
 function updateColspan(columns) {
@@ -163,8 +165,9 @@ function generateScheduleTable(data) {
                 td.classList.add(`${day}${row}`); // optional id (probably won't need that)
 
                 if (cellData) {
-                    const lessonContainer = generateLessonTableContent(cellData);
-                    td.appendChild(lessonContainer);
+                    const lessonContainerWrapper = generateLessonTableContent(cellData);
+                    td.appendChild(lessonContainerWrapper);
+                    const lessonContainer = lessonContainerWrapper.querySelector('.lesson-grid-container');
                     lessonContainer.setAttribute("lessonid", cellData.id)
                     if (cellData.irregular) {
                         lessonContainer.classList.add("irregular")
@@ -176,9 +179,6 @@ function generateScheduleTable(data) {
                     if (cellData.cancelled) {
                         lessonContainer.classList.add("cancelled")
                     }
-                    lessonContainer.style.cursor = 'pointer';
-                    lessonContainer.style.backgroundColor = 'var(--table-highlight)';
-                    lessonContainer.style.borderRadius = '10px';
 
 
                     // check if next row has the same subject

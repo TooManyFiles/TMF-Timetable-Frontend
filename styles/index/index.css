@@ -9,6 +9,7 @@
 .controls-left {
     margin-left: 10px;
     display: flex;
+    width: 15%;
 }
 
 .timerange-center {
@@ -27,6 +28,8 @@
     border: none;
     cursor: pointer;
     margin: 0 10px;
+    height: 35px;
+    width: 43.75px;
 }
 
 
@@ -88,6 +91,7 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 15%;
 }
 
 .buttons-right {
@@ -101,4 +105,55 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
     text-align: center;
     margin-top: -20px;
     position: relative;
+}
+
+.bottomnav {
+    display: none;
+    background-color: var(--accent-light);
+    width: 95%;
+    height: 5.5vh;
+    margin: auto;
+    margin-top: 1vh;
+
+    border-radius: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottomnav_img {
+    height: 4vh;
+}
+.bottomnav_img:hover {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+@media (max-width: 1023px) {
+    .controls-left {
+        display: none;
+    }
+    .controls-right {
+        display: none;
+    }
+    .bottomnav {
+        display: flex;
+    }
+    #status-display {
+        display: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .timerange-controls {
+        margin: 0;
+    }
+    .timerange-center  {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 400px) {
+    .timerange-item {
+        font-size: medium;
+    }
 }
