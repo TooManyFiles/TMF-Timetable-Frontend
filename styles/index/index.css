@@ -123,7 +123,7 @@ input[type="checkbox"]:checked+.switch-label #multiUserIcon {
 .bottomnav_img {
     height: 4vh;
 }
-.bottomnav_img:hover{
+.bottomnav_img:hover {
     cursor: pointer;
     pointer-events: auto;
 }
