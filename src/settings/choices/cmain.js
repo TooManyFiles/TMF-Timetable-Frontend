@@ -1,16 +1,18 @@
 // Sample subjects - replace with your actual subjects
 
 import { getCurrentUser } from "../../api/auth.js";
-import { getChoice, getChoicesByUserId, postChoice } from "../../api/choise.js";
-import { getUserSetting } from "../../api/settigns.js";
+import { getChoice, getChoicesByUserId, postChoice } from "../../api/choice.js";
+import { getUserSetting } from "../../api/settings.js";
 import { getView, getViewWithCustomChoice } from "../../api/view.js";
 import { getMonday } from "../../utils/utils.js";
 let user;
 let choiceID;
 let userClass;
+
+
 async function getRelevantSubjects(userClass) {
 
-    const currentLessons = (await getViewWithCustomChoice(dateToString(getMonday()), 21, {userClass:[]})).Untis
+    const currentLessons = (await getViewWithCustomChoice(dateToString(getMonday()), 21, { userClass: [] })).Untis
     // const currentLessons = localStorage.getItem('lessons');
     console.log(currentLessons);
     if (!currentLessons) return [];
@@ -27,6 +29,13 @@ async function getRelevantSubjects(userClass) {
 // Initialize by adding all subjects to visible box
 const visibleBox = document.getElementById("visible-subjects");
 const hiddenBox = document.getElementById("hidden-subjects");
+
+function highlightMoved(element) {
+    element.classList.add("moved");
+    setTimeout(() => {
+        element.classList.remove("moved");
+    }, 3000);
+}
 
 
 function createSubjectElement(subject, classID) {
@@ -54,8 +63,12 @@ function createSubjectElement(subject, classID) {
     moveButton.addEventListener("click", () => {
         const isInVisible = div.closest("#visible-subjects") !== null;
         const targetBox = isInVisible ? hiddenBox : visibleBox;
-        targetBox.appendChild(div);
+        const firstNonTitle = [...targetBox.children].find(
+            el => !el.classList.contains("box-title")
+        );
+        targetBox.insertBefore(div, firstNonTitle);
         updateButtonText();
+        highlightMoved(div);
         saveSettings();
     });
 
@@ -84,7 +97,11 @@ function createSubjectElement(subject, classID) {
         e.preventDefault();
         const draggingItem = document.querySelector(".dragging");
         if (draggingItem && !box.contains(draggingItem)) {
-            box.appendChild(draggingItem);
+            const firstNonTitle = [...box.children].find(
+                el => !el.classList.contains("box-title")
+            );
+            box.insertBefore(draggingItem, firstNonTitle);
+            highlightMoved(draggingItem);
             saveSettings();
         }
     });
@@ -138,10 +155,10 @@ async function loadSettings() {
     user = await getCurrentUser();
     choiceID = user.defaultChoice.id;
     let allSubjects = localStorage.getItem("subjects");
-    userClass = await getUserSetting("untis","classId")
-    if (userClass.status == 200){
+    userClass = await getUserSetting("untis", "classId")
+    if (userClass.status == 200) {
         userClass = userClass.data;
-    }else{
+    } else {
         userClass = -1;
     }
     if (allSubjects) {

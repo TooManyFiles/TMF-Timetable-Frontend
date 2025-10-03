@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Settings - Subject Visibility</title>
-    <link rel="stylesheet" href="/styles/settings/settigns.css">
-    <link rel="stylesheet" href="/styles/general/errorDisplay.css">
 
-  </head>
-  <body>
-    <div class="container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Subject Visibility</title>
+  <link rel="stylesheet" href="styles/settings/settings.css">
+  <link rel="stylesheet" href="styles/general/errorDisplay.css">
+  <link rel="stylesheet" href="styles/style.css">
+
+</head>
+
+<body>
+  <div id="main-container">
+    <div class="choice-container">
       <div class="subject-box" id="visible-subjects">
         <div class="box-title">Visible Subjects</div>
         <!-- Subjects will be added here -->
@@ -20,17 +24,26 @@
         <!-- Subjects will be added here -->
       </div>
     </div>
-    <div id="error-display" style="display: none;">
-        <button id="close-button" onclick="closeErrorDisplay()">×</button>
-        <h4>Error:</h4>
-        <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
+    <!-- Neuer Container für Farbeinstellung -->
+    <div class="color-selection-container">
+    <h3>Set Colors for Visible Subjects</h3>
+    <div id="color-list">
+      <!-- Dynamically filled with subjects and color pickers -->
     </div>
+  </div>
+  </div>
+  <div id="error-display" style="display: none;">
+    <button id="close-button" onclick="closeErrorDisplay()">×</button>
+    <h4>Error:</h4>
+    <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
+  </div>
 
 
-    <script type="module" src="src/generic/errorDisplay.js"></script>
-    <script type="module" src="src/api/choise.js"></script>
-    <script type="module" src="src/api/settigns.js"></script>
-    <script type="module" src="src/settings/choisce/cmain.js"></script>
+  <script type="module" src="src/generic/errorDisplay.js"></script>
+  <script type="module" src="src/api/choice.js"></script>
+  <script type="module" src="src/api/settings.js"></script>
+  <script type="module" src="src/settings/choices/cmain.js"></script>
+ 
+</body>
 
-  </body>
 </html>
