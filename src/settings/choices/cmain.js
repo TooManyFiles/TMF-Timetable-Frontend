@@ -1,6 +1,7 @@
 // Sample subjects - replace with your actual subjects
 
 import { getCurrentUser } from "../../api/auth.js";
+import { getStaticData } from "../../api/untis.js";
 import { getChoice, getChoicesByUserId, postChoice } from "../../api/choice.js";
 import { getUserSetting } from "../../api/settings.js";
 import { getView, getViewWithCustomChoice } from "../../api/view.js";
@@ -12,8 +13,12 @@ let userClass;
 
 async function getRelevantSubjects(userClass) {
 
-    const currentLessons = (await getViewWithCustomChoice(dateToString(getMonday()), 21, { userClass: [] })).Untis
-    // const currentLessons = localStorage.getItem('lessons');
+    const currentLessons = (await getViewWithCustomChoice(
+        dateToString(getMonday()),
+        21,
+        { ["" + userClass]: [] }
+    )).Untis;
+
     console.log(currentLessons);
     if (!currentLessons) return [];
 
@@ -164,7 +169,7 @@ async function loadSettings() {
     if (allSubjects) {
         allSubjects = JSON.parse(allSubjects); // jetzt ein Array von Objekten
     } else {
-        allSubjects = []; // Fallback falls nichts gespeichert
+        allSubjects =  (await getStaticData()).subjects
     }
 
 

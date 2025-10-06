@@ -1,49 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Subject Visibility</title>
+    <link rel="stylesheet" href="styles/settings/settings.css" />
+    <link rel="stylesheet" href="styles/settings/topbar.css" />
+    <link rel="stylesheet" href="styles/general/errorDisplay.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings - Subject Visibility</title>
-  <link rel="stylesheet" href="styles/settings/settings.css">
-  <link rel="stylesheet" href="styles/general/errorDisplay.css">
-  <link rel="stylesheet" href="styles/style.css">
-
-</head>
-
-<body>
-  <div id="main-container">
-    <div class="choice-container">
-      <div class="subject-box" id="visible-subjects">
-        <div class="box-title">Visible Subjects</div>
-        <!-- Subjects will be added here -->
+  <body>
+    <!-- Navigation Bar -->
+    <div id="top-bar">
+      <div>
+        <button id="back-button">← Back to Timetable</button>
       </div>
-
-      <div class="subject-box" id="hidden-subjects">
-        <div class="box-title">Hidden Subjects</div>
-        <!-- Subjects will be added here -->
+      <div>
+        <button id="logout-button">Logout</button>
       </div>
     </div>
-    <!-- Neuer Container für Farbeinstellung -->
-    <div class="color-selection-container">
-    <h3>Set Colors for Visible Subjects</h3>
-    <div id="color-list">
-      <!-- Dynamically filled with subjects and color pickers -->
+
+    <div id="main-container">
+      <div class="choice-container">
+        <div class="subject-box" id="visible-subjects">
+          <div class="box-title">Visible Subjects</div>
+          <!-- Subjects will be added here -->
+        </div>
+
+        <div class="subject-box" id="hidden-subjects">
+          <div class="box-title">Hidden Subjects</div>
+          <!-- Subjects will be added here -->
+        </div>
+      </div>
+      <!-- Neuer Container für Farbeinstellung -->
+      <div class="color-selection-container" hidden>
+        <h3>Set Colors for Visible Subjects</h3>
+        <div id="color-list">
+          <!-- Dynamically filled with subjects and color pickers -->
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-  <div id="error-display" style="display: none;">
-    <button id="close-button" onclick="closeErrorDisplay()">×</button>
-    <h4>Error:</h4>
-    <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
-  </div>
+    <div id="error-display" style="display: none">
+      <button id="close-button" onclick="closeErrorDisplay()">×</button>
+      <h4>Error:</h4>
+      <p>
+        <span id="error-display-text"
+          >Biiiig problem amogus just took over</span
+        >
+      </p>
+    </div>
 
+    <script type="module" src="src/generic/errorDisplay.js"></script>
+    <script type="module" src="src/api/choice.js"></script>
+    <script type="module" src="src/api/settings.js"></script>
+    <script type="module" src="src/settings/choices/cmain.js"></script>
+    <script type="module">
+      import { logout } from "./src/api/auth.js";
 
-  <script type="module" src="src/generic/errorDisplay.js"></script>
-  <script type="module" src="src/api/choice.js"></script>
-  <script type="module" src="src/api/settings.js"></script>
-  <script type="module" src="src/settings/choices/cmain.js"></script>
- 
-</body>
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", async () => {
+          try {
+            await logout();
+          } catch (err) {
+            console.error("Logout failed:", err);
+          }
+        });
 
+      document.getElementById("back-button").addEventListener("click", () => {
+        window.location.href = "/";
+      });
+    </script>
+  </body>
 </html>

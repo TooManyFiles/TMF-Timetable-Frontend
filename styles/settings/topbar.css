@@ -1,0 +1,42 @@
+/* ===== Top Bar Styling ===== */
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color-dark-1);
+  border-bottom: 1px solid var(--accent-color);
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Button Styles */
+#top-bar button {
+  font-size: 14px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Back Button */
+#back-button {
+  background-color: var(--background-color-dark-2);
+  color: #333;
+}
+
+#back-button:hover {
+  background-color: var(--background-color-dark-2-hover);
+}
+
+/* Logout Button */
+#logout-button {
+  background-color: var(--color-red);
+  color: white;
+}
+
+#logout-button:hover {
+  background-color: var(--color-red-hover);
+}

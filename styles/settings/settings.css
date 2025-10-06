@@ -3,18 +3,20 @@
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
   min-height: 100vh;
   padding: 20px;
   width: 100%;
+  overflow: auto;
+  
 }
 
 .choice-container {
   display: flex;
   justify-content: space-around;
   padding: 20px;
-  max-width: 800px;
-  background-color: var(--table-background);
+  max-width: min(800px, 100vw);
+    flex-wrap: wrap; /* Damit die Boxen umbrechen auf kleine Bildschirme */
 
   .subject-item.moved {
     animation: fadeHighlight 1.5s ease-in-out;
@@ -25,8 +27,8 @@
   .subject-box {
     width: 300px;
     min-height: 400px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
+    border: var(--border-settings);
+    border-radius: var(--border-radius);
     padding: 15px;
     margin: 10px;
   }
@@ -35,14 +37,14 @@
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.2em;
-    color: var(--table-highlight);
+    color: var(--accent-color);
     font-weight: bold;
-    border-bottom: 2px solid var(--table-highlight);
+    border-bottom: 2px solid var(--accent-color);
     padding-bottom: 5px;
   }
 
   .subject-item {
-    background-color: #f0f0f0;
+    background-color: var(--background-color-dark-1);
     padding: 10px;
     margin: 5px 0;
     border-radius: 4px;
@@ -51,7 +53,7 @@
   }
 
   .subject-item:hover {
-    background-color: #e0e0e0;
+    background-color: var(--background-color-dark-1-hover);
   }
 
   .dragging {
@@ -65,7 +67,7 @@
   }
 
   .move-button {
-    background-color: var(--table-highlight);
+    background-color: var(--accent-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -75,28 +77,28 @@
   }
 
   .move-button:hover {
-    background-color: var(--table-highlight-faded);
+    background-color: var(--accent-color-faded);
   }
 }
 
 @keyframes fadeHighlight {
   0% {
-    background-color: #f0f0f0;
+    background-color: var(--background-color-dark-1);
   }
 
   25% {
-    background-color: #ffe082;
+    background-color: var(--color-yellow);
   }
 
   35% {
-    background-color: #f0f0f0;
+    background-color: var(--background-color-dark-1);
   }
 
   60% {
-    background-color: #ffe082;
+    background-color: var(--color-yellow);
   }
 
   100% {
-    background-color: #f0f0f0;
+    background-color: var(--background-color-dark-1);
   }
 }
