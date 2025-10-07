@@ -170,6 +170,6 @@ input:checked+.slider:before {
 
 #toggle-label {
   font-size: 0.95em;
-  color: #333;
+  color: var(--text-color);
   user-select: none;
 }

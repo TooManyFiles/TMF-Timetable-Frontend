@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings - Subject Visibility</title>
-    <link rel="stylesheet" href="styles/settings/settings.css" />
     <link rel="stylesheet" href="styles/settings/topbar.css" />
+    <link rel="stylesheet" href="styles/settings/settings.css" />
+    <link rel="stylesheet" href="styles/settings/untisacc.css" />
     <link rel="stylesheet" href="styles/general/errorDisplay.css" />
     <link rel="stylesheet" href="styles/style.css" />
   </head>
@@ -42,12 +43,28 @@
           <!-- Subjects will be added here -->
         </div>
       </div>
-      <!-- Neuer Container für Farbeinstellung -->
-      <div class="color-selection-container" hidden>
-        <h3>Set Colors for Visible Subjects</h3>
-        <div id="color-list">
-          <!-- Dynamically filled with subjects and color pickers -->
-        </div>
+      <div class="untis-update-container">
+        <h3>Update Untis Account</h3>
+        <form id="untis-form">
+          <div class="form-row">
+            <label for="forename">Forename:</label>
+            <input type="text" id="forename" required />
+          </div>
+          <div class="form-row">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" required />
+          </div>
+          <div class="form-row">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required />
+          </div>
+          <div class="form-row">
+            <label for="untisPWD">Untis Password:</label>
+            <input type="password" id="untisPWD" required />
+          </div>
+          <button type="submit" id="update-untis-btn">Update Account</button>
+        </form>
+        <div id="untis-feedback" class="feedback"></div>
       </div>
     </div>
     <div id="error-display" style="display: none">
@@ -64,6 +81,7 @@
     <script type="module" src="src/api/choice.js"></script>
     <script type="module" src="src/api/settings.js"></script>
     <script type="module" src="src/settings/choices/cmain.js"></script>
+    <script type="module" src="src/settings/untis.js"></script>
     <script type="module">
       import { logout } from "./src/api/auth.js";
 
