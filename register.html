@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | TMF Timetable</title>
     <link rel="stylesheet" href="/styles/register/register.css">
+    <link rel="stylesheet" href="/styles/general/errorDisplay.css">
+
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
@@ -14,6 +16,7 @@
                 }).catch(console.error);
             }
     </script>
+    <script src="lib/jsSHA/dist/sha.js"></script>
 </head>
 <body>
     <div class="center-wrapper">
@@ -40,6 +43,12 @@
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Nachname</label>
+                </div>
+                <div class="group">      
+                    <input type="mail" id="email" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>E-mail</label>
                 </div>
                 <button type="button" class="button next-btn">Weiter!</button>
                 <p>Bereits einen Account erstellt? <a href="/login.html" style="color: var(--highlight-faded)">Zum login</a></p>
@@ -81,25 +90,43 @@
             <form id="form-step-3" class="form-step">
                 <h2 class="onboarding-heading">Registrieren - Schritt 3</h2>
                 <p class="onboarding-description">Dein Passwort bleibt sicher bei uns und kann von niemandem eingelesen werden. </p>
+                
+                <div class="group">      
+                    <input type="text" id="untis-username" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>WebUntis Username</label>
+                </div>
                 <div class="group">      
                     <input type="password" id="untis-password" required>
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>WebUntis Passwort</label>
                 </div>
-                <button type="button" class="button next-btn">Abschließen!</button>
+                <button type="button" class="button" onclick="finishRegistration()">Abschließen!</button>
                 <p>Letzer Schritt! | <a onclick="showPreviousStep()" style="color: var(--highlight-faded); cursor: pointer">Zurück</a></p>
             </form>
-
             <!-- Step 4 -->
             <form id="form-step-4" class="form-step">
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <p>Dein Account wird erstellt...</p>
+                </div>
+            </form>
+            </form>
+            <!-- Step 5 -->
+            <form id="form-step-5" class="form-step">
                 <h1 class="onboarding-heading" style="text-align: center;">&#127881; Geschafft! &#127881;</h1>
                 <h4>Dein Account ist jetzt erstellt und du kannst dich mit deinen Anmeldedaten anmelden:</h4>
                 <button class="button" style="background-color: var(--highlight); color: white;"><a href="/login.html" style="text-decoration: none; color: white !important"> Zum login! </a></button> <!-- redirect not final! -->
             </form>
         </div>
     </div>
-
-    <script src="/src/register/register.js"></script>
+<div id="error-display" style="display: none;">
+        <button id="close-button" onclick="closeErrorDisplay()">×</button>
+        <h4>Error:</h4>
+        <p><span id="error-display-text">Biiiig problem amogus just took over</span></p>
+    </div>
+    <script src="/src/register/register.js"  type="module" ></script>
 </body>
 </html>
