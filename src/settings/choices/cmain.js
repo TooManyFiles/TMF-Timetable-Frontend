@@ -52,7 +52,14 @@ function createSubjectElement(subject, classID) {
     div.setAttribute("classID", classID);
 
     const subjectText = document.createElement("span");
-    subjectText.textContent = subject.name;
+    const subjectNameLong = document.createElement("span");
+    subjectNameLong.textContent = subject.name;
+    subjectNameLong.className = "long-name";
+    const subjectNameShort = document.createElement("span");
+    subjectNameShort.textContent = subject.shortName;
+    subjectNameShort.className = "short-name";
+    subjectText.appendChild(subjectNameShort);
+    subjectText.appendChild(subjectNameLong);
     subjectText.setAttribute("sid", subject.id);
     div.appendChild(subjectText);
 
@@ -219,3 +226,28 @@ async function loadSettings() {
 
 // Load saved settings when page loads
 loadSettings();
+
+
+const toggle = document.getElementById("toggle-names");
+const label = document.getElementById("toggle-label");
+
+toggle.addEventListener("change", () => {
+  const html = document.documentElement;
+  const showShort = toggle.checked;
+
+  if (showShort) {
+    html.classList.add("c-short-names");
+    html.classList.remove("c-full-names");
+  } else {
+    html.classList.add("c-full-names");
+    html.classList.remove("c-short-names");
+  }
+
+  // Optional: speichern im localStorage
+  localStorage.setItem("useShortNames", showShort ? "1" : "0");
+});
+
+// Initialzustand beim Laden
+const useShort = localStorage.getItem("useShortNames") === "1";
+toggle.checked = useShort;
+document.documentElement.classList.add(useShort ? "c-short-names" : "c-full-names");

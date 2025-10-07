@@ -1,7 +1,9 @@
-let API_URL_input = '${API_URL}';
-const hashPasswordBool_input = '${HASH_PASSWORD}';
+let API_URL_input = 'https://timetable.api.beta.toomanyfiles.dev/';
+// let API_URL_input = 'http://localhost:8080/';
+const hashPasswordBool_input = 'true';
 
 export const hashPasswordBool = /^(true|1|yes)$/i.test(hashPasswordBool_input.trim());
+
 
 if (!API_URL_input.endsWith('/')) {
     API_URL_input = API_URL_input + "/";
