@@ -11,11 +11,14 @@ let choiceID;
 let userClass;
 
 
+// Duration in days for lesson view
+const LESSON_VIEW_DURATION_DAYS = 21;
+
 async function getRelevantSubjects(userClass) {
 
     const currentLessons = (await getViewWithCustomChoice(
         dateToString(getMonday()),
-        21,
+        LESSON_VIEW_DURATION_DAYS,
         { ["" + userClass]: [] }
     )).Untis;
 
