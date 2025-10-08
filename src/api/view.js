@@ -41,7 +41,7 @@ export async function getView(date, duration) {
         console.error('Request failed:', error);
     }
 }
-export async function getViewWithCustomChoice(date, duration,choiceData) {
+export async function getViewWithCustomChoice(date, duration, choiceData) {
     const query = `?date=${date}&duration=${duration}`;
     const url = `${API_URL}view${query}`;
 
