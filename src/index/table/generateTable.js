@@ -139,7 +139,10 @@ function generateScheduleTable(data) {
 
     const ColumnsPerDay = getLCMofAmoutOfSimultaneousLessonsPerDay(data)
     updateColspan(ColumnsPerDay)
-
+    const allDays = ['m', 't', 'w', 'th', 'f'];
+    allDays.forEach(day => {
+        if (!ColumnsPerDay[day]) ColumnsPerDay[day] = 1;
+    });
     // keep track on witch lessons already have been drawn as a combination
     let alreadyDrawn = [];
     let previouslyTakenSpaces = {};
