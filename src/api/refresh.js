@@ -5,7 +5,6 @@ import { getView } from './view.js';
 async function refreshAll(){
     setLoading();
     await fetchAndDisplayMenu();
-    setLastRefreshed(getCurrentTime());
     await getView(dateToString(getMonday()), 6);
     window.generateSchedule();
 }
