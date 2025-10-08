@@ -13,6 +13,11 @@ function generateSchedule() {
         return lessonDate >= startOfWeek && lessonDate <= endOfWeek;
     });
     generateScheduleTable(scheduleData);
+        const earliestLesson = scheduleData.reduce((earliest, lesson) =>
+        !earliest || new Date(lesson.lastUpdate) < new Date(earliest.lastUpdate) ? lesson : earliest
+        , null);
+    setLastRefreshed(earliestLesson.lastUpdate);
+
 }
 
 
