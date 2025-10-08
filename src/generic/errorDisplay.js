@@ -16,3 +16,4 @@ function closeErrorDisplay(){
 }
 
 window.closeErrorDisplay = closeErrorDisplay;
+window.setErrorDisplay = setErrorDisplay;

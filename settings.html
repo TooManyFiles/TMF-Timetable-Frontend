@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Einstellungen - Fächer Sichtbarkeit</title>
+    <link rel="stylesheet" href="styles/settings/topbar.css" />
+    <link rel="stylesheet" href="styles/settings/settings.css" />
+    <link rel="stylesheet" href="styles/settings/choice.css" />
+    <link rel="stylesheet" href="styles/settings/untisacc.css" />
+    <link rel="stylesheet" href="styles/general/errorDisplay.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <div id="top-bar">
+      <div>
+        <button id="back-button">← Zurück zum Stundenplan</button>
+      </div>
+      <div>
+        <button id="logout-button">Ausloggen</button>
+      </div>
+    </div>
+
+    <div id="main-container">
+      <div class="choice-container">
+        <!-- TOGGLE SWITCH -->
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="toggle-names" />
+            <span class="slider"></span>
+          </label>
+          <span id="toggle-label">Kurzform zeigen</span>
+        </div>
+
+        <div class="subject-box" id="visible-subjects">
+          <div class="box-title">Sichtbare Fächer</div>
+          <!-- Subjects will be added here -->
+        </div>
+
+        <div class="subject-box" id="hidden-subjects">
+          <div class="box-title">Versteckte Fächer</div>
+          <!-- Subjects will be added here -->
+        </div>
+      </div>
+      <div class="untis-update-container">
+        <h3>Untis Account aktualisieren</h3>
+        <form id="untis-form">
+          <div class="form-row">
+            <label for="forename">Vorname:</label>
+            <input type="text" id="forename" required />
+          </div>
+          <div class="form-row">
+            <label for="surname">Nachname:</label>
+            <input type="text" id="surname" required />
+          </div>
+          <div class="form-row">
+            <label for="username">Nutzername:</label>
+            <input type="text" id="username" required />
+          </div>
+          <div class="form-row">
+            <label for="untisPWD">Untis Passwort:</label>
+            <input type="password" id="untisPWD" required />
+          </div>
+          <button type="submit" id="update-untis-btn">Account aktualisieren</button>
+        </form>
+        <div id="untis-feedback" class="feedback"></div>
+      </div>
+    </div>
+    <div id="error-display" style="display: none">
+      <button id="close-button" onclick="closeErrorDisplay()">×</button>
+      <h4>Error:</h4>
+      <p>
+        <span id="error-display-text"
+          >Biiiig problem amogus just took over</span
+        >
+      </p>
+    </div>
+
+    <script type="module" src="src/generic/errorDisplay.js"></script>
+    <script type="module" src="src/api/choice.js"></script>
+    <script type="module" src="src/api/settings.js"></script>
+    <script type="module" src="src/settings/choices/cmain.js"></script>
+    <script type="module" src="src/settings/untis.js"></script>
+    <script type="module">
+      import { logout } from "./src/api/auth.js";
+
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", async () => {
+          try {
+            await logout();
+          } catch (err) {
+            console.error("Logout failed:", err);
+          }
+        });
+
+      document.getElementById("back-button").addEventListener("click", () => {
+        window.location.href = "/";
+      });
+    </script>
+  </body>
+</html>
