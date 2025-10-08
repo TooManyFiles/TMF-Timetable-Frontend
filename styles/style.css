@@ -1,7 +1,7 @@
 :root {
     --accent-dark: #6f6f6f;
     --accent-light: #D9D9D9;
-    --accent-color:rgba(64, 125, 127, 1);
+    --accent-color: rgba(64, 125, 127, 1);
     --accent-color-faded: rgba(64, 125, 127, 0.54);
     --accent-color-faded-solid: rgb(147, 180, 181);
     --accent-color-2: rgb(95, 64, 127);
