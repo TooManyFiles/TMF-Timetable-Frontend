@@ -1,4 +1,6 @@
 import { register, updateUntisAccount, login } from "../api/auth.js";
+import { postChoice } from "../api/choice.js";
+import { getUserSetting } from "../api/settings.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const nextButtons = document.querySelectorAll('.next-btn');
@@ -107,13 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: 0,
                 name: "Normal",
                 userId: 0,
-                Choice: {
-                    1: [
-                        1,
-                        4,
-                        100
-                    ]
-                }
+                Choice: {}
             }
         };
         const password = document.getElementById('password').value.trim();
@@ -126,10 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     const surname = document.getElementById('lastname').value.trim();
                     if (untisUsername && untisPassword) {
                         updateUntisAccount(forename, surname, untisUsername, untisPassword).then(() => {
-                            window.location.href = '/index.html';
+                            getUserSetting("untis", "classId").then((res) => {
+                                if (res.status === 200) {
+                                    const userClass = res.data;
+                                    postChoice(-1, -1, { Choice: { ["" + userClass]: [] } }).then(() => {
+                                        window.location.href = '/index.html';
+                                    }).catch((error) => {
+                                        console.error("Fehler beim Speichern der Wahl:", error);
+                                        window.location.href = '/settings.html';
+                                    });
+                                }
+                            }).catch((error) => {
+                                console.error("Fehler beim Abrufen der Benutzereinstellung:", error);
+                                window.location.href = '/settings.html';
+                            });
                         }).catch((error) => {
                             alert("Registrierung erfolgreich, aber das Verbinden deines Untis-Kontos ist fehlgeschlagen: " + error.message);
-                            window.location.href = '/index.html';
+                            window.location.href = '/settings.html#untis';
                         });
                     } else {
                         window.location.href = '/index.html';
@@ -146,8 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Registrierung fehlgeschlagen: " + error.message);
             showPreviousStep();
         });
-        // untis_password: document.getElementById('untis-password').value.trim(),
-        //     untis_username: document.getElementById('untis-username').value.trim()
+
 
     }
 
