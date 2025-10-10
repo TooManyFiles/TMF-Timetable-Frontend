@@ -6,6 +6,7 @@ import { getChoice, getChoicesByUserId, postChoice } from "../../api/choice.js";
 import { getUserSetting } from "../../api/settings.js";
 import { getView, getViewWithCustomChoice } from "../../api/view.js";
 import { getMonday } from "../../utils/utils.js";
+import { setErrorDisplay } from "../../generic/errorDisplay.js";
 let user;
 let choiceID;
 let userClass;
@@ -39,11 +40,19 @@ const visibleBox = document.getElementById("visible-subjects");
 const hiddenBox = document.getElementById("hidden-subjects");
 
 function highlightMoved(element) {
+    // Alle anderen Elemente entfernen die Klasse "moved"
+    document.querySelectorAll(".moved").forEach(el => {
+        if (el !== element) el.classList.remove("moved");
+    });
+
+    // Klasse auf aktuelles Element setzen
     element.classList.add("moved");
+
     setTimeout(() => {
         element.classList.remove("moved");
     }, 3000);
 }
+
 
 
 function createSubjectElement(subject, classID) {
@@ -124,6 +133,7 @@ function createSubjectElement(subject, classID) {
 
 function saveSettings() {
     if (!user || !choiceID) return;
+    sortSubjectsByShortName();
 
     const visibleSubjects = [...visibleBox.querySelectorAll(".subject-item")].map(item => ({
         id: Number(item.getAttribute("sid")),
@@ -214,18 +224,40 @@ async function loadSettings() {
     }
 
     relevantSubjects.forEach((subjectID) => {
-        if (!addedSubjects.some(subj => subj === subjectID)) {
-            const subjectElement = createSubjectElement(allSubjects.find(subject => subject.id === subjectID), userClass);
-            visibleBox.appendChild(subjectElement);
-            subjectElement.querySelector(".move-button").textContent = "Hide →";
+        if (subjectID && !addedSubjects.some(subj => subj === subjectID)) {
+            try {
+                const subjectElement = createSubjectElement(allSubjects.find(subject => subject.id === subjectID), userClass);
+                visibleBox.appendChild(subjectElement);
+                subjectElement.querySelector(".move-button").textContent = "Hide →";
+            } catch (error) {
+                console.error("Fehler beim Erstellen des Fachelements für Fach-ID:", subjectID, error);
+                setErrorDisplay("Einige Fächer konnten nicht geladen werden. Bitte kontaktiere den Administrator.");
+            }
+
 
         } else {
             // element = visibleBox.querySelector(".subject-item:has([sid=\"28\"])");
         }
 
     });
+    sortSubjectsByShortName();
     return
 }
+function sortSubjectsByShortName() {
+    [visibleBox, hiddenBox].forEach(box => {
+        const items = [...box.querySelectorAll(".subject-item")];
+
+        items.sort((a, b) => {
+            const aName = a.querySelector(".short-name")?.textContent || "";
+            const bName = b.querySelector(".short-name")?.textContent || "";
+            return aName.localeCompare(bName);
+        });
+
+        items.forEach(item => box.appendChild(item));
+    });
+}
+
+
 
 // Load saved settings when page loads
 loadSettings();
@@ -235,22 +267,23 @@ const toggle = document.getElementById("toggle-names");
 const label = document.getElementById("toggle-label");
 
 toggle.addEventListener("change", () => {
-  const html = document.documentElement;
-  const showShort = toggle.checked;
+    const html = document.documentElement;
+    const showShort = toggle.checked;
 
-  if (showShort) {
-    html.classList.add("c-short-names");
-    html.classList.remove("c-full-names");
-  } else {
-    html.classList.add("c-full-names");
-    html.classList.remove("c-short-names");
-  }
+    if (showShort) {
+        html.classList.add("c-short-names");
+        html.classList.remove("c-full-names");
+    } else {
+        html.classList.add("c-full-names");
+        html.classList.remove("c-short-names");
+    }
 
-  // Optional: speichern im localStorage
-  localStorage.setItem("useShortNames", showShort ? "1" : "0");
+    // Optional: speichern im localStorage
+    localStorage.setItem("useShortNames", showShort ? "1" : "0");
 });
 
 // Initialzustand beim Laden
 const useShort = localStorage.getItem("useShortNames") === "1";
 toggle.checked = useShort;
 document.documentElement.classList.add(useShort ? "c-short-names" : "c-full-names");
+
