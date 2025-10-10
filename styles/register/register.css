@@ -1,15 +1,9 @@
-:root {
-    --accent-dark: #6f6f6f;
-    --accent-light: #D9D9D9;
-    --highlight: rgba(64, 125, 127, 1);
-    --highlight-faded: rgba(64, 125, 127, 0.54);
-    --text: rgb(0, 0, 0);
-    --text-faded: rgb(73, 73, 73);
-}
 
+/* ===== Base ===== */
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 body {
@@ -18,16 +12,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--text);
 }
 
 a {
-    color: var(--highlight);
+    color: var(--accent-color);
     text-decoration: none;
 }
 
+/* ===== Headings ===== */
 .onboarding-heading {
     text-align: start;
-    color: var(--highlight);
+    color: var(--accent-color);
+    font-weight: 600;
 }
 
 .onboarding-description {
@@ -36,19 +33,24 @@ a {
     margin-bottom: 2em;
 }
 
+/* ===== Layout ===== */
 .center-wrapper {
     text-align: center;
+    max-width: 100%;
+    padding: 0 10px;
 }
 
 .container {
     width: 600px;
+    max-width: 90%;
     margin: 20px auto;
-    padding: 50px;
+    padding: 40px;
     background-color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
-/* Added Progress Bar */
+/* ===== Progress Bar ===== */
 .progress-bar {
     width: 100%;
     height: 8px;
@@ -61,16 +63,15 @@ a {
 .progress-bar .progress {
     height: 100%;
     width: 0;
-    background-color: var(--highlight);
-    transition: width 0.4s ease; /* Smooth transition for the progress fill */
+    background-color: var(--accent-color);
+    transition: width 0.4s ease;
 }
 
+/* ===== Input Fields ===== */
 .group {
     position: relative;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
 }
-
-/* INPUT */
 
 input {
     font-size: 18px;
@@ -78,7 +79,9 @@ input {
     display: block;
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--highlight-faded);
+    border-bottom: 1px solid var(--accent-color-faded);
+    background-color: transparent;
+    color: var(--text);
 }
 
 input:focus {
@@ -94,12 +97,13 @@ label {
     left: 5px;
     top: 10px;
     transition: 0.2s ease all;
+    color: var(--text-faded);
 }
 
 input:focus ~ label, input:valid ~ label {
     top: -20px;
     font-size: 14px;
-    color: var(--highlight);
+    color: var(--accent-color);
 }
 
 .bar {
@@ -114,7 +118,7 @@ input:focus ~ label, input:valid ~ label {
     width: 0;
     bottom: 1px;
     position: absolute;
-    background: var(--highlight);
+    background: var(--accent-color);
     transition: 0.2s ease all;
 }
 
@@ -140,37 +144,37 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
     opacity: 0.5;
 }
 
-.hint {
-    color: var(--accent-dark);
-}
-
 input:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
 }
 
 @keyframes inputHighlighter {
-    from { background: var(--highlight); }
+    from { background: var(--accent-color); }
     to   { width: 0; background: transparent; }
 }
 
-/* BUTTON */
+.hint {
+    color: var(--accent-dark);
+    font-size: 0.85em;
+}
 
+/* ===== Buttons ===== */
 .button {
   position: relative;
-  border: 2px solid var(--highlight);
+  border: 2px solid var(--accent-color);
   border-radius: 12px;
-  background-color: #fffdfd00;
-  color: var(--highlight);
+  background-color: transparent;
+  color: var(--accent-color);
   font-size: 15px;
-  width: 20em;
-  height: 2.5em;
-  transition: all 0.5s;
+  width: 100%;
+  max-width: 20em;
+  height: 2.8em;
+  transition: all 0.3s;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin: 10px auto;
 }
 
 .button span {
-  cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
@@ -185,6 +189,11 @@ input:focus ~ .highlight {
   transition: 0.5s;
 }
 
+.button:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
 .button:hover span {
   padding-right: 25px;
 }
@@ -194,8 +203,7 @@ input:focus ~ .highlight {
   right: 0;
 }
 
-
-/* transitions between steps: */
+/* ===== Step Animation ===== */
 .form-step {
     display: none;
     opacity: 0;
@@ -209,7 +217,7 @@ input:focus ~ .highlight {
     transform: translateX(0);
 }
 
-/* spinner */ 
+/* ===== Loading Spinner ===== */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -223,16 +231,72 @@ input:focus ~ .highlight {
     height: 200px;
 }
 
-.loading-container p {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-
 .spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid var(--highlight);
+    border: 8px solid var(--accent-light);
+    border-top: 8px solid var(--accent-color);
     border-radius: 50%;
     width: 60px;
     height: 60px;
     animation: spin 1s linear infinite;
+}
+
+.loading-container p {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: var(--accent-dark);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px 20px;
+    }
+
+    .onboarding-heading {
+        font-size: 1.3em;
+    }
+
+    .onboarding-description {
+        font-size: 0.95em;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .button {
+        font-size: 14px;
+        height: 2.5em;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        align-items: flex-start;
+        padding-top: 30px;
+    }
+
+    .container {
+        width: 95%;
+        margin: 0 auto;
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+
+    .onboarding-heading {
+        font-size: 1.2em;
+    }
+
+    .onboarding-description {
+        font-size: 0.9em;
+    }
+
+    .button {
+        font-size: 13px;
+    }
 }
