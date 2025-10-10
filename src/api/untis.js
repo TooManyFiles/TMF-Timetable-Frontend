@@ -199,7 +199,7 @@ export async function parseLessons(lessons) {
     ),
     startTime: lesson.startTime,
     endTime: lesson.endTime,
-    row: timeToSchoolTimeGrid(lesson.startTime).name - 0,
+    row: (timeToSchoolTimeGrid(lesson.startTime)?.name ?? lesson.startTime) - 0,
     day: getOneLetterDayCode(lesson.startTime),
     cancelled: lesson.cancelled || '',
     irregular: lesson.irregular || '',
